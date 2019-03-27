@@ -201,6 +201,8 @@ ab flase false
 ab ms2p mapStateToProps
 ab md2p mapDispatchToProps
 
+map <silent> <leader>dr A // eslint-disable-line 
+map <silent> <leader>dl me,dr<bs><esc>`e:delmark e<cr>
 map <space> /
 map <c-space> ?
 
