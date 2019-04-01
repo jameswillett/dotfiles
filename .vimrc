@@ -10,7 +10,9 @@ call vundle#begin()
 "call vundle#begin('~/some/path/here')
 
 " let Vundle manage Vundle, required
+Plugin 'SirVer/ultisnips'
 Plugin 'Valloric/MatchTagAlways'
+Plugin 'Valloric/YouCompleteMe'
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'airblade/vim-gitgutter'
@@ -128,11 +130,10 @@ let g:jsx_ext_required = 0
 " the rest of it
 """
 
-noremap <Up> <Nop>
+noremap <Up> :source ~/.vimrc<cr>
 noremap <Left> <Nop>
 noremap <Right> <Nop>
 noremap <Down> <Nop>
-inoremap <Up> <Nop>
 inoremap <Left> <Nop>
 inoremap <Right> <Nop>
 inoremap <Down> <Nop>
