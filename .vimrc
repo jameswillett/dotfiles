@@ -137,7 +137,7 @@ let g:UltiSnipsEditSplit = 'context'
 " the rest of it
 """
 
-noremap <Up> :source ~/.vimrc<cr>
+noremap <Up> <Nop>
 noremap <Left> <Nop>
 noremap <Right> <Nop>
 noremap <Down> <Nop>
@@ -190,6 +190,7 @@ if has("gui_running")
 endif
 
 nmap <leader>gf :CtrlP<CR><C-\>w
+nmap <leader>so :source ~/.vimrc<cr>
 set encoding=utf8
 
 set nobackup
@@ -332,3 +333,5 @@ augroup suffixes
         execute "autocmd FileType " . ft[0] . " setlocal suffixesadd=" . ft[1]
     endfor
 augroup END
+set mouse=
+set ttymouse=
