@@ -41,6 +41,7 @@ Plugin 'vim-scripts/ReplaceWithRegister'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'w0rp/ale'
 Plugin 'wikitopian/hardmode'
+Plugin 'honza/vim-snippets'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -125,6 +126,12 @@ let g:mta_filetypes = {
 """
 
 let g:jsx_ext_required = 0
+
+"""
+" ultisnips
+"""
+
+let g:UltiSnipsEditSplit = 'context'
 
 """
 " the rest of it
@@ -219,6 +226,8 @@ map <silent> <leader>tc :tabclose<cr>
 map <silent> <leader>tm :tabmove<cr>
 map <silent> <leader>tt :tabnext<cr>
 
+highlight Pmenu ctermfg=15 ctermbg=0 guifg=#ffffff guibg=#000000
+
 let g:lasttab = 1
 nmap <Leader>tl :exe "tabn ".g:lasttab<CR>
 au TabLeave * let g:lasttab = tabpagenr()
@@ -239,10 +248,16 @@ set laststatus=2
 set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
 
 " ∆ is alt-j ˚ is alt-k
+" move line or lines up and down
 nmap <silent> ∆ mz:m+<cr>`z:delmark z<cr>
 nmap <silent> ˚ mz:m-2<cr>`z:delmark z<cr>
-vmap ∆ :m'>+<cr>`<my`>mzgv`yo`z
-vmap ˚ :m'<-2<cr>`>my`<mzgv`yo`z
+vmap <silent> ∆ :m'>+<cr>`<my`>mzgv`yo`z
+vmap <silent> ˚ :m'<-2<cr>`>my`<mzgv`yo`z
+
+" ø is alt-o
+" pad line(s) with blank lines
+nmap <silent> ø moO<esc>jo<esc>`o:delmark o<cr>
+vmap <silent> ø <esc>`<O<esc>`>o<esc>gv
 
 if has("mac") || has("macunix")
   nmap <D-j> <M-j>
