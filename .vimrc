@@ -262,19 +262,19 @@ set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ 
 
 " ∆ is alt-j ˚ is alt-k ˙ is alt-h ¬ is alt-l
 " move line or lines up and down and left and right
-nmap <silent> ∆ mz:m+<cr>`z:delmark z<cr>
-nmap <silent> ˚ mz:m-2<cr>`z:delmark z<cr>
-nmap <silent> ¬ xp
-nmap <silent> ˙ xhP
-vmap <silent> ∆ :m'>+<cr>`<my`>mzgv`yo`z
-vmap <silent> ˚ :m'<-2<cr>`>my`<mzgv`yo`z
-vmap <silent> ¬ xp`[v`]
-vmap <silent> ˙ xhP`[v`]
+nmap <silent> ∆ @='mz:m+<C-V><C-M>`z:delmark z<C-V><C-M>'<cr>
+nmap <silent> ˚ @='mz:m-2<C-V><C-M>`z:delmark z<C-V><C-M>'<cr>
+nmap <silent> ¬ @='xp'<cr>
+nmap <silent> ˙ @='xhP'<cr>
+vmap <silent> ∆ @=':m'>+<C-V><C-M>`<my`>mzgv`yo`z'<cr>
+vmap <silent> ˚ @=':m'<-2<C-V><C-M>`>my`<mzgv`yo`z'<cr>
+vmap <silent> ¬ @='xp`[v`]'<cr>
+vmap <silent> ˙ @='xhP`[v`]'<cr>
 
 " ø is alt-o
 " pad line(s) with blank lines
-nmap <silent> ø moO<esc>jo<esc>`o:delmark o<cr>
-vmap <silent> ø <esc>`<O<esc>`>o<esc>gv
+nmap <silent> ø @='moO<esc>jo<esc>`o:delmark o<C-V><C-M>'<cr>
+vmap <silent> ø @='<C-V><esc>`<O<C-V><esc>`>o<C-V><esc>gv'<cr>
 
 if has("mac") || has("macunix")
   nmap <D-j> <M-j>
