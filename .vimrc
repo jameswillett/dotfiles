@@ -152,6 +152,7 @@ noremap <Up> <Nop>
 noremap <Left> <Nop>
 noremap <Right> <Nop>
 noremap <Down> <Nop>
+inoremap <Up> <Nop>
 inoremap <Left> <Nop>
 inoremap <Right> <Nop>
 inoremap <Down> <Nop>
