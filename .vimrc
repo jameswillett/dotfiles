@@ -259,8 +259,8 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 set laststatus=2
 set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
 
-" ∆ is alt-j ˚ is alt-k
-" move line or lines up and down
+" ∆ is alt-j ˚ is alt-k ˙ is alt-h ¬ is alt-l
+" move line or lines up and down and left and right
 nmap <silent> ∆ mz:m+<cr>`z:delmark z<cr>
 nmap <silent> ˚ mz:m-2<cr>`z:delmark z<cr>
 nmap <silent> ¬ xp
