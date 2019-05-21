@@ -19,6 +19,8 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'dikiaap/minimalist'
 Plugin 'elmcast/elm-vim'
+Plugin 'heavenshell/vim-jsdoc'
+Plugin 'honza/vim-snippets'
 Plugin 'junegunn/gv.vim'
 Plugin 'mileszs/ack.vim'
 Plugin 'moll/vim-node'
@@ -41,7 +43,7 @@ Plugin 'vim-scripts/ReplaceWithRegister'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'w0rp/ale'
 Plugin 'wikitopian/hardmode'
-Plugin 'honza/vim-snippets'
+Plugin 'amadeus/vim-mjml'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -132,6 +134,15 @@ let g:jsx_ext_required = 0
 """
 
 let g:UltiSnipsEditSplit = 'context'
+
+"""
+" vim-jsdoc
+"""
+
+let g:jsdoc_allow_input_prompt = 1
+let g:jsdoc_input_description = 1
+let g:jsdoc_enable_es6 = 1
+let g:jsdoc_allow_shorthand = 1
 
 """
 " the rest of it
@@ -252,8 +263,12 @@ set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ 
 " move line or lines up and down
 nmap <silent> ∆ mz:m+<cr>`z:delmark z<cr>
 nmap <silent> ˚ mz:m-2<cr>`z:delmark z<cr>
+nmap <silent> ¬ xp
+nmap <silent> ˙ xhP
 vmap <silent> ∆ :m'>+<cr>`<my`>mzgv`yo`z
 vmap <silent> ˚ :m'<-2<cr>`>my`<mzgv`yo`z
+vmap <silent> ¬ xp`[v`]
+vmap <silent> ˙ xhP`[v`]
 
 " ø is alt-o
 " pad line(s) with blank lines
