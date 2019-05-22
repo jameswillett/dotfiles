@@ -266,8 +266,8 @@ nmap <silent> ∆ @='mz:m+<C-V><C-M>`z:delmark z<C-V><C-M>'<cr>
 nmap <silent> ˚ @='mz:m-2<C-V><C-M>`z:delmark z<C-V><C-M>'<cr>
 nmap <silent> ¬ @='xp'<cr>
 nmap <silent> ˙ @='xhP'<cr>
-vmap <silent> ∆ @=':m'>+<C-V><C-M>`<my`>mzgv`yo`z'<cr>
-vmap <silent> ˚ @=':m'<-2<C-V><C-M>`>my`<mzgv`yo`z'<cr>
+vmap <silent> ∆ @=':m''>+<C-V><C-M>`<my`>mzgv`yo`z'<cr>
+vmap <silent> ˚ @=':m''<-2<C-V><C-M>`>my`<mzgv`yo`z'<cr>
 vmap <silent> ¬ @='xp`[v`]'<cr>
 vmap <silent> ˙ @='xhP`[v`]'<cr>
 
