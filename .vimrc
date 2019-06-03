@@ -273,8 +273,10 @@ vmap <silent> ˙ @='xhP`[v`]'<cr>
 
 " ø is alt-o
 " pad line(s) with blank lines
-nmap <silent> ø @='moO<esc>jo<esc>`o:delmark o<C-V><C-M>'<cr>
+nmap <silent> ø @='moO<C-V><esc>jo<C-V><esc>`o:delmark o<C-V><C-M>'<cr>
 vmap <silent> ø @='<C-V><esc>`<O<C-V><esc>`>o<C-V><esc>gv'<cr>
+
+vmap <silent> u <esc>u
 
 if has("mac") || has("macunix")
   nmap <D-j> <M-j>
