@@ -278,6 +278,11 @@ vmap <silent> ø @='<C-V><esc>`<O<C-V><esc>`>o<C-V><esc>gv'<cr>
 
 vmap <silent> u <esc>u
 
+" Ô is shift-alt-j,  is shift-alt-k
+" move forward or back eslint errors. works with counts
+nmap <silent> Ô @=':ALENext<C-V><C-M>'<cr>
+nmap <silent>  @=':ALEPrevious<C-V><C-M>'<cr>
+
 if has("mac") || has("macunix")
   nmap <D-j> <M-j>
   nmap <D-k> <M-k>
