@@ -162,6 +162,9 @@ set number relativenumber
 syntax enable
 set autoread
 
+set dir=~/.vim/swapfiles//
+set backup
+set backupdir=~/.vim/backupfiles//
 set undofile
 set undodir=~/.vim/undodir
 
@@ -207,10 +210,6 @@ endif
 nmap <leader>gf :CtrlP<CR><C-\>w
 nmap <leader>so :source ~/.vimrc<cr>
 set encoding=utf8
-
-set nobackup
-set nowb
-set noswapfile
 
 set expandtab
 set shiftwidth=2
