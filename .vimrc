@@ -162,6 +162,9 @@ set number relativenumber
 syntax enable
 set autoread
 
+set undofile
+set undodir=~/.vim/undodir
+
 set ignorecase
 set smartcase
 set hlsearch
