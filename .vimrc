@@ -201,7 +201,11 @@ catch
 endtry
 
 set background=dark
-highlight ColorColumn ctermbg=59
+hi ColorColumn ctermbg=59
+
+if exists('$TMUX')
+  hi Normal ctermfg=none ctermbg=234 cterm=NONE guifg=#FFEEEE gui=NONE
+endif
 
 "Set extra options when running in GUI mode
 if has("gui_running")
@@ -245,7 +249,7 @@ map <silent> <leader>tc :tabclose<cr>
 map <silent> <leader>tm :tabmove<cr>
 map <silent> <leader>tt :tabnext<cr>
 
-highlight Pmenu ctermfg=15 ctermbg=0 guifg=#ffffff guibg=#000000
+highlight Pmenu ctermfg=15 ctermbg=0
 
 let g:lasttab = 1
 nmap <Leader>tl :exe "tabn ".g:lasttab<CR>
