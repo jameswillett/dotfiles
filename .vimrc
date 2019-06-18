@@ -43,6 +43,7 @@ Plugin 'vim-syntastic/syntastic'
 Plugin 'w0rp/ale'
 Plugin 'wikitopian/hardmode'
 Plugin 'amadeus/vim-mjml'
+Plugin 'christoomey/vim-tmux-navigator'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
