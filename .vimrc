@@ -35,7 +35,6 @@ Plugin 'tpope/vim-airline'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-speeddating'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'vim-airline/vim-airline-themes'
@@ -288,6 +287,10 @@ vmap <silent> u <esc>u
 " move forward or back eslint errors. works with counts
 nmap <silent> Ô @=':ALENext<C-V><C-M>'<cr>
 nmap <silent>  @=':ALEPrevious<C-V><C-M>'<cr>
+
+" map alt-a/alt-x to ctrl-a/ctrl-x, respectively
+nmap å <C-a>
+nmap ≈ <C-x>
 
 if has("mac") || has("macunix")
   nmap <D-j> <M-j>
