@@ -204,7 +204,7 @@ set background=dark
 hi ColorColumn ctermbg=59
 
 if exists('$TMUX')
-  hi Normal ctermfg=none ctermbg=234 cterm=NONE guifg=#FFEEEE gui=NONE
+  hi Normal ctermfg=NONE cterm=NONE guifg=NONE gui=NONE
 endif
 
 "Set extra options when running in GUI mode
