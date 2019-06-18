@@ -175,6 +175,9 @@ set incsearch
 set nolazyredraw
 set magic
 
+set textwidth=100
+set colorcolumn=+5
+
 set visualbell
 
 set wrap
@@ -198,6 +201,7 @@ catch
 endtry
 
 set background=dark
+highlight ColorColumn ctermfg=4 ctermbg=4
 
 "Set extra options when running in GUI mode
 if has("gui_running")
