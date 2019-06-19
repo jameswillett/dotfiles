@@ -210,7 +210,7 @@ function s:Colors(bg)
     set background=dark
     if exists('$TMUX')
       hi Normal ctermfg=NONE cterm=NONE guifg=NONE gui=NONE
-      if exists('AirlineTheme')
+      if exists(':AirlineTheme')
         AirlineTheme minimalist
       endif
       hi clear SignColumn
