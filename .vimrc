@@ -44,6 +44,7 @@ Plugin 'w0rp/ale'
 Plugin 'wikitopian/hardmode'
 Plugin 'amadeus/vim-mjml'
 Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'tmux-plugins/vim-tmux-focus-events'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -195,17 +196,37 @@ if $COLORTERM == 'gnome-terminal'
   set t_Co=256
 endif
 
-try
-  colorscheme minimalist
-catch
-endtry
+function s:SetTheme()
+  try
+    colorscheme minimalist
+  catch
+  endtry
+endfunction
 
-set background=dark
+function s:Colors(bg)
+  call s:SetTheme()
+
+  if a:bg == 'dark'
+    set background=dark
+    AirlineTheme minimalist
+  elseif a:bg == 'light'
+    set background=light
+    AirlineTheme base16_twilight
+  else
+    set background=
+  endif
+endfunction
+
+call s:Colors('dark')
+
 hi ColorColumn ctermbg=59
 
 if exists('$TMUX')
   hi Normal ctermfg=NONE cterm=NONE guifg=NONE gui=NONE
+  autocmd FocusGained * call s:Colors('dark')
+  autocmd FocusLost * call s:Colors('light')
 endif
+
 
 "Set extra options when running in GUI mode
 if has("gui_running")
