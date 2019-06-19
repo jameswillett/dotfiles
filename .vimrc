@@ -208,13 +208,24 @@ function s:Colors(bg)
 
   if a:bg == 'dark'
     set background=dark
-    AirlineTheme minimalist
+    if exists('$TMUX')
+      hi Normal ctermfg=NONE cterm=NONE guifg=NONE gui=NONE
+      if exists('AirlineTheme')
+        AirlineTheme minimalist
+      endif
+      hi clear SignColumn
+    endif
   elseif a:bg == 'light'
     set background=light
-    AirlineTheme base16_twilight
+    if exists('$TMUX')
+      hi Normal ctermfg=NONE cterm=NONE guifg=NONE gui=NONE
+      AirlineTheme base16_twilight
+      hi clear SignColumn
+    endif
   else
     set background=
   endif
+  highlight Pmenu ctermfg=15 ctermbg=0
 endfunction
 
 call s:Colors('dark')
@@ -222,11 +233,10 @@ call s:Colors('dark')
 hi ColorColumn ctermbg=59
 
 if exists('$TMUX')
-  hi Normal ctermfg=NONE cterm=NONE guifg=NONE gui=NONE
   autocmd FocusGained * call s:Colors('dark')
   autocmd FocusLost * call s:Colors('light')
+else
 endif
-
 
 "Set extra options when running in GUI mode
 if has("gui_running")
@@ -269,8 +279,6 @@ map <silent> <leader>to :tabonly<cr>
 map <silent> <leader>tc :tabclose<cr>
 map <silent> <leader>tm :tabmove<cr>
 map <silent> <leader>tt :tabnext<cr>
-
-highlight Pmenu ctermfg=15 ctermbg=0
 
 let g:lasttab = 1
 nmap <Leader>tl :exe "tabn ".g:lasttab<CR>
