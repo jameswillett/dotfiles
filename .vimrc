@@ -208,17 +208,19 @@ function s:Colors(bg)
 
   if a:bg == 'dark'
     set background=dark
+
     if exists('$TMUX')
-      hi Normal ctermfg=NONE cterm=NONE guifg=NONE gui=NONE
       if exists(':AirlineTheme')
         AirlineTheme minimalist
       endif
+
       hi clear SignColumn
     endif
   elseif a:bg == 'light'
     set background=light
+
     if exists('$TMUX')
-      hi Normal ctermfg=NONE cterm=NONE guifg=NONE gui=NONE
+      hi Normal ctermfg=245 cterm=NONE guifg=NONE gui=NONE
       AirlineTheme base16_twilight
       hi clear SignColumn
     endif
@@ -226,11 +228,12 @@ function s:Colors(bg)
     set background=
   endif
   highlight Pmenu ctermfg=15 ctermbg=0
+  hi ColorColumn ctermbg=60 ctermfg=7
 endfunction
 
 call s:Colors('dark')
 
-hi ColorColumn ctermbg=59
+
 
 if exists('$TMUX')
   autocmd FocusGained * call s:Colors('dark')
