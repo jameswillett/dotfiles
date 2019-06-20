@@ -3,6 +3,8 @@ filetype off                  " required
 
 let mapleader = ","
 
+autocmd!
+
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -203,37 +205,37 @@ function s:SetTheme()
   endtry
 endfunction
 
-function s:Colors(bg)
+""
+" only set background dark if background is light and vice versa
+" prevents this fn from being called mulitple times after resourcing
+" without having to include autocmd! in my rc
+"""
+
+function s:Colors(bg, ...)
   call s:SetTheme()
 
-  if a:bg == 'dark'
+  if a:bg == 'dark' && (&background ==# 'light' || a:0 ==# 'init')
     set background=dark
 
     if exists('$TMUX')
       if exists(':AirlineTheme')
         AirlineTheme minimalist
       endif
-
-      hi clear SignColumn
     endif
-  elseif a:bg == 'light'
+  elseif a:bg == 'light' && &background ==# 'dark'
     set background=light
 
     if exists('$TMUX')
       hi Normal ctermfg=245 cterm=NONE guifg=NONE gui=NONE
       AirlineTheme base16_twilight
-      hi clear SignColumn
     endif
-  else
-    set background=
   endif
-  highlight Pmenu ctermfg=15 ctermbg=0
+  hi clear SignColumn
+  hi Pmenu ctermfg=15 ctermbg=0
   hi ColorColumn ctermbg=60 ctermfg=7
 endfunction
 
-call s:Colors('dark')
-
-
+call s:Colors('dark', 'init')
 
 if exists('$TMUX')
   autocmd FocusGained * call s:Colors('dark')
