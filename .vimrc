@@ -205,16 +205,10 @@ function s:SetTheme()
   endtry
 endfunction
 
-""
-" only set background dark if background is light and vice versa
-" prevents this fn from being called mulitple times after resourcing
-" without having to include autocmd! in my rc
-"""
-
 function s:Colors(bg, ...)
   call s:SetTheme()
 
-  if a:bg == 'dark' && (&background ==# 'light' || a:0 ==# 'init')
+  if a:bg == 'dark'
     set background=dark
 
     if exists('$TMUX')
@@ -222,7 +216,7 @@ function s:Colors(bg, ...)
         AirlineTheme minimalist
       endif
     endif
-  elseif a:bg == 'light' && &background ==# 'dark'
+  elseif a:bg == 'light'
     set background=light
 
     if exists('$TMUX')
