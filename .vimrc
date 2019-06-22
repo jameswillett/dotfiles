@@ -47,6 +47,7 @@ Plugin 'wikitopian/hardmode'
 Plugin 'amadeus/vim-mjml'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'tmux-plugins/vim-tmux-focus-events'
+Plugin 'nathanaelkane/vim-indent-guides'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -148,6 +149,17 @@ let g:jsdoc_enable_es6 = 1
 let g:jsdoc_allow_shorthand = 1
 
 """
+" vim-indent-guides
+"""
+
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_auto_colors = 0
+let g:indent_guides_start_level = 2
+let g:indent_guides_guide_size = 1
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=235
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=236
+
+"""
 " the rest of it
 """
 
@@ -178,9 +190,7 @@ set incsearch
 set nolazyredraw
 set magic
 
-set textwidth=80
-set colorcolumn=+20
-
+set colorcolumn=100
 set visualbell
 
 set wrap
@@ -227,6 +237,8 @@ function s:Colors(bg, ...)
   hi clear SignColumn
   hi Pmenu ctermfg=15 ctermbg=0
   hi ColorColumn ctermbg=60 ctermfg=7
+  hi IndentGuidesOdd ctermbg=235
+  hi IndentGuidesEven ctermbg=236
 endfunction
 
 call s:Colors('dark', 'init')
@@ -255,7 +267,6 @@ set tabstop=2
 
 set ai
 set si
-set wrap
 set backspace=indent,eol,start
 
 ab flase false
@@ -400,3 +411,4 @@ augroup suffixes
 augroup END
 set mouse=
 set ttymouse=
+
