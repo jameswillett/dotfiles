@@ -166,6 +166,9 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=236
 let g:ycm_min_num_of_chars_for_completion = 4
 let g:ycm_min_num_identifier_candidate_chars = 4
 let g:ycm_enable_diagnostic_highlighting = 0
+let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_autoclose_preview_window_after_completion = 1
+nnoremap <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 """
 " the rest of it
