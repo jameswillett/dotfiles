@@ -160,6 +160,14 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=235
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=236
 
 """
+" ycm
+"""
+
+let g:ycm_min_num_of_chars_for_completion = 4
+let g:ycm_min_num_identifier_candidate_chars = 4
+let g:ycm_enable_diagnostic_highlighting = 0
+
+"""
 " the rest of it
 """
 
@@ -411,4 +419,5 @@ augroup suffixes
 augroup END
 set mouse=
 set ttymouse=
+
 
