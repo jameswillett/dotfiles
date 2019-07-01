@@ -154,7 +154,6 @@ let g:jsdoc_allow_shorthand = 1
 
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_auto_colors = 0
-let g:indent_guides_start_level = 2
 let g:indent_guides_guide_size = 1
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=235
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=236
@@ -169,6 +168,7 @@ let g:ycm_enable_diagnostic_highlighting = 0
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
 nnoremap <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
 
 """
 " the rest of it
@@ -219,6 +219,7 @@ if $COLORTERM == 'gnome-terminal'
   set t_Co=256
 endif
 
+
 function s:SetTheme()
   try
     colorscheme minimalist
@@ -250,6 +251,8 @@ function s:Colors(bg, ...)
   hi ColorColumn ctermbg=60 ctermfg=7
   hi IndentGuidesOdd ctermbg=235
   hi IndentGuidesEven ctermbg=236
+  hi NonText ctermfg=darkgrey guifg=grey70
+  hi SpecialKey ctermfg=darkgrey guifg=grey70
 endfunction
 
 call s:Colors('dark', 'init')
@@ -422,5 +425,4 @@ augroup suffixes
 augroup END
 set mouse=
 set ttymouse=
-
 
