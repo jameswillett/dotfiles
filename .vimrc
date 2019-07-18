@@ -288,8 +288,12 @@ ab flase false
 ab ms2p mapStateToProps
 ab md2p mapDispatchToProps
 
-map <silent> <leader>dr A // eslint-disable-line 
-map <silent> <leader>dl me,dr<bs><esc>`e:delmark e<cr>
+function GetRule()
+  return substitute(execute("1 messages"), ":.*$", "", "")
+endfunction
+
+map <silent> <leader>dr meA // eslint-disable-line <c-r>=GetRule()<cr><esc>kJ`e:delmark e<cr>
+map <silent> <leader>dl meA // eslint-disable-line<esc>`e:delmark e<cr>
 map <space> /
 map <c-space> ?
 
