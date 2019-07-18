@@ -292,8 +292,9 @@ function GetRule()
   return substitute(execute("1 messages"), ":.*$", "", "")
 endfunction
 
-map <silent> <leader>dr meA // eslint-disable-line <c-r>=GetRule()<cr><esc>kJ`e:delmark e<cr>
-map <silent> <leader>dl meA // eslint-disable-line<esc>`e:delmark e<cr>
+map <silent> <leader>_dl meA // eslint-disable-line
+map <silent> <leader>dr ,_dl <c-r>=GetRule()<cr><esc>kJ`e:delmark e<cr>
+map <silent> <leader>dl ,_dl<esc>`e:delmark e<cr>
 map <space> /
 map <c-space> ?
 
