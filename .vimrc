@@ -292,9 +292,35 @@ function GetRule()
   return substitute(execute("1 messages"), ":.*$", "", "")
 endfunction
 
-map <silent> <leader>_dl meA // eslint-disable-line
-map <silent> <leader>dr ,_dl <c-r>=GetRule()<cr><esc>kJ`e:delmark e<cr>
-map <silent> <leader>dl ,_dl<esc>`e:delmark e<cr>
+let g:workingWithjsxComment = 0
+
+function GetCommentType(flag)
+  if index(map(synstack(line('.'), col('.')), 'synIDattr(v:val,"name")'), "jsxRegion") >= 0
+    let g:workingWithjsxComment = 1
+    let suffix = ' '
+    if a:flag == 'l'
+      let suffix = '-next-line '
+    endif
+    return 'O{/* eslint-disable' . suffix
+  else
+    return 'A// eslint-disable-line'
+  endif
+endfunction
+
+function MaybeCloseComment()
+  if g:workingWithjsxComment == 1
+    let g:workingWithjsxComment = 0
+    return ' */}'
+  else
+    return ''
+  endif
+endfunction
+
+
+map <silent> <leader>_dl mei<c-r>=GetCommentType('l')<cr>
+map <silent> <leader>_dr mei<c-r>=GetCommentType('r')<cr>
+map <silent> <leader>dr ,_dl <c-r>=GetRule()<cr><c-r>=MaybeCloseComment()<cr><esc>kJ`e:delmark e<cr>
+map <silent> <leader>dl ,_dl<c-r>=MaybeCloseComment()<cr><esc>`e:delmark e<cr>
 map <space> /
 map <c-space> ?
 
