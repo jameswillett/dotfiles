@@ -319,7 +319,7 @@ endfunction
 
 map <silent> <leader>_dl mei<c-r>=GetCommentType('l')<cr>
 map <silent> <leader>_dr mei<c-r>=GetCommentType('r')<cr>
-map <silent> <leader>dr ,_dl <c-r>=GetRule()<cr><c-r>=MaybeCloseComment()<cr><esc>kJ`e:delmark e<cr>
+map <silent> <leader>dr ,_dr <c-r>=GetRule()<cr><c-r>=MaybeCloseComment()<cr><esc>kJ`e:delmark e<cr>
 map <silent> <leader>dl ,_dl<c-r>=MaybeCloseComment()<cr><esc>`e:delmark e<cr>
 map <space> /
 map <c-space> ?
