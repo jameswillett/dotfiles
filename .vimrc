@@ -303,7 +303,7 @@ function GetCommentType(flag)
     endif
     return 'O{/* eslint-disable' . suffix
   else
-    return 'A// eslint-disable-line'
+    return 'A // eslint-disable-line'
   endif
 endfunction
 
