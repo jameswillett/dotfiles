@@ -49,6 +49,7 @@ Plugin 'vim-scripts/ReplaceWithRegister'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'w0rp/ale'
 Plugin 'wikitopian/hardmode'
+Plugin 'clavery/vim-dwre'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -169,6 +170,38 @@ let g:ycm_enable_diagnostic_highlighting = 0
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
 nnoremap <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+"""
+" DWRE
+"""
+
+" override terminal open to be vertical split instead of horizontal
+let g:DWREDebugVertical = 1
+
+" add a breakpoint
+autocmd FileType dsscript nnoremap <buffer> <leader>da :DWREAdd<cr>
+" delete the breakpoint
+autocmd FileType dsscript nnoremap <buffer> <leader>dd :DWREDel<cr>
+" clear all breakpoints
+autocmd FileType dsscript nnoremap <buffer> <leader>dr :DWREReset<cr>
+
+" launch the debugger or continue execution
+nnoremap <f5> :DWREDebugStartContinue<cr>
+" next statement
+nnoremap <f6> :DWREDebugNext<cr>
+" jump into function
+nnoremap <f7> :DWREDebugInto<cr>
+" jump out of function
+nnoremap <f8> :DWREDebugOut<cr>
+" stop debugging and terminate debugger
+nnoremap <f9> :DWREDebugStop<cr>
+" Jump to current halted location, if halted
+nnoremap <leader>dj :silent DWREDebugJump<cr>
+" Print info on expression under cursor
+autocmd FileType dsscript nnoremap <buffer> K :DWREDebugPrint<cr>
+
+" highlight line of current location
+highlight DWRELocation guibg=#666666
 
 
 """
