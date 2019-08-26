@@ -261,6 +261,9 @@ function s:SetTheme()
   endtry
 endfunction
 
+set t_ZH=[3m
+set t_ZR=[23m
+
 function s:Colors(bg, ...)
   call s:SetTheme()
 
@@ -287,6 +290,7 @@ function s:Colors(bg, ...)
   hi IndentGuidesEven ctermbg=236
   hi NonText ctermfg=darkgrey guifg=grey70
   hi SpecialKey ctermfg=darkgrey guifg=grey70
+  hi Comment gui=italic cterm=italic
 endfunction
 
 call s:Colors('dark', 'init')
@@ -297,9 +301,6 @@ if exists('$TMUX')
 else
 endif
 
-set t_ZH=[3m
-set t_ZR=[23m
-highlight Comment gui=italic cterm=italic
 
 "Set extra options when running in GUI mode
 if has("gui_running")
