@@ -7,6 +7,7 @@ plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
 export NVM_DIR="$HOME/.nvm"
+export TERM="xterm-256color"
 
 # Lazyload Node.js - NVM and npm
 lazynvm() {

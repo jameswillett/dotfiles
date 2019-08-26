@@ -297,6 +297,10 @@ if exists('$TMUX')
 else
 endif
 
+set t_ZH=[3m
+set t_ZR=[23m
+highlight Comment gui=italic cterm=italic
+
 "Set extra options when running in GUI mode
 if has("gui_running")
   set guioptions-=T
