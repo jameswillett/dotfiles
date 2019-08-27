@@ -159,6 +159,7 @@ let g:indent_guides_auto_colors = 0
 let g:indent_guides_guide_size = 1
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd ctermbg=235
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=236
+autocmd FileType isml setlocal shiftwidth=4 tabstop=4
 
 """
 " ycm
