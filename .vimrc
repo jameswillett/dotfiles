@@ -223,31 +223,32 @@ set number relativenumber
 syntax enable
 set autoread
 
-set dir=~/.vim/swapfiles//
 set backup
 set backupdir=~/.vim/backupfiles//
-set undofile
+set dir=~/.vim/swapfiles//
 set undodir=~/.vim/undodir
+set undofile
 
-set ignorecase
-set smartcase
 set hlsearch
+set ignorecase
 set incsearch
-set nolazyredraw
 set magic
+set nolazyredraw
+set smartcase
 
 set colorcolumn=100
 set visualbell
 
-set wrap
-set wrapmargin=8
+set autoindent
+set cursorline
 set linebreak
 set showbreak=…
-set autoindent
-set ttyfast
-set wildmenu
 set showcmd
 set showmatch
+set ttyfast
+set wildmenu
+set wrap
+set wrapmargin=8
 
 " Enable 256 colors palette in Gnome Terminal
 if $COLORTERM == 'gnome-terminal'
