@@ -185,6 +185,8 @@ autocmd FileType dsscript nnoremap <buffer> <leader>da :DWREAdd<cr>
 autocmd FileType dsscript nnoremap <buffer> <leader>dd :DWREDel<cr>
 " clear all breakpoints
 autocmd FileType dsscript nnoremap <buffer> <leader>dr :DWREReset<cr>
+" after all the bullshit just set it to javascript
+autocmd FileType dsscript set ft=javascript
 
 " launch the debugger or continue execution
 nnoremap <f5> :DWREDebugStartContinue<cr>
@@ -203,7 +205,6 @@ autocmd FileType dsscript nnoremap <buffer> K :DWREDebugPrint<cr>
 
 " highlight line of current location
 highlight DWRELocation guibg=#666666
-
 
 """
 " the rest of it
