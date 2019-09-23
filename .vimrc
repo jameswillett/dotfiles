@@ -50,6 +50,7 @@ Plugin 'vim-syntastic/syntastic'
 Plugin 'w0rp/ale'
 Plugin 'wikitopian/hardmode'
 Plugin 'clavery/vim-dwre'
+Plugin 'tidalcycles/vim-tidal'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -205,6 +206,12 @@ autocmd FileType dsscript nnoremap <buffer> K :DWREDebugPrint<cr>
 
 " highlight line of current location
 highlight DWRELocation guibg=#666666
+
+"""
+" tidal vim stuff
+"""
+
+autocmd FileType tidal inoremap <C-e> <C-e><esc>
 
 """
 " the rest of it
