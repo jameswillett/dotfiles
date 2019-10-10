@@ -261,7 +261,7 @@ set wrapmargin=8
 set complete+=kspell
 
 " spell check off by default
-set nospell
+autocmd VimEnter :set nospell
 nnoremap <silent> <leader>sp :set spell!<cr>
 
 " Enable 256 colors palette in Gnome Terminal
