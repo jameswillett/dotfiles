@@ -259,6 +259,9 @@ set wrap
 set wrapmargin=8
 
 set complete+=kspell
+
+" spell check off by default
+set nospell
 nnoremap <silent> <leader>sp :set spell!<cr>
 
 " Enable 256 colors palette in Gnome Terminal
@@ -386,6 +389,12 @@ map <silent> <leader>to :tabonly<cr>
 map <silent> <leader>tc :tabclose<cr>
 map <silent> <leader>tm :tabmove<cr>
 map <silent> <leader>tt :tabnext<cr>
+
+" open vimrc in new buffer
+map <silent> <leader>ev ,tn:e ~/configs/.vimrc<cr>
+
+" open vimrc in new split
+map <silent> <leader>sv :split ~/configs/.vimrc<cr>
 
 let g:lasttab = 1
 nmap <Leader>tl :exe "tabn ".g:lasttab<CR>
