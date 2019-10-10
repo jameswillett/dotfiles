@@ -51,6 +51,7 @@ Plugin 'w0rp/ale'
 Plugin 'wikitopian/hardmode'
 Plugin 'clavery/vim-dwre'
 Plugin 'tidalcycles/vim-tidal'
+Plugin 'tpope/vim-dispatch'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -225,6 +226,8 @@ inoremap <Up> <Nop>
 inoremap <Left> <Nop>
 inoremap <Right> <Nop>
 inoremap <Down> <Nop>
+
+" inoremap <silent> <cr> <cr><esc>:Start! echo -e '\a'<cr>i
 
 set path+=**
 set number relativenumber
