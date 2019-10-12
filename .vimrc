@@ -52,6 +52,7 @@ Plugin 'wikitopian/hardmode'
 Plugin 'clavery/vim-dwre'
 Plugin 'tidalcycles/vim-tidal'
 Plugin 'tpope/vim-dispatch'
+Plugin 'inkarkat/vim-SyntaxRange'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -252,6 +253,7 @@ set visualbell
 
 set autoindent
 set cursorline
+set cursorcolumn
 set linebreak
 set showbreak=…
 set showcmd
@@ -283,6 +285,14 @@ endfunction
 set t_ZH=[3m
 set t_ZR=[23m
 
+function s:SqlHighlight()
+  call SyntaxRange#Include('\vQueryService(\n\s*)?\.query(One)?\((\n\s*)?`', '\v`(\n\s*)?(,|\))', 'sql')
+  call SyntaxRange#Include('\vQueryService(\n\s*)?\.query(One)?\((\n\s*)?''', '\v''(\n\s*)?(,|\))?', 'sql')
+  call SyntaxRange#Include('\vuery \= `', '`', 'sql')
+endfunction
+
+autocmd BufReadPost * call s:SqlHighlight()
+
 function s:Colors(bg, ...)
   call s:SetTheme()
 
@@ -310,6 +320,7 @@ function s:Colors(bg, ...)
   hi NonText ctermfg=darkgrey guifg=grey70
   hi SpecialKey ctermfg=darkgrey guifg=grey70
   hi Comment gui=italic cterm=italic
+  call s:SqlHighlight()
 endfunction
 
 call s:Colors('dark', 'init')
