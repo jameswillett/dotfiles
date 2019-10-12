@@ -289,6 +289,7 @@ function s:SqlHighlight()
   call SyntaxRange#Include('\vQueryService(\n\s*)?\.query(One)?\((\n\s*)?`', '\v`(\n\s*)?(,|\))', 'sql')
   call SyntaxRange#Include('\vQueryService(\n\s*)?\.query(One)?\((\n\s*)?''', '\v''(\n\s*)?(,|\))?', 'sql')
   call SyntaxRange#Include('\vuery \= `', '`', 'sql')
+  call SyntaxRange#Include('\vsql \= `', '`', 'sql')
 endfunction
 
 autocmd BufReadPost * call s:SqlHighlight()
