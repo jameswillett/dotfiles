@@ -53,6 +53,7 @@ Plugin 'clavery/vim-dwre'
 Plugin 'tidalcycles/vim-tidal'
 Plugin 'tpope/vim-dispatch'
 Plugin 'inkarkat/vim-SyntaxRange'
+Plugin 'Yggdroot/LeaderF'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
