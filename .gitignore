@@ -5,3 +5,5 @@
 !.zshrc
 !iterm.json
 !com.googlecode.iterm2.plist
+js/node_modules
+
