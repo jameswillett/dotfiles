@@ -33,13 +33,13 @@ const p = (fn) => new Promise((resolve, reject) =>
     p(spotify.isRepeating),
   ])
     .then(([state, track, isShuffling, repeating]) => {
-      const r = repeating ? '🔁' : '';
-      const s = state.state === 'playing' ? '▶️' : '⏸';
-      const shuf = isShuffling ? ' 🔀' : '';
+      const r = repeating ? ' ⟳' : '';
+      const s = state.state === 'playing' ? '►' : '✘';
+      const shuf = isShuffling ? ' ⤭' : '';
 
       const curr = timeString(state.position);
       const tot = timeString(Math.floor(track.duration / 1000));
-      const playStates = `${s}${shuf}${r} :`;
+      const playStates = `[ ${s}${shuf}${r} ]`;
       const times = `[${curr} - ${tot}]`;
       const string = `${playStates} ${track.artist} - ${track.name} ${times}`;
       const truncString = `${playStates} ${trunc(track.artist, 17)} - ${trunc(track.name, 40)} ${times}`;
