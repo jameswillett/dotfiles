@@ -42,7 +42,7 @@ const p = (fn) => new Promise((resolve, reject) =>
       const playStates = `${s}${shuf}${r} :`;
       const times = `[${curr} - ${tot}]`;
       const string = `${playStates} ${track.artist} - ${track.name} ${times}`;
-      const truncString = `${playStates} ${trunc(track.artist, 17)} - ${trunc(track.name, 30)} ${times}`;
+      const truncString = `${playStates} ${trunc(track.artist, 17)} - ${trunc(track.name, 40)} ${times}`;
       if (process.argv[2]) return console.log(state, track, string, truncString, timeString(state.position));
       console.log(`#[fg=colour10,bg=colour240]#[fg=colour232,bg=colour10,bold] ${truncString} `);
     });
