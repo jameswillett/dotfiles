@@ -23,17 +23,18 @@
     "Alpha Component" : 1,
     "Green Component" : 0.72156862745098038
   },
-  "Ansi 8 Color" : {
-    "Red Component" : 0,
-    "Color Space" : "sRGB",
-    "Blue Component" : 0.21176470588235294,
-    "Green Component" : 0.16862745098039217
-  },
+  "Draw Powerline Glyphs" : true,
   "Bold Color" : {
     "Red Component" : 0.57647058823529407,
     "Color Space" : "sRGB",
     "Blue Component" : 0.63137254901960782,
     "Green Component" : 0.63137254901960782
+  },
+  "Ansi 8 Color" : {
+    "Red Component" : 0,
+    "Color Space" : "sRGB",
+    "Blue Component" : 0.21176470588235294,
+    "Green Component" : 0.16862745098039217
   },
   "Ansi 9 Color" : {
     "Red Component" : 0.79607843137254897,
@@ -42,9 +43,9 @@
     "Green Component" : 0.29411764705882354
   },
   "Horizontal Spacing" : 0.91000000000000003,
-  "Right Option Key Sends" : 0,
   "Rows" : 25,
   "Default Bookmark" : "No",
+  "Right Option Key Sends" : 0,
   "Blend" : 0.21715995592948723,
   "Cursor Guide Color" : {
     "Red Component" : 0.70213186740875244,
@@ -88,10 +89,10 @@
   "Sync Title" : false,
   "Prompt Before Closing 2" : false,
   "BM Growl" : true,
+  "Mouse Reporting" : false,
   "Command" : "",
   "Description" : "Default",
   "Smart Cursor Color" : true,
-  "Mouse Reporting" : true,
   "Screen" : -1,
   "Selection Color" : {
     "Red Component" : 0.38069647271186113,
@@ -320,6 +321,7 @@
   "Visual Bell" : true,
   "Flashing Bell" : false,
   "Silence Bell" : false,
+  "Mouse Reporting allow mouse wheel" : false,
   "Ansi 14 Color" : {
     "Red Component" : 0,
     "Color Space" : "sRGB",
