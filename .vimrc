@@ -444,6 +444,10 @@ vmap <silent> ˚ @=':m''<-2<C-V><C-M>`>my`<mzgv`yo`z'<cr>
 vmap <silent> ¬ @='xp`[v`]'<cr>
 vmap <silent> ˙ @='xhP`[v`]'<cr>
 
+" scroll window faster
+nmap <silent> <C-E> @='4<C-V><C-E>'<cr>
+nmap <silent> <C-Y> @='4<C-V><C-Y>'<cr>
+
 " ø is alt-o
 " pad line(s) with blank lines
 nmap <silent> ø @='moO<C-V><esc>jo<C-V><esc>`o:delmark o<C-V><C-M>'<cr>
