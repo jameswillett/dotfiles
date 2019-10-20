@@ -5,9 +5,10 @@ const trunc = (s, l) => s.length - 3 < l ? s : s.substring(0, l) + '...';
 const pad = n => n >= 10 ? String(n) : `0${n}`;
 
 const timeString = (rawSeconds) => {
-  const seconds = rawSeconds % 60;
-  const minutes = Math.floor((rawSeconds % 3600) / 60);
-  const hours = Math.floor(rawSeconds / 3600);
+  const flooredSeconds = Math.floor(rawSeconds);
+  const seconds = flooredSeconds % 60;
+  const minutes = Math.floor((flooredSeconds % 3600) / 60);
+  const hours = Math.floor(flooredSeconds / 3600);
 
   const finalHours = hours ? `${hours}:` : '';
   const finalMinutes = hours ? pad(minutes) : `${minutes}`;
@@ -28,18 +29,35 @@ const v = (num) => {
   return '█';
 };
 
+const getRunningApp = (data) => {
+  const { spotify, itunes } = JSON.parse(data);
+  const app = (() => {
+    if (spotify.running && itunes.running) {
+      return itunes.state === 'playing' ? itunes : spotify;
+    } else if (spotify.running) {
+      return spotify;
+    } else if (itunes.running) {
+      return itunes;
+    }
+  })();
+
+  const fg = 232;
+  const bg = app.app === 'spotify' ? 10 : 213;
+  return { app, fg, bg };
+}
+
 const p = (fn) => new Promise((resolve, reject) =>
   fn((e, d) => e ? reject(e) : resolve(d)));
 
 applescript.execFile('/Users/james/configs/scripts/spotify', (err, d) => {
   if (err) return;
-  const data = JSON.parse(d);
-  if (!data.running) return;
+  const { app, fg, bg } = getRunningApp(d);
+  if (!app || !app.running) return;
   const {
     shuffling, repeating, state,
     position, duration,
     artist, title, volume,
-  } = JSON.parse(d)
+  } = app;
 
   const r = repeating ? ' ⟳' : '';
   const s = state === 'playing' ? '►' : '✘';
@@ -47,7 +65,7 @@ applescript.execFile('/Users/james/configs/scripts/spotify', (err, d) => {
   const playStates = `[ ${s}${shuf}${r} ]`;
 
   const curr = timeString(position);
-  const tot = timeString(Math.floor(duration));
+  const tot = timeString(duration);
   const times = `[${curr} - ${tot}]`;
 
   const string = `${playStates} ${artist} - ${title} ${times}`;
@@ -65,5 +83,5 @@ applescript.execFile('/Users/james/configs/scripts/spotify', (err, d) => {
     v(volume)
   }`;
 
-  console.log(`#[fg=colour10,bg=colour240]#[fg=colour232,bg=colour10,bold] ${truncString} `);
+  console.log(`#[fg=colour${bg},bg=colour240]#[fg=colour${fg},bg=colour${bg},bold] ${truncString} `);
 });
