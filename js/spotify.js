@@ -18,7 +18,7 @@ const timeString = (rawSeconds) => {
 };
 
 const v = (num) => {
-  if (num == 0) return ' ';
+  if (num == 0) return '✘';
   if (num < 15) return '▁';
   if (num < 30) return '▂';
   if (num < 45) return '▃';
