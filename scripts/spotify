@@ -49,5 +49,4 @@ end if
 
 set r to r & "}}"
 
-do shell script "echo " & r
 return r
