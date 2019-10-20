@@ -42,7 +42,7 @@ const getRunningApp = (data) => {
   })();
 
   const fg = 232;
-  const bg = app.app === 'spotify' ? 10 : 213;
+  const bg = app && app.app === 'spotify' ? 10 : 213;
   return { app, fg, bg };
 }
 
