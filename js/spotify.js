@@ -50,7 +50,7 @@ const p = (fn) => new Promise((resolve, reject) =>
       }${
         track.artist ? ' - ' : '' // do i care?
       }${
-        trunc(track.name, track.artist ? 40 : 55) // nope
+        trunc(track.name, track.artist ? 30 : 45) // nope
       } ${
         times // sorry
       }`;
