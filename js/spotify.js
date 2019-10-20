@@ -61,7 +61,7 @@ applescript.execFile('/Users/james/configs/scripts/spotify', (err, d) => {
     trunc(title, artist ? 30 : 45) // nope
   } ${
     times // sorry
-  } ${
+  } #[fg=colour9]${
     v(volume)
   }`;
 
