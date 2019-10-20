@@ -23,8 +23,7 @@ const v = (num) => {
   if (num < 45) return '▃';
   if (num < 60) return '▄';
   if (num < 75) return '▅';
-  if (num < 88)
-    return '▆';
+  if (num < 88) return '▆';
   if (num < 100) return '▇';
   return '█';
 };
