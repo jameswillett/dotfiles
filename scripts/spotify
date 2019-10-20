@@ -1,0 +1,27 @@
+on escape_quotes(string_to_escape)
+  set AppleScript's text item delimiters to the "\""
+  set the item_list to every text item of string_to_escape
+  set AppleScript's text item delimiters to the "\\\""
+  set string_to_escape to the item_list as string
+  set AppleScript's text item delimiters to ""
+  return string_to_escape
+end escape_quotes
+
+if application "Spotify" is running then
+  tell application "Spotify"
+    set r to "{"
+    set r to r & "\"running\": " & running
+    set r to r & ",\"shuffling\": " & shuffling
+    set r to r & ",\"repeating\": " & repeating
+    set r to r & ",\"position\": " & (player position as integer)
+    set r to r & ",\"volume\": " & (sound volume as integer)
+    set r to r & ",\"duration\": " & (current track's duration / 1000 as integer)
+    set r to r & ",\"state\": \"" & player state & "\""
+    set r to r & ",\"artist\": \"" & my escape_quotes(current track's artist) & "\""
+    set r to r & ",\"title\": \"" & my escape_quotes(current track's name) & "\""
+    set r to r & "}"
+    return r
+  end tell
+else
+  return "{\"running\": false}"
+end if
