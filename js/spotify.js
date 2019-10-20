@@ -2,7 +2,7 @@ const applescript = require('applescript');
 
 const trunc = (s, l) => s.length - 3 < l ? s : s.substring(0, l) + '...';
 
-const pad = n => n > 10 ? String(n) : `0${n}`;
+const pad = n => n >= 10 ? String(n) : `0${n}`;
 
 const timeString = (rawSeconds) => {
   const seconds = rawSeconds % 60;
