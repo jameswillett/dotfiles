@@ -9,6 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "spotify-node-applescript": "^1.1.1"
+    "applescript": "^1.0.0"
   }
 }
