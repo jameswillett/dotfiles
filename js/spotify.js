@@ -17,13 +17,16 @@ const timeString = (rawSeconds) => {
 };
 
 const v = (num) => {
-  if (num == 0) return '';
-  if (num < 16) return '⠄';
-  if (num < 32) return '⠆';
-  if (num < 48) return '⠇';
-  if (num < 64) return '⠏';
-  if (num < 80) return '⠟';
-  return '⠿';
+  if (num == 0) return ' ';
+  if (num < 15) return '▁';
+  if (num < 30) return '▂';
+  if (num < 45) return '▃';
+  if (num < 60) return '▄';
+  if (num < 75) return '▅';
+  if (num < 88)
+    return '▆';
+  if (num < 100) return '▇';
+  return '█';
 };
 
 const p = (fn) => new Promise((resolve, reject) =>
