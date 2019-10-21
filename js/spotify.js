@@ -5,7 +5,7 @@ const trunc = (s, l) => s.length - 3 < l ? s : s.substring(0, l) + '...';
 const pad = n => n >= 10 ? String(n) : `0${n}`;
 
 const timeString = (rawSeconds) => {
-  const flooredSeconds = Math.floor(rawSeconds);
+  const flooredSeconds = Math.round(rawSeconds);
   const seconds = flooredSeconds % 60;
   const minutes = Math.floor((flooredSeconds % 3600) / 60);
   const hours = Math.floor(flooredSeconds / 3600);
