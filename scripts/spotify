@@ -47,6 +47,9 @@ else
   set r to r & ",\"running\": false"
 end if
 
+set r to r & "}, \"system\": {"
+set r to r & "\"volume\" : " & output volume of (get volume settings)
+set r to r & ",\"muted\": " & output muted of (get volume settings)
 set r to r & "}}"
 
 return r

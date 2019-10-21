@@ -17,8 +17,8 @@ const timeString = (rawSeconds) => {
   return `${finalHours}${finalMinutes}:${finalSeconds}`;
 };
 
-const v = (num) => {
-  if (num == 0) return '✘';
+const v = (num, muted = false) => {
+  if (num == 0 || muted) return '✘';
   if (num < 15) return '▁';
   if (num < 30) return '▂';
   if (num < 45) return '▃';
@@ -30,7 +30,7 @@ const v = (num) => {
 };
 
 const getRunningApp = (data) => {
-  const { spotify, itunes } = JSON.parse(data);
+  const { spotify, itunes, system } = JSON.parse(data);
   const app = (() => {
     if (spotify.running && itunes.running) {
       return itunes.state === 'playing' ? itunes : spotify;
@@ -43,7 +43,7 @@ const getRunningApp = (data) => {
 
   const fg = 232;
   const bg = app && app.app === 'spotify' ? 10 : 213;
-  return { app, fg, bg };
+  return { app, fg, bg, system };
 }
 
 const p = (fn) => new Promise((resolve, reject) =>
@@ -51,7 +51,7 @@ const p = (fn) => new Promise((resolve, reject) =>
 
 applescript.execFile('/Users/james/configs/scripts/spotify', (err, d) => {
   if (err) return;
-  const { app, fg, bg } = getRunningApp(d);
+  const { app, fg, bg, system } = getRunningApp(d);
   if (!app || !app.running) return;
   const {
     shuffling, repeating, state,
@@ -81,6 +81,8 @@ applescript.execFile('/Users/james/configs/scripts/spotify', (err, d) => {
     times // sorry
   } #[fg=colour9]${
     v(volume)
+  }${
+    v(system.volume, system.muted)
   }`;
 
   console.log(`#[fg=colour${bg},bg=colour240]#[fg=colour${fg},bg=colour${bg},bold] ${truncString} `);
