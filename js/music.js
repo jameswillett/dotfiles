@@ -51,8 +51,11 @@ const p = (fn) => new Promise((resolve, reject) =>
 
 applescript.execFile('/Users/james/configs/scripts/spotify', (err, d) => {
   if (err) return;
+  const lastBg = process.argv[2];
   const { app, fg, bg, system } = getRunningApp(d);
-  if (!app || !app.running) return;
+  const sysVol = (background) =>
+    `#[fg=colour90,bg=colour${background},bold]#[fg=colour12,bg=colour90] 🔈 ${v(system.volume, system.muted)} `;
+  if (!app || !app.running) return console.log(sysVol(lastBg));
   const {
     shuffling, repeating, state,
     position, duration,
@@ -81,9 +84,9 @@ applescript.execFile('/Users/james/configs/scripts/spotify', (err, d) => {
     times // sorry
   } #[fg=colour9]${
     v(volume)
-  }${
-    v(system.volume, system.muted)
+  } ${
+    sysVol(bg)
   }`;
 
-  console.log(`#[fg=colour${bg},bg=colour240]#[fg=colour${fg},bg=colour${bg},bold] ${truncString} `);
+  console.log(`#[fg=colour${bg},bg=colour${lastBg}]#[fg=colour${fg},bg=colour${bg},bold] ${truncString}`);
 });
