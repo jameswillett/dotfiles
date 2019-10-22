@@ -54,7 +54,7 @@ applescript.execFile('/Users/james/configs/scripts/spotify', (err, d) => {
   const lastBg = process.argv[2];
   const { app, fg, bg, system } = getRunningApp(d);
   const sysVol = (background) =>
-    `#[fg=colour90,bg=colour${background},bold]#[fg=colour12,bg=colour90] 🔈 ${v(system.volume, system.muted)} `;
+    `#[fg=colour39,bg=colour${background},bold]#[fg=colour233,bg=colour39] 🔈 ${v(system.volume, system.muted)} `;
   if (!app || !app.running) return console.log(sysVol(lastBg));
   const {
     shuffling, repeating, state,
