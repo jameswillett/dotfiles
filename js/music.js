@@ -32,11 +32,11 @@ const v = (num, muted = false) => {
 const getRunningApp = (data) => {
   const { spotify, itunes, system } = JSON.parse(data);
   const app = (() => {
-    if (spotify.running && itunes.running) {
+    if (spotify && spotify.running && itunes && itunes.running) {
       return itunes.state === 'playing' ? itunes : spotify;
-    } else if (spotify.running) {
+    } else if (spotify && spotify.running) {
       return spotify;
-    } else if (itunes.running) {
+    } else if (itunes && itunes.running) {
       return itunes;
     }
   })();
@@ -54,7 +54,7 @@ applescript.execFile('/Users/james/configs/scripts/spotify', (err, d) => {
   const lastBg = process.argv[2];
   const { app, fg, bg, system } = getRunningApp(d);
   const sysVol = (background) =>
-    `#[fg=colour39,bg=colour${background},bold]#[fg=colour233,bg=colour39] 🔈 ${v(system.volume, system.muted)} `;
+    `#[fg=colour240,bg=colour${background},bold]#[fg=colour39,bg=colour240] 🔈 ${v(system.volume, system.muted)} `;
   if (!app || !app.running) return console.log(sysVol(lastBg));
   const {
     shuffling, repeating, state,
