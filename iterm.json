@@ -89,7 +89,7 @@
   "Sync Title" : false,
   "Prompt Before Closing 2" : false,
   "BM Growl" : true,
-  "Mouse Reporting" : false,
+  "Mouse Reporting" : true,
   "Command" : "",
   "Description" : "Default",
   "Smart Cursor Color" : true,
@@ -321,7 +321,7 @@
   "Visual Bell" : true,
   "Flashing Bell" : false,
   "Silence Bell" : false,
-  "Mouse Reporting allow mouse wheel" : false,
+  "Mouse Reporting allow mouse wheel" : true,
   "Ansi 14 Color" : {
     "Red Component" : 0,
     "Color Space" : "sRGB",
