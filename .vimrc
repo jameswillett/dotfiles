@@ -70,7 +70,7 @@ filetype plugin indent on    " required
 " Put your non-Plugin stuff after this line
 
 """
-" nerdtree 
+" nerdtree
 """
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
@@ -495,7 +495,7 @@ function! <SID>BufcloseCloseIt()
     bnext
   endif
 
-  if bufnr("%") == l:currentBufNum    
+  if bufnr("%") == l:currentBufNum
     new
   endif
 
