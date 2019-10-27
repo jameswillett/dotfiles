@@ -14,7 +14,6 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'SirVer/ultisnips'
 Plugin 'Valloric/MatchTagAlways'
-Plugin 'Valloric/YouCompleteMe'
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'airblade/vim-gitgutter'

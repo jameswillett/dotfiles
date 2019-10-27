@@ -49,8 +49,8 @@ const getRunningApp = (data) => {
 const p = (fn) => new Promise((resolve, reject) =>
   fn((e, d) => e ? reject(e) : resolve(d)));
 
-applescript.execFile('configs/scripts/music', (err, d) => {
-  if (err) return;
+applescript.execFile('/Users/james/configs/scripts/music', (err, d) => {
+  if (err) return console.log(err);
   const lastBg = process.argv[2];
   const { app, fg, bg, system } = getRunningApp(d);
   const sysVol = (background) =>
