@@ -2,7 +2,7 @@ declare -a greetings=("what is good my dude" "let us get this bread" "t(._.t)")
 len=${#greetings[@]}
 rand=$[(RANDOM)%$len]
 # echo -e "\e[1;5;31m${greetings[rand+1]}"
-export ZSH=/Users/james/.oh-my-zsh
+export ZSH="$HOME/.oh-my-zsh"
 plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
