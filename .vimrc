@@ -53,6 +53,7 @@ Plugin 'tidalcycles/vim-tidal'
 Plugin 'tpope/vim-dispatch'
 Plugin 'inkarkat/vim-SyntaxRange'
 Plugin 'Yggdroot/LeaderF'
+Plugin 'supercollider/scvim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -215,6 +216,13 @@ highlight DWRELocation guibg=#666666
 
 autocmd FileType tidal inoremap <C-e> <C-e><esc>
 
+"""
+" scvim
+"""
+
+au BufEnter,BufWinEnter,BufNewFile,BufRead *.sc,*.scd set filetype=supercollider
+au Filetype supercollider packadd scvim
+let g:scFlash = 1
 """
 " the rest of it
 """
