@@ -387,6 +387,8 @@ map <silent> <leader>ev ,tn:e ~/configs/.vimrc<cr>
 " open vimrc in new split
 map <silent> <leader>sv :split ~/configs/.vimrc<cr>
 
+map <silent> <leader>sy :syntax sync minlines=20<cr>
+
 let g:lasttab = 1
 nmap <Leader>tl :exe "tabn ".g:lasttab<CR>
 au TabLeave * let g:lasttab = tabpagenr()
