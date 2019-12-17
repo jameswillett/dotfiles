@@ -53,6 +53,7 @@ Plugin 'tpope/vim-dispatch'
 Plugin 'inkarkat/vim-SyntaxRange'
 Plugin 'Yggdroot/LeaderF'
 Plugin 'supercollider/scvim'
+Plugin 'ervandew/supertab'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -238,6 +239,9 @@ set wrap
 set wrapmargin=8
 
 set complete+=kspell
+
+" https://www.gutenberg.org/files/3202/files/mthesaur.txt
+set thesaurus+=~/.vim/thesaurus/mthesaur.txt
 
 " spell check off by default
 autocmd VimEnter :set nospell
