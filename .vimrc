@@ -240,11 +240,11 @@ set wrapmargin=8
 
 set complete+=kspell
 
-" https://www.gutenberg.org/files/3202/files/mthesaur.txt
+autocmd VimEnter * :silent !bash ~/configs/scripts/thesaurus
 set thesaurus+=~/.vim/thesaurus/mthesaur.txt
 
 " spell check off by default
-autocmd VimEnter :set nospell
+autocmd VimEnter * :set nospell
 nnoremap <silent> <leader>sp :set spell!<cr>
 
 " Enable 256 colors palette in Gnome Terminal
