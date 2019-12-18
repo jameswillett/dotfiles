@@ -55,6 +55,8 @@ Plugin 'Yggdroot/LeaderF'
 Plugin 'supercollider/scvim'
 Plugin 'ervandew/supertab'
 
+source ./scripts/BufOnly.vim
+
 call vundle#end()            " required
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
@@ -245,6 +247,7 @@ set thesaurus+=~/.vim/thesaurus/mthesaur.txt
 
 nmap Q :echo "i bet you didnt want to go to EX mode... hit alt-Q to actually enter EX mode"<cr>
 nnoremap Œ Q
+nnoremap q: q::echo "its cuz you typed q: ya dummy"<cr>
 
 " spell check off by default
 autocmd VimEnter * :set nospell
