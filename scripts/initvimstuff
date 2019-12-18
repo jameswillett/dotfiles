@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+THESAURUSDIR=~/.vim/thesaurus
+THESAURUS=~/.vim/thesaurus/mthesaur.txt
+
+[ ! -d $THESAURUSDIR ] && mkdir $THESAURUSDIR;
+if [ ! -f $THESAURUS ]; then
+  echo "saving thesaurus..."
+  curl https://www.gutenberg.org/files/3202/files/mthesaur.txt -o $THESAURUS
+fi
+
+BACKUPDIR=~/.vim/backupfiles
+SWAPDIR=~/.vim/swapfiles
+UNDODIR=~/.vim/undodir
+
+[ ! -d $BACKUPDIR ] && mkdir $BACKUPDIR
+[ ! -d $SWAPDIR ] && mkdir $SWAPDIR
+[ ! -d $UNDODIR ] && mkdir $UNDODIR
