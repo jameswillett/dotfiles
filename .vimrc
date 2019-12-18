@@ -242,7 +242,7 @@ set wrapmargin=8
 
 set complete+=kspell
 
-autocmd VimEnter * :Start! bash ~/configs/scripts/initvimstuff
+autocmd VimEnter * :Start! sh ~/configs/scripts/initvimstuff
 set thesaurus+=~/.vim/thesaurus/mthesaur.txt
 
 nmap Q :echo "i bet you didnt want to go to EX mode... hit alt-Q to actually enter EX mode"<cr>

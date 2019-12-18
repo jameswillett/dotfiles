@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 THESAURUSDIR=~/.vim/thesaurus
 THESAURUS=~/.vim/thesaurus/mthesaur.txt
