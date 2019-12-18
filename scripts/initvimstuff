@@ -13,6 +13,20 @@ BACKUPDIR=~/.vim/backupfiles
 SWAPDIR=~/.vim/swapfiles
 UNDODIR=~/.vim/undodir
 
-[ ! -d $BACKUPDIR ] && mkdir $BACKUPDIR
-[ ! -d $SWAPDIR ] && mkdir $SWAPDIR
-[ ! -d $UNDODIR ] && mkdir $UNDODIR
+if [ ! -d $BACKUPDIR ]; then
+  echo -n "making backup dir..."
+  mkdir $BACKUPDIR
+  echo "done!"
+fi
+
+if [ ! -d $SWAPDIR ]; then
+  echo -n "making swap dir..."
+  mkdir $SWAPDIR
+  echo "done!"
+fi
+
+if [ ! -d $UNDODIR ]; then
+  echo -n "making undo dir..."
+  mkdir $UNDODIR
+  echo "done!"
+fi

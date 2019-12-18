@@ -55,7 +55,7 @@ Plugin 'Yggdroot/LeaderF'
 Plugin 'supercollider/scvim'
 Plugin 'ervandew/supertab'
 
-source ./scripts/BufOnly.vim
+source ~/configs/scripts/BufOnly.vim
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -242,7 +242,7 @@ set wrapmargin=8
 
 set complete+=kspell
 
-autocmd VimEnter * :Start! sh ~/configs/scripts/initvimstuff
+autocmd VimEnter * :Dispatch bash ~/configs/scripts/initvimstuff
 set thesaurus+=~/.vim/thesaurus/mthesaur.txt
 
 nmap Q :echo "i bet you didnt want to go to EX mode... hit alt-Q to actually enter EX mode"<cr>
