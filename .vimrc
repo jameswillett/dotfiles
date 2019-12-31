@@ -37,7 +37,7 @@ Plugin 'ruanyl/vim-gh-line'
 Plugin 'scrooloose/nerdtree'
 Plugin 'tmux-plugins/vim-tmux-focus-events'
 Plugin 'tpope/vim-abolish'
-" Plugin 'tpope/vim-airline'
+Plugin 'tpope/vim-airline'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-repeat'
@@ -54,7 +54,6 @@ Plugin 'inkarkat/vim-SyntaxRange'
 Plugin 'Yggdroot/LeaderF'
 Plugin 'supercollider/scvim'
 Plugin 'ervandew/supertab'
-Plugin 'python-mode/python-mode'
 
 source ~/configs/scripts/BufOnly.vim
 
@@ -117,6 +116,10 @@ let g:airline#extensions#ale#enabled = 1
 let g:ale_sign_offset = 1000000
 let g:ale_sign_warning = '🚩'
 let g:ale_statusline_format = ['💣 %d', '🚩 %d', '']
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\   'python': ['flake8', 'pylint'],
+\}
 
 """
 " airline
