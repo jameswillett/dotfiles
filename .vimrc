@@ -54,6 +54,7 @@ Plugin 'inkarkat/vim-SyntaxRange'
 Plugin 'Yggdroot/LeaderF'
 Plugin 'supercollider/scvim'
 Plugin 'ervandew/supertab'
+Plugin 'python-mode/python-mode'
 
 source ~/configs/scripts/BufOnly.vim
 
