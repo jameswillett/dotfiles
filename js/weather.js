@@ -21,17 +21,6 @@ const getEmoji = (icon) => {
   return '';
 };
 
-const _getColor = temp => {
-  const fg = (() => {
-    if (temp >= 90) return 1;
-    if (temp > 75) return 3;
-    if (temp > 55) return 2;
-    if (temp > 32) return 14;
-    return 21;
-  })();
-  return `#[fg=colour${fg},bold]${temp}#[fg=colour255,nobold]`;
-}
-
 const getColor = temp => {
   let R = 15, G = 15, B = 15;
 
