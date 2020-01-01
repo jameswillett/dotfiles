@@ -3,7 +3,7 @@ const fs = require('fs');
 const { weather } = require('./configs');
 
 const width = process.argv[2];
-const lastWeather = `${process.env.HOME}/.lastweather`;
+const lastWeather = `${process.env.HOME}/lastweather.json`;
 
 const getEmoji = (icon) => {
   if (/01/.test(icon)) {
@@ -56,7 +56,7 @@ if (now.getSeconds() === 0) {
       const low = Math.floor(d.main.temp_min);
       const sunset = new Date(d.sys.sunset * 1000)
       const sunrise = new Date(d.sys.sunrise * 1000)
-      const parts = { icon, temp, high, low };
+      const parts = { icon, temp, high, low, sunset, sunrise };
       const string = makeString(parts);
       const cached = JSON.stringify(parts)
       fs.writeFileSync(lastWeather, cached, { encoding: 'utf8' });

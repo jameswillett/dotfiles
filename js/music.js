@@ -52,6 +52,7 @@ const p = (fn) => new Promise((resolve, reject) =>
 applescript.execFile(`${process.env.HOME}/configs/scripts/music`, (err, d) => {
   if (err) return console.log(err);
   const lastBg = process.argv[2];
+  const width = process.argv[3];
   const { app, fg, bg, system } = getRunningApp(d);
   const sysVol = (background) =>
     `#[fg=colour240,bg=colour${background},bold]#[fg=colour39,bg=colour240] 🔈 ${v(system.volume, system.muted)} `;
@@ -65,28 +66,33 @@ applescript.execFile(`${process.env.HOME}/configs/scripts/music`, (err, d) => {
   const r = repeating ? ' ⟳' : '';
   const s = state === 'playing' ? '►' : '✘';
   const shuf = shuffling ? ' ⤭' : '';
-  const playStates = `[ ${s}${shuf}${r} ]`;
+  const playStates = width > 200 ? `[ ${s}${shuf}${r} ]` : s;
 
   const curr = timeString(position);
   const tot = timeString(duration);
   const times = `[${curr} - ${tot}]`;
 
   const string = `${playStates} ${artist} - ${title} ${times}`;
+  const artistLen = width > 200 ? 17 : 10;
+  const songLen = width > 200 ? 30 : 15;
+  const podcastLen = width > 200 ? 45 : 20;
   const truncString = `${
     playStates // is this an ugly way to do this?
   } ${
-    trunc(artist, 17) // probably.
+    trunc(artist, artistLen) // probably.
   }${
     artist ? ' - ' : '' // do i care?
   }${
-    trunc(title, artist ? 30 : 45) // nope
+    trunc(title, artist ? songLen : podcastLen) // nope
   } ${
-    times // sorry
+    width > 200 ? times : '' // sorry
   } #[fg=colour9]${
     v(volume)
   } ${
     sysVol(bg)
   }`;
 
-  console.log(`#[fg=colour${bg},bg=colour${lastBg}]#[fg=colour${fg},bg=colour${bg},bold] ${truncString}`);
+  const minString = `${s} #[fg=colour9]${v(volume)} ${sysVol(bg)}`
+
+  console.log(`#[fg=colour${bg},bg=colour${lastBg}]#[fg=colour${fg},bg=colour${bg},bold] ${width > 140 ? truncString : minString}`);
 });
