@@ -29,10 +29,10 @@ const getColor = temp => {
     if (temp > 32) return 14;
     return 21;
   })();
-  return `#[fg=colour${fg}]${temp}#[fg=colour255]`;
+  return `#[fg=colour${fg},bold]${temp}#[fg=colour255,nobold]`;
 }
 const makeString = ({ icon, temp, high, low }) => {
-  let color = 238;
+  let color = 235;
   const main = `#[fg=colour${color}]#[bg=colour${color},fg=colour255] ${getEmoji(icon)}  ${getColor(temp)}℉`
   if (width < 200) return main;
   const extra = ` [ ↑${getColor(high)}℉ ↓${getColor(low)}℉ ]`

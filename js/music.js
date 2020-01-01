@@ -66,7 +66,7 @@ applescript.execFile(`${process.env.HOME}/configs/scripts/music`, (err, d) => {
   const r = repeating ? ' ⟳' : '';
   const s = state === 'playing' ? '►' : '✘';
   const shuf = shuffling ? ' ⤭' : '';
-  const playStates = width > 200 ? `[ ${s}${shuf}${r} ]` : s;
+  const playStates = width > 200 ? `[ #[bold]${s}${shuf}${r}#[nobold] ]` : s;
 
   const curr = timeString(position);
   const tot = timeString(duration);
@@ -78,9 +78,9 @@ applescript.execFile(`${process.env.HOME}/configs/scripts/music`, (err, d) => {
   const podcastLen = width > 200 ? 45 : 20;
   const truncString = `${
     playStates // is this an ugly way to do this?
-  } ${
+  } #[bold]${
     trunc(artist, artistLen) // probably.
-  }${
+  }#[nobold]${
     artist ? ' - ' : '' // do i care?
   }${
     trunc(title, artist ? songLen : podcastLen) // nope
@@ -92,7 +92,7 @@ applescript.execFile(`${process.env.HOME}/configs/scripts/music`, (err, d) => {
     sysVol(bg)
   }`;
 
-  const minString = `${s} #[fg=colour9]${v(volume)} ${sysVol(bg)}`
+  const minString = `#[bold]${s} #[fg=colour9]${v(volume)} ${sysVol(bg)}#[nobold]`
 
-  console.log(`#[fg=colour${bg},bg=colour${lastBg}]#[fg=colour${fg},bg=colour${bg},bold] ${width > 140 ? truncString : minString}`);
+  console.log(`#[fg=colour${bg},bg=colour${lastBg}]#[fg=colour${fg},bg=colour${bg}] ${width > 140 ? truncString : minString}`);
 });
