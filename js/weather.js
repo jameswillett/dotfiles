@@ -21,7 +21,7 @@ const getEmoji = (icon) => {
   return '';
 };
 
-const getColor = temp => {
+const _getColor = temp => {
   const fg = (() => {
     if (temp >= 90) return 1;
     if (temp > 75) return 3;
@@ -31,9 +31,60 @@ const getColor = temp => {
   })();
   return `#[fg=colour${fg},bold]${temp}#[fg=colour255,nobold]`;
 }
+
+const getColor = temp => {
+  let R = 15, G = 15, B = 15;
+
+  if (temp >= 100) {
+    R = 15;
+    G = 0;
+    B = 0;
+  } else if (temp >= 85) {
+    R = 15;
+    G = 100 - temp;
+    B = 0;
+  } else if (temp >= 70) {
+    R = temp - 70;
+    G = 15;
+    B = 0;
+  } else if (temp >= 55) {
+    R = 0;
+    G = 15;
+    B = 70 - temp;
+  } else if (temp >= 40) {
+    R = 4;
+    G = temp - 40;
+    B = 15;
+  } else if (temp >= 25) {
+    R = 40 - temp;
+    G = 4
+    B = 15;
+  } else if (temp >= 10) {
+    R = 15;
+    G = 25 - temp;
+    B = 15;
+  }
+
+  const hex = `#${
+    R.toString(16)
+  }${
+    R.toString(16)
+  }${
+    G.toString(16)
+  }${
+    G.toString(16)
+  }${
+    B.toString(16)
+  }${
+    B.toString(16)
+  }`;
+
+  return `#[fg=${hex},bold]${temp}#[fg=colour255,nobold]`;
+}
+
 const makeString = ({ icon, temp, high, low }) => {
-  let color = 235;
-  const main = `#[fg=colour${color}]#[bg=colour${color},fg=colour255] ${getEmoji(icon)}  ${getColor(temp)}℉`
+  let color = '#000000';
+  const main = `#[fg=${color}]#[bg=${color},fg=colour255] ${getEmoji(icon)}  ${getColor(temp)}℉`
   if (width < 200) return main;
   const extra = ` [ ↑${getColor(high)}℉ ↓${getColor(low)}℉ ]`
   return main + extra;
