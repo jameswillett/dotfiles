@@ -65,19 +65,11 @@ const getColor = temp => {
     B = 15;
   }
 
-  const hex = `#${
-    R.toString(16)
-  }${
-    R.toString(16)
-  }${
-    G.toString(16)
-  }${
-    G.toString(16)
-  }${
-    B.toString(16)
-  }${
-    B.toString(16)
-  }`;
+  const hex = ['#',
+    (R + (16 * R)).toString(16),
+    (G + (16 * G)).toString(16),
+    (B + (16 * B)).toString(16),
+  ].join('');
 
   return `#[fg=${hex},bold]${temp}#[fg=colour255,nobold]`;
 }
