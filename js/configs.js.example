@@ -1,0 +1,3 @@
+module.exports = {
+  weather: 'https://openweathermap.org/ api key',
+};
