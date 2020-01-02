@@ -62,13 +62,13 @@ const getColor = temp => {
   return `#[fg=${hex},bold]${temp}#[fg=colour255,nobold]`;
 }
 
-const makeString = ({ icon, code, temp, high, low, tHigh, tLow }) => {
+const makeString = ({ icon, code, temp, high, low, tCode, tHigh, tLow }) => {
   let color = '#000000';
   const main = `#[fg=${color}]#[bg=${color},fg=colour255] ${emojiDict[code] || '❓'}  ${getColor(temp)}℉`
   if (width < 200) return main;
-  const highLow = ` [${getColor(high)}℉/${getColor(low)}℉`
-  if (width < 220 ) return main + highLow + ']';
-  const tomorrow = ` ${getColor(tHigh)}℉/${getColor(tLow)}℉]`;
+  const highLow = ` [${getColor(high)}℉/${getColor(low)}℉]`
+  if (width < 220 ) return main + highLow;
+  const tomorrow = ` => [${emojiDict[tCode] ||  '❓'}  ${getColor(tHigh)}℉/${getColor(tLow)}℉]`;
   return main + highLow + tomorrow;
 }
 
@@ -78,15 +78,22 @@ if (now.getSeconds() === 0 || invokeImmediately) {
   getIpInfo()
     .then(({ postal, lat, lng }) => getYahooWeather(lat, lng))
     .then((d) => {
-      const code = d['current_observation'].condition.code;
+      const [ today, tomorrow ] = d.forecasts;
+      const code = today.code;
+      const weather = today.text;
       const temp = Math.floor(d['current_observation'].condition.temperature);
-      const high = Math.floor(d.forecasts[0].high);
-      const low = Math.floor(d.forecasts[0].low);
-      const tHigh = Math.floor(d.forecasts[1].high);
-      const tLow = Math.floor(d.forecasts[1].low);
+      const high = Math.floor(today.high);
+      const low = Math.floor(today.low);
+      const tHigh = Math.floor(tomorrow.high);
+      const tLow = Math.floor(tomorrow.low);
+      const tCode = tomorrow.code;
+      const tWeather = tomorrow.text;
       const sunset = d['current_observation'].astronomy.sunset;
       const sunrise = d['current_observation'].astronomy.sunrise;
-      const parts = { code, temp, high, low, sunset, sunrise, tHigh, tLow };
+      const parts = {
+        code, weather, temp, high, low, sunset, sunrise,
+        tCode, tWeather, tHigh, tLow,
+      };
       const string = makeString(parts);
       const cached = JSON.stringify({...parts, timestamp: new Date()});
       fs.writeFileSync(lastWeather, cached, { encoding: 'utf8' });
