@@ -20,6 +20,8 @@ const emojiDict = {
   47: '⚡️☔️',
 };
 
+const getEmoji = code => emojiDict[code] || '❓';
+
 const getColor = temp => {
   let R = 15, G = 15, B = 15;
 
@@ -62,13 +64,13 @@ const getColor = temp => {
   return `#[fg=${hex},bold]${temp}#[fg=colour255,nobold]`;
 };
 
-const makeString = ({ code, temp, high, low, tCode, tHigh, tLow }) => {
+const makeString = ({ code, laterCode, temp, high, low, tCode, tHigh, tLow }) => {
   const c = '#000000';
-  const main = `#[fg=${c}]#[bg=${c},fg=colour255] ${emojiDict[code] || '❓'}  ${getColor(temp)}℉`;
+  const main = `#[fg=${c}]#[bg=${c},fg=colour255] ${getEmoji(code)}  ${getColor(temp)}℉`;
   if (width < 200) return main;
-  const highLow = ` [${getColor(high)}℉/${getColor(low)}℉]`;
+  const highLow = ` [${getEmoji(laterCode)}  ${getColor(high)}℉/${getColor(low)}℉]`;
   if (width < 220 ) return main + highLow;
-  const tomorrow = ` => [${emojiDict[tCode] ||  '❓'}  ${getColor(tHigh)}℉/${getColor(tLow)}℉]`;
+  const tomorrow = ` => [${getEmoji(tCode)}  ${getColor(tHigh)}℉/${getColor(tLow)}℉]`;
   return main + highLow + tomorrow;
 };
 
@@ -79,7 +81,8 @@ if ((now.getMinutes() % 3 === 0 && now.getSeconds() === 0) || invokeImmediately)
     .then(({ /* postal, */ lat, lng }) => getYahooWeather(lat, lng))
     .then((d) => {
       const [ today, tomorrow ] = d.forecasts;
-      const code = today.code;
+      const code = d['current_observation'].condition.code;
+      const laterCode = today.code;
       const weather = today.text;
       const temp = Math.floor(d['current_observation'].condition.temperature);
       const high = Math.floor(today.high);
@@ -91,7 +94,7 @@ if ((now.getMinutes() % 3 === 0 && now.getSeconds() === 0) || invokeImmediately)
       const sunset = d['current_observation'].astronomy.sunset;
       const sunrise = d['current_observation'].astronomy.sunrise;
       const parts = {
-        code, weather, temp, high, low, sunset, sunrise,
+        code, weather, temp, high, low, laterCode, sunset, sunrise,
         tCode, tWeather, tHigh, tLow,
       };
       const string = makeString(parts);
