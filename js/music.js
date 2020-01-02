@@ -1,6 +1,6 @@
 const applescript = require('applescript');
 
-const trunc = (s, l) => s.length - 3 < l ? s : s.substring(0, l) + '...';
+const trunc = (s, l) => Math.ceil(s.length) - 3 < l ? s : s.substring(0, l) + '...';
 
 const pad = n => n >= 10 ? String(n) : `0${n}`;
 
@@ -73,9 +73,9 @@ applescript.execFile(`${process.env.HOME}/configs/scripts/music`, (err, d) => {
   const times = `[${curr} - ${tot}]`;
 
   const string = `${playStates} ${artist} - ${title} ${times}`;
-  const artistLen = width > 200 ? 17 : 10;
-  const songLen = width > 200 ? 30 : 15;
-  const podcastLen = width > 200 ? 45 : 20;
+  const artistLen = width / 10;
+  const songLen = width / 10;
+  const podcastLen = width / 5;
   const truncString = `${
     playStates // is this an ugly way to do this?
   } #[bold]${
