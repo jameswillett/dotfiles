@@ -3,6 +3,8 @@ const fs = require('fs');
 const { getIpInfo, getYahooWeather } = require('./apiStuff');
 
 const width = process.argv[2];
+const invokeImmediately = process.argv[3];
+
 const lastWeather = `${process.env.HOME}/lastweather.json`;
 
 const emojiDict = {
@@ -72,7 +74,7 @@ const makeString = ({ icon, code, temp, high, low, tHigh, tLow }) => {
 
 const now = new Date();
 
-if (now.getSeconds() === 0) {
+if (now.getSeconds() === 0 || invokeImmediately) {
   getIpInfo()
     .then(({ postal, lat, lng }) => getYahooWeather(lat, lng))
     .then((d) => {
@@ -86,7 +88,7 @@ if (now.getSeconds() === 0) {
       const sunrise = d['current_observation'].astronomy.sunrise;
       const parts = { code, temp, high, low, sunset, sunrise, tHigh, tLow };
       const string = makeString(parts);
-      const cached = JSON.stringify(parts)
+      const cached = JSON.stringify({...parts, timestamp: new Date()});
       fs.writeFileSync(lastWeather, cached, { encoding: 'utf8' });
       console.log(string);
     }).catch((e) => {console.log(e); console.log('');})
