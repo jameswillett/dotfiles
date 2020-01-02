@@ -95,7 +95,13 @@ if ((now.getMinutes() % 3 === 0 && now.getSeconds() === 0) || invokeImmediately)
         tCode, tWeather, tHigh, tLow,
       };
       const string = makeString(parts);
-      const cached = JSON.stringify({...parts, timestamp: new Date()});
+      const cached = JSON.stringify({
+        ...parts,
+        timestamp: new Date(),
+        timezone: d.location.timezone_id,
+        lat: d.location.lat,
+        lng: d.location.long,
+      }, null, '  ');
       fs.writeFileSync(lastWeather, cached, { encoding: 'utf8' });
       console.log(string);
     }).catch((e) => {
@@ -106,6 +112,8 @@ if ((now.getMinutes() % 3 === 0 && now.getSeconds() === 0) || invokeImmediately)
   try {
     const raw = fs.readFileSync(lastWeather, { encoding: 'utf8' });
     console.log(makeString(JSON.parse(raw)));
-  } catch(e) { // eslint-disable-line no-empty
+  } catch(e) {
+    console.log(e);
+    console.log('');
   }
 }
