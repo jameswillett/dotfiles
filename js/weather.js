@@ -1,24 +1,58 @@
-const axios = require('axios');
 const fs = require('fs');
-const { weather } = require('./configs');
+
+const { getIpInfo, getYahooWeather } = require('./apiStuff');
 
 const width = process.argv[2];
 const lastWeather = `${process.env.HOME}/lastweather.json`;
 
-const getEmoji = (icon) => {
-  if (/01/.test(icon)) {
-    if (/d$/.test(icon)) return '🌞';
-    return '🌚';
-  }
-  if (/02/.test(icon)) return '🌤';
-  if (/03/.test(icon)) return '🌥';
-  if (/04/.test(icon)) return '☁️';
-  if (/09/.test(icon)) return '🌧';
-  if (/10/.test(icon)) return '🌦';
-  if (/11/.test(icon)) return '⚡️';
-  if (/13/.test(icon)) return '☃️';
-  if (/50/.test(icon)) return '🌫';
-  return '';
+const emojiDict = {
+  0: '🌪',
+  1: '🌀',
+  2: '🌀',
+  3: '⚡️❗️',
+  4: '⚡️',
+  5: '🌧❄️',
+  6: '🌧🧊',
+  7: '❄️🧊',
+  8: '🧊💦',
+  9: '💦',
+  10: '🧊🌧',
+  11: '☔️',
+  12: '🌧',
+  13: '🌨',
+  14: '🌨',
+  15: '🌬🌨',
+  16: '🌨',
+  17: '🧊',
+  18: '🧊',
+  19: '🟫',
+  20: '🌁',
+  21: '🌫',
+  22: '🔥',
+  23: '🌬',
+  24: '🌬',
+  25: '🥶',
+  26: '☁️',
+  27: '🌥',
+  28: '🌥',
+  29: '🌤',
+  30: '🌤',
+  31: '🌚',
+  32: '🌞',
+  33: '🌑',
+  34: '☀️',
+  35: '🌧/🧊',
+  36: '🥵',
+  37: '⚡️',
+  38: '⚡️',
+  39: '☔️',
+  40: '🌧❗️',
+  41: '❄️☔️',
+  42: '❄️❗️',
+  43: '❄️‼️',
+  45: '☔️',
+  46: '❄️☔️',
+  47: '⚡️☔️',
 };
 
 const getColor = temp => {
@@ -63,32 +97,31 @@ const getColor = temp => {
   return `#[fg=${hex},bold]${temp}#[fg=colour255,nobold]`;
 }
 
-const makeString = ({ icon, temp, high, low }) => {
+const makeString = ({ icon, code, temp, high, low, tHigh, tLow }) => {
   let color = '#000000';
-  const main = `#[fg=${color}]#[bg=${color},fg=colour255] ${getEmoji(icon)}  ${getColor(temp)}℉`
+  const main = `#[fg=${color}]#[bg=${color},fg=colour255] ${emojiDict[code] || '❓'}  ${getColor(temp)}℉`
   if (width < 200) return main;
-  const extra = ` [ ↑${getColor(high)}℉ ↓${getColor(low)}℉ ]`
-  return main + extra;
+  const highLow = ` [${getColor(high)}℉/${getColor(low)}℉`
+  if (width < 220 ) return main + highLow + ']';
+  const tomorrow = ` ${getColor(tHigh)}℉/${getColor(tLow)}℉]`;
+  return main + highLow + tomorrow;
 }
 
 const now = new Date();
 
 if (now.getSeconds() === 0) {
-  axios.get('https://ipinfo.io')
-    .then(r => r.data)
-    .then(({ postal }) =>
-      axios.get(
-        `http://api.openweathermap.org/data/2.5/weather?zip=${postal},us&appid=${weather}&units=imperial`
-      ))
-    .then(r => r.data)
+  getIpInfo()
+    .then(({ postal, lat, lng }) => getYahooWeather(lat, lng))
     .then((d) => {
-      const { icon } = d.weather[0];
-      const temp = Math.floor(d.main.temp);
-      const high = Math.floor(d.main.temp_max);
-      const low = Math.floor(d.main.temp_min);
-      const sunset = new Date(d.sys.sunset * 1000)
-      const sunrise = new Date(d.sys.sunrise * 1000)
-      const parts = { icon, temp, high, low, sunset, sunrise };
+      const code = d['current_observation'].condition.code;
+      const temp = Math.floor(d['current_observation'].condition.temperature);
+      const high = Math.floor(d.forecasts[0].high);
+      const low = Math.floor(d.forecasts[0].low);
+      const tHigh = Math.floor(d.forecasts[1].high);
+      const tLow = Math.floor(d.forecasts[1].low);
+      const sunset = d['current_observation'].astronomy.sunset;
+      const sunrise = d['current_observation'].astronomy.sunrise;
+      const parts = { code, temp, high, low, sunset, sunrise, tHigh, tLow };
       const string = makeString(parts);
       const cached = JSON.stringify(parts)
       fs.writeFileSync(lastWeather, cached, { encoding: 'utf8' });

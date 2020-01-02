@@ -1,3 +1,6 @@
 module.exports = {
-  weather: 'https://openweathermap.org/ api key',
+  weather: 'https://openweathermap.org/ api key', // deprecated
+  yahooAppId,
+  yahooClientId,
+  yahooClientSecret
 };
