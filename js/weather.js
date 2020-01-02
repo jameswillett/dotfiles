@@ -45,7 +45,7 @@ const getColor = temp => {
     B = 15;
   } else if (temp >= 25) {
     R = 40 - temp;
-    G = 4
+    G = 4;
     B = 15;
   } else if (temp >= 10) {
     R = 15;
@@ -60,23 +60,23 @@ const getColor = temp => {
   ].join('');
 
   return `#[fg=${hex},bold]${temp}#[fg=colour255,nobold]`;
-}
+};
 
-const makeString = ({ icon, code, temp, high, low, tCode, tHigh, tLow }) => {
-  let color = '#000000';
-  const main = `#[fg=${color}]#[bg=${color},fg=colour255] ${emojiDict[code] || '❓'}  ${getColor(temp)}℉`
+const makeString = ({ code, temp, high, low, tCode, tHigh, tLow }) => {
+  const c = '#000000';
+  const main = `#[fg=${c}]#[bg=${c},fg=colour255] ${emojiDict[code] || '❓'}  ${getColor(temp)}℉`;
   if (width < 200) return main;
-  const highLow = ` [${getColor(high)}℉/${getColor(low)}℉]`
+  const highLow = ` [${getColor(high)}℉/${getColor(low)}℉]`;
   if (width < 220 ) return main + highLow;
   const tomorrow = ` => [${emojiDict[tCode] ||  '❓'}  ${getColor(tHigh)}℉/${getColor(tLow)}℉]`;
   return main + highLow + tomorrow;
-}
+};
 
 const now = new Date();
 
-if (now.getSeconds() === 0 || invokeImmediately) {
+if ((now.getMinutes() % 3 === 0 && now.getSeconds() === 0) || invokeImmediately) {
   getIpInfo()
-    .then(({ postal, lat, lng }) => getYahooWeather(lat, lng))
+    .then(({ /* postal, */ lat, lng }) => getYahooWeather(lat, lng))
     .then((d) => {
       const [ today, tomorrow ] = d.forecasts;
       const code = today.code;
@@ -98,11 +98,14 @@ if (now.getSeconds() === 0 || invokeImmediately) {
       const cached = JSON.stringify({...parts, timestamp: new Date()});
       fs.writeFileSync(lastWeather, cached, { encoding: 'utf8' });
       console.log(string);
-    }).catch((e) => {console.log(e); console.log('');})
+    }).catch((e) => {
+      console.log(e);
+      console.log('');
+    });
 } else {
   try {
     const raw = fs.readFileSync(lastWeather, { encoding: 'utf8' });
     console.log(makeString(JSON.parse(raw)));
-  } catch(e) {
+  } catch(e) { // eslint-disable-line no-empty
   }
 }

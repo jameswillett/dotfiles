@@ -44,10 +44,7 @@ const getRunningApp = (data) => {
   const fg = 232;
   const bg = app && app.app === 'spotify' ? 10 : 213;
   return { app, fg, bg, system };
-}
-
-const p = (fn) => new Promise((resolve, reject) =>
-  fn((e, d) => e ? reject(e) : resolve(d)));
+};
 
 applescript.execFile(`${process.env.HOME}/configs/scripts/music`, (err, d) => {
   if (err) return console.log(err);
@@ -72,7 +69,6 @@ applescript.execFile(`${process.env.HOME}/configs/scripts/music`, (err, d) => {
   const tot = timeString(duration);
   const times = `[${curr} - ${tot}]`;
 
-  const string = `${playStates} ${artist} - ${title} ${times}`;
   const artistLen = width / 10;
   const songLen = width / 10;
   const podcastLen = width / 5;
@@ -92,7 +88,7 @@ applescript.execFile(`${process.env.HOME}/configs/scripts/music`, (err, d) => {
     sysVol(bg)
   }`;
 
-  const minString = `#[bold]${s} #[fg=colour9]${v(volume)} ${sysVol(bg)}#[nobold]`
+  const minString = `#[bold]${s} #[fg=colour9]${v(volume)} ${sysVol(bg)}#[nobold]`;
 
   console.log(`#[fg=colour${bg},bg=colour${lastBg}]#[fg=colour${fg},bg=colour${bg}] ${width > 140 ? truncString : minString}`);
 });

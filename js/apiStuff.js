@@ -4,7 +4,7 @@ const OAuth = require('oauth');
 const { yahooAppId, yahooClientId, yahooClientSecret } = require('./configs');
 
 const header = {
-  "X-Yahoo-App-Id": yahooAppId,
+  'X-Yahoo-App-Id': yahooAppId,
 };
 
 const weatherRequest = new OAuth.OAuth(
@@ -24,7 +24,7 @@ const getYahooWeather = (lat = '39.38319', lon = '-76.551872') => new Promise((r
     `https://weather-ydn-yql.media.yahoo.com/forecastrss?lat=${lat}&lon=${lon}&format=json`,
     null,
     null,
-    (err, data, result) => err
+    (err, data /*, result */) => err
       ? reject(err)
       : resolve(JSON.parse(data))
   );
@@ -32,4 +32,4 @@ const getYahooWeather = (lat = '39.38319', lon = '-76.551872') => new Promise((r
 
 const getIpInfo = () => axios.get('https://ipinfo.io').then(r => r.data);
 
-module.exports = { getIpInfo, getYahooWeather }
+module.exports = { getIpInfo, getYahooWeather };
