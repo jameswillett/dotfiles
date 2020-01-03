@@ -1,8 +1,8 @@
 const applescript = require('applescript');
 
-const trunc = (s, l) => Math.floor(s.length) - 3 < l ? s : s.substring(0, l) + '...';
+const trunc = (s, l) => Math.floor(s.length) - 4 < l ? s : s.substring(0, l) + '...';
 
-const pad = n => n >= 10 ? String(n) : `0${n}`;
+const pad = n => String(n).padStart(2, '0');
 
 const timeString = (rawSeconds) => {
   const flooredSeconds = Math.round(rawSeconds);
