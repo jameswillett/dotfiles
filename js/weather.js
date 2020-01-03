@@ -76,7 +76,7 @@ const makeString = ({ code, laterCode, temp, high, low, tCode, tHigh, tLow }) =>
 
 const now = new Date();
 
-if ((now.getMinutes() % 3 === 0 && now.getSeconds() === 0) || invokeImmediately) {
+if (now.getSeconds() === 0 || invokeImmediately) {
   getIpInfo()
     .then(({ /* postal, */ lat, lng }) => getYahooWeather(lat, lng))
     .then((d) => {
