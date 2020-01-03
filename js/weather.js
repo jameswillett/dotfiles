@@ -22,6 +22,8 @@ const emojiDict = {
 
 const getEmoji = code => emojiDict[code] || '❓';
 
+const toHex = n => (n + (16 * n)).toString(16).padStart(2, '0');
+
 const getColor = temp => {
   let R = 15, G = 15, B = 15;
 
@@ -55,11 +57,7 @@ const getColor = temp => {
     B = 15;
   }
 
-  const hex = ['#',
-    (R + (16 * R)).toString(16),
-    (G + (16 * G)).toString(16),
-    (B + (16 * B)).toString(16),
-  ].join('');
+  const hex = `#${toHex(R)}${toHex(G)}${toHex(B)}`;
 
   return `#[fg=${hex},bold]${temp}#[fg=colour255,nobold]`;
 };
