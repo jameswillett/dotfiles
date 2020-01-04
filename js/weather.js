@@ -24,7 +24,7 @@ const getEmoji = code => emojiDict[code] || '❓';
 
 const toHex = n => (n + (16 * n)).toString(16).padStart(2, '0');
 
-const getColor = temp => {
+const getColor = (temp, fg) => {
   let R = 15, G = 15, B = 15;
 
   if (temp >= 100) {
@@ -59,16 +59,17 @@ const getColor = temp => {
 
   const hex = `#${toHex(R)}${toHex(G)}${toHex(B)}`;
 
-  return `#[fg=${hex},bold]${temp}#[fg=colour255,nobold]`;
+  return `#[fg=${hex},bold]${temp}#[fg=${fg},nobold]`;
 };
 
 const makeString = ({ code, laterCode, temp, high, low, tCode, tHigh, tLow }) => {
   const c = '#000000';
-  const main = `#[fg=${c}]#[bg=${c},fg=colour255] ${getEmoji(code)}  ${getColor(temp)}℉`;
+  const fg = '#BBBBBB';
+  const main = `#[fg=${c}]#[bg=${c}] ${getEmoji(code)}  ${getColor(temp, fg)}℉`;
   if (width < 200) return main;
-  const highLow = ` [${getEmoji(laterCode)}  ${getColor(high)}℉/${getColor(low)}℉]`;
+  const highLow = ` [${getEmoji(laterCode)}  ${getColor(high, fg)}℉/${getColor(low, fg)}℉]`;
   if (width < 220 ) return main + highLow;
-  const tomorrow = ` => [${getEmoji(tCode)}  ${getColor(tHigh)}℉/${getColor(tLow)}℉]`;
+  const tomorrow = ` => [${getEmoji(tCode)}  ${getColor(tHigh, fg)}℉/${getColor(tLow, fg)}℉]`;
   return main + highLow + tomorrow;
 };
 
