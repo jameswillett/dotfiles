@@ -76,8 +76,13 @@ const now = new Date();
 
 if (now.getSeconds() === 0 || invokeImmediately) {
   getIpInfo()
-    .then(({ /* postal, */ lat, lng }) => getYahooWeather(lat, lng))
+    .then((ipInfo) => {
+      if (invokeImmediately) console.log(ipInfo);
+      const [lat, lng] = ipInfo.loc.split(',');
+      return getYahooWeather(lat, lng);
+    })
     .then((d) => {
+      if (invokeImmediately) console.log(d);
       const [ today, tomorrow ] = d.forecasts;
       const code = d['current_observation'].condition.code;
       const laterCode = today.code;
