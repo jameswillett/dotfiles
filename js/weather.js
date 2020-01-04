@@ -116,10 +116,12 @@ if (now.getSeconds() === 0 || invokeImmediately) {
       const string = makeString(parts);
       const cached = JSON.stringify({
         ...parts,
-        timestamp: new Date(),
-        timezone: d.location.timezone_id,
-        lat: d.location.lat,
-        lng: d.location.long,
+        locale: {
+          timestamp: new Date(),
+          timezone: d.location.timezone_id,
+          lat: d.location.lat,
+          lng: d.location.long,
+        },
       }, null, '  ');
       fs.writeFileSync(lastWeather, cached, { encoding: 'utf8' });
       if (invokeImmediately) console.log('parts: ', parts);
