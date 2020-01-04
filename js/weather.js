@@ -78,12 +78,12 @@ const now = new Date();
 if (now.getSeconds() === 0 || invokeImmediately) {
   getIpInfo()
     .then((ipInfo) => {
-      if (invokeImmediately) console.log(ipInfo);
+      if (invokeImmediately) console.log('ip info: ', ipInfo);
       const [lat, lng] = ipInfo.loc.split(',');
       return getYahooWeather(lat, lng);
     })
     .then((d) => {
-      if (invokeImmediately) console.log(d);
+      if (invokeImmediately) console.log('weather: ', d);
       const [ today, tomorrow ] = d.forecasts;
       const code = d['current_observation'].condition.code;
       const laterCode = today.code;
@@ -110,6 +110,7 @@ if (now.getSeconds() === 0 || invokeImmediately) {
         lng: d.location.long,
       }, null, '  ');
       fs.writeFileSync(lastWeather, cached, { encoding: 'utf8' });
+      if (invokeImmediately) console.log('parts: ', parts);
       console.log(string);
     }).catch((e) => {
       console.log(e);
