@@ -62,14 +62,18 @@ const getColor = (temp, fg) => {
   return `#[fg=${hex},bold]${temp}#[fg=${fg},nobold]`;
 };
 
-const makeString = ({ code, laterCode, temp, high, low, tCode, tHigh, tLow }) => {
-  const c = '#000000';
+const makeString = ({ now, today, tomorrow: t }) => {
+  const bg = (() => {
+    if (now.temp >= 80) return '#440000';
+    if (now.temp >= 50) return '#004400';
+    return '#000044';
+  })();
   const fg = '#BBBBBB';
-  const main = `#[fg=${c}]#[bg=${c}] ${getEmoji(code)}  ${getColor(temp, fg)}℉`;
+  const main = `#[fg=${bg}]#[bg=${bg}] ${getEmoji(now.code)}  ${getColor(now.temp, fg)}℉`;
   if (width < 200) return main;
-  const highLow = ` [${getEmoji(laterCode)}  ${getColor(high, fg)}℉/${getColor(low, fg)}℉]`;
+  const highLow = ` [${getEmoji(today.code)}  ${getColor(today.high, fg)}℉/${getColor(today.low, fg)}℉]`;
   if (width < 220 ) return main + highLow;
-  const tomorrow = ` => [${getEmoji(tCode)}  ${getColor(tHigh, fg)}℉/${getColor(tLow, fg)}℉]`;
+  const tomorrow = ` => [${getEmoji(t.code)}  ${getColor(t.high, fg)}℉/${getColor(t.low, fg)}℉]`;
   return main + highLow + tomorrow;
 };
 
@@ -86,8 +90,9 @@ if (now.getSeconds() === 0 || invokeImmediately) {
       if (invokeImmediately) console.log('weather: ', d);
       const [ today, tomorrow ] = d.forecasts;
       const code = d['current_observation'].condition.code;
+      const weather = d['current_observation'].condition.text;
       const laterCode = today.code;
-      const weather = today.text;
+      const laterWeather = today.text;
       const temp = Math.floor(d['current_observation'].condition.temperature);
       const high = Math.floor(today.high);
       const low = Math.floor(today.low);
@@ -98,8 +103,15 @@ if (now.getSeconds() === 0 || invokeImmediately) {
       const sunset = d['current_observation'].astronomy.sunset;
       const sunrise = d['current_observation'].astronomy.sunrise;
       const parts = {
-        code, weather, temp, high, low, laterCode, sunset, sunrise,
-        tCode, tWeather, tHigh, tLow,
+        now: {
+          code, weather, temp,
+        },
+        today: {
+          high, low, code: laterCode, weather: laterWeather, sunset, sunrise,
+        },
+        tomorrow: {
+          code: tCode, weather: tWeather, high: tHigh, low: tLow,
+        },
       };
       const string = makeString(parts);
       const cached = JSON.stringify({
