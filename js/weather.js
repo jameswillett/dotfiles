@@ -3,7 +3,7 @@ const fs = require('fs');
 const { getIpInfo, getYahooWeather } = require('./apiStuff');
 
 const width = process.argv[2];
-const invokeImmediately = process.argv[3];
+const invokeImmediately = process.argv[3] === 'true';
 
 const lastWeather = `${process.env.HOME}/lastweather.json`;
 
