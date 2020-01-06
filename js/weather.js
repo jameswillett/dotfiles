@@ -72,7 +72,7 @@ const makeString = ({ now, today, tomorrow: t }) => {
   if (width < 220 ) return main + highLow;
   const tomorrow = ` [${getEmoji(t.code)}  ${getColor(t.high, fg)}℉/${getColor(t.low, fg)}℉]`;
   if (width < 230) return main + highLow + ']' + tomorrow;
-  const atmosphere = ` #[fg=#ffffff,bold]${now.bar}"${now.rising ? '👆' :'👇'} ${now.humidity}%#[fg=${fg},nobold]]`;
+  const atmosphere = ` #[fg=#ffffff,bold]${now.bar}#[nobold]"☿${now.rising ? '👆' :'👇'} #[bold]${now.humidity}#[nobold]%#[fg=${fg}]]`;
   return main + highLow + atmosphere + tomorrow;
 };
 
