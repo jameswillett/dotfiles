@@ -68,12 +68,12 @@ const makeString = ({ now, today, tomorrow: t }) => {
   const fg = '#BBBBBB';
   const main = `#[fg=${bg}]#[bg=${bg}] ${getEmoji(now.code)}  ${getColor(now.temp, fg)}℉`;
   if (width < 200) return main;
-  const highLow = ` [${getEmoji(today.code)}  ${getColor(today.high, fg)}℉/${getColor(today.low, fg)}℉`;
+  const highLow = ` [${getEmoji(today.code)}  ${getColor(today.high, fg)}℉/${getColor(today.low, fg)}℉]`;
   if (width < 220 ) return main + highLow;
   const tomorrow = ` [${getEmoji(t.code)}  ${getColor(t.high, fg)}℉/${getColor(t.low, fg)}℉]`;
-  if (width < 230) return main + highLow + ']' + tomorrow;
-  const atmosphere = ` #[fg=#ffffff,bold]${now.bar}#[nobold]"☿${now.rising ? '👆' :'👇'} #[bold]${now.humidity}#[nobold]%#[fg=${fg}]]`;
-  return main + highLow + atmosphere + tomorrow;
+  if (width < 240) return main + highLow + tomorrow;
+  const atmosphere = ` #[fg=#ffffff,bold]${now.bar}#[nobold]"☿${now.rising ? '👆' :'👇'} #[bold]${now.humidity}#[nobold]%#[fg=${fg}]`;
+  return main + atmosphere + highLow + tomorrow;
 };
 
 const now = new Date();

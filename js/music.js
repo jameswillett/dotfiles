@@ -71,7 +71,7 @@ applescript.execFile(`${process.env.HOME}/configs/scripts/music`, (err, d) => {
 
   const artistLen = width / 12;
   const songLen = width / 15;
-  const podcastLen = width / 5;
+  const podcastLen = width / 8;
   const truncString = `${
     playStates // is this an ugly way to do this?
   } #[bold]${
