@@ -73,8 +73,10 @@ const makeString = ({ now, today, tomorrow: t }) => {
   if (width < 200) return main;
   const highLow = ` [${getEmoji(today.code)}  ${getColor(today.high, fg)}℉/${getColor(today.low, fg)}℉]`;
   if (width < 220 ) return main + highLow;
-  const tomorrow = ` => [${getEmoji(t.code)}  ${getColor(t.high, fg)}℉/${getColor(t.low, fg)}℉]`;
-  return main + highLow + tomorrow;
+  const tomorrow = ` [${getEmoji(t.code)}  ${getColor(t.high, fg)}℉/${getColor(t.low, fg)}℉]`;
+  if (width < 230) return main + highLow + tomorrow;
+  const atmosphere = ` [#[fg=#ffffff,bold]${now.bar}"${now.rising ? '👆' :'👇'} ${now.humidity}%#[fg=${fg},nobold]]`;
+  return main + highLow + tomorrow + atmosphere;
 };
 
 const now = new Date();
@@ -89,22 +91,26 @@ if (now.getSeconds() === 0 || invokeImmediately) {
     .then((d) => {
       if (invokeImmediately) console.log('weather: ', d);
       const [ today, tomorrow ] = d.forecasts;
-      const code = d['current_observation'].condition.code;
-      const weather = d['current_observation'].condition.text;
+      const now = d['current_observation'];
+      const code = now.condition.code;
+      const weather = now.condition.text;
       const laterCode = today.code;
       const laterWeather = today.text;
-      const temp = Math.floor(d['current_observation'].condition.temperature);
+      const temp = Math.floor(now.condition.temperature);
       const high = Math.floor(today.high);
       const low = Math.floor(today.low);
       const tHigh = Math.floor(tomorrow.high);
       const tLow = Math.floor(tomorrow.low);
       const tCode = tomorrow.code;
       const tWeather = tomorrow.text;
-      const sunset = d['current_observation'].astronomy.sunset;
-      const sunrise = d['current_observation'].astronomy.sunrise;
+      const sunset = now.astronomy.sunset;
+      const sunrise = now.astronomy.sunrise;
       const parts = {
         now: {
           code, weather, temp,
+          bar: now.atmosphere.pressure,
+          rising: now.atmosphere.rising,
+          humidity: now.atmosphere.humidity,
         },
         today: {
           high, low, code: laterCode, weather: laterWeather, sunset, sunrise,
