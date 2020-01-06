@@ -69,8 +69,8 @@ applescript.execFile(`${process.env.HOME}/configs/scripts/music`, (err, d) => {
   const tot = timeString(duration);
   const times = `[${curr} - ${tot}]`;
 
-  const artistLen = width / 10;
-  const songLen = width / 10;
+  const artistLen = width / 12;
+  const songLen = width / 15;
   const podcastLen = width / 5;
   const truncString = `${
     playStates // is this an ugly way to do this?

@@ -63,20 +63,16 @@ const getColor = (temp, fg) => {
 };
 
 const makeString = ({ now, today, tomorrow: t }) => {
-  const bg = (() => {
-    if (now.temp >= 80) return '#440000';
-    if (now.temp >= 50) return '#004400';
-    return '#000044';
-  })();
+  const bg = '#000000';
   const fg = '#BBBBBB';
   const main = `#[fg=${bg}]#[bg=${bg}] ${getEmoji(now.code)}  ${getColor(now.temp, fg)}℉`;
   if (width < 200) return main;
-  const highLow = ` [${getEmoji(today.code)}  ${getColor(today.high, fg)}℉/${getColor(today.low, fg)}℉]`;
+  const highLow = ` [${getEmoji(today.code)}  ${getColor(today.high, fg)}℉/${getColor(today.low, fg)}℉`;
   if (width < 220 ) return main + highLow;
   const tomorrow = ` [${getEmoji(t.code)}  ${getColor(t.high, fg)}℉/${getColor(t.low, fg)}℉]`;
-  if (width < 230) return main + highLow + tomorrow;
-  const atmosphere = ` [#[fg=#ffffff,bold]${now.bar}"${now.rising ? '👆' :'👇'} ${now.humidity}%#[fg=${fg},nobold]]`;
-  return main + highLow + tomorrow + atmosphere;
+  if (width < 230) return main + highLow + ']' + tomorrow;
+  const atmosphere = ` #[fg=#ffffff,bold]${now.bar}"${now.rising ? '👆' :'👇'} ${now.humidity}%#[fg=${fg},nobold]]`;
+  return main + highLow + atmosphere + tomorrow;
 };
 
 const now = new Date();
