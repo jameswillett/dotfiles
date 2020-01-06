@@ -92,31 +92,17 @@ if (now.getSeconds() === 0 || invokeImmediately) {
       if (invokeImmediately) console.log('weather: ', d);
       const [ today, tomorrow ] = d.forecasts;
       const now = d['current_observation'];
-      const code = now.condition.code;
-      const weather = now.condition.text;
-      const laterCode = today.code;
-      const laterWeather = today.text;
-      const temp = Math.floor(now.condition.temperature);
-      const high = Math.floor(today.high);
-      const low = Math.floor(today.low);
-      const tHigh = Math.floor(tomorrow.high);
-      const tLow = Math.floor(tomorrow.low);
-      const tCode = tomorrow.code;
-      const tWeather = tomorrow.text;
-      const sunset = now.astronomy.sunset;
-      const sunrise = now.astronomy.sunrise;
       const parts = {
         now: {
-          code, weather, temp,
-          bar: now.atmosphere.pressure,
-          rising: now.atmosphere.rising,
-          humidity: now.atmosphere.humidity,
+          code: now.condition.code, weather: now.condition.text, temp: now.condition.temperature,
+          bar: now.atmosphere.pressure, rising: now.atmosphere.rising, humidity: now.atmosphere.humidity,
         },
         today: {
-          high, low, code: laterCode, weather: laterWeather, sunset, sunrise,
+          high: today.high, low: today.low, code: today.code,
+          weather: today.text, sunset: now.astronomy.sunset, sunrise: now.astronomy.sunrise,
         },
         tomorrow: {
-          code: tCode, weather: tWeather, high: tHigh, low: tLow,
+          code: tomorrow.code, weather: tomorrow.text, high: tomorrow.high, low: tomorrow.low,
         },
       };
       const string = makeString(parts);
