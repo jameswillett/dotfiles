@@ -1,5 +1,6 @@
 const fs = require('fs');
 
+const configs = require('./configs');
 const { getIpInfo, getYahooWeather } = require('./apiStuff');
 
 const width = process.argv[2];
@@ -81,7 +82,10 @@ if (now.getSeconds() === 0 || invokeImmediately) {
   getIpInfo()
     .then((ipInfo) => {
       if (invokeImmediately) console.log('ip info: ', ipInfo);
-      const [lat, lng] = ipInfo.loc.split(',');
+      const [lat, lng] = (ipInfo.loc === configs.workIpLoc
+        ? configs.workLoc
+        : ipInfo.loc
+      ).split(',');
       return getYahooWeather(lat, lng);
     })
     .then((d) => {
