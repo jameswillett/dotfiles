@@ -2,26 +2,12 @@ const fs = require('fs');
 
 const configs = require('./configs');
 const { getIpInfo, getYahooWeather } = require('./apiStuff');
+const { getEmoji, getRising } = require('./emojis');
 
 const width = process.argv[2];
 const invokeImmediately = process.argv[3] === 'true';
 
 const lastWeather = `${process.env.HOME}/lastweather.json`;
-
-const emojiDict = {
-  0: '🌪', 1: '🌀', 2: '🌀', 3: '⚡️❗️', 4: '⚡️', 5: '🌧❄️',
-  6: '🌧🧊', 7: '❄️🧊', 8: '🧊💦', 9: '💦', 10: '🧊🌧',
-  11: '☔️', 12: '🌧', 13: '⛄️', 14: '🌨', 15: '🌬🌨',
-  16: '⛄️', 17: '🧊', 18: '🧊', 19: '🟫', 20: '🌁',
-  21: '🌫', 22: '🔥', 23: '🌬', 24: '🌬', 25: '🥶',
-  26: '☁️', 27: '🌥', 28: '🌥', 29: '🌤', 30: '🌤',
-  31: '🌚', 32: '🌞', 33: '🌑', 34: '☀️', 35: '🌧/🧊',
-  36: '🥵', 37: '⚡️', 38: '⚡️', 39: '☔️', 40: '🌧❗️',
-  41: '❄️☔️', 42: '☃️', 43: '☃️❗️', 45: '☔️', 46: '❄️☔️',
-  47: '⚡️☔️',
-};
-
-const getEmoji = code => emojiDict[code] || '❓';
 
 const toHex = n => (n + (16 * n)).toString(16).padStart(2, '0');
 
@@ -66,13 +52,13 @@ const getColor = (temp, fg) => {
 const makeString = ({ now, today, tomorrow: t }) => {
   const bg = '#000000';
   const fg = '#BBBBBB';
-  const main = `#[fg=${bg}]#[bg=${bg}] ${getEmoji(now.code)}  ${getColor(now.temp, fg)}℉`;
+  const main = `#[fg=${bg}]#[bg=${bg}] ${getEmoji(now.code)} ${getColor(now.temp, fg)}℉`;
   if (width < 200) return main;
-  const highLow = ` [${getEmoji(today.code)}  ${getColor(today.high, fg)}℉/${getColor(today.low, fg)}℉]`;
+  const highLow = ` [${getEmoji(today.code)} ${getColor(today.high, fg)}℉/${getColor(today.low, fg)}℉]`;
   if (width < 220 ) return main + highLow;
-  const tomorrow = ` [${getEmoji(t.code)}  ${getColor(t.high, fg)}℉/${getColor(t.low, fg)}℉]`;
+  const tomorrow = ` [${getEmoji(t.code)} ${getColor(t.high, fg)}℉/${getColor(t.low, fg)}℉]`;
   if (width < 240) return main + highLow + tomorrow;
-  const atmosphere = ` #[fg=#ffffff,bold]${now.bar}#[nobold]"☿${now.rising ? '👆' :'👇'} #[bold]${now.humidity}#[nobold]%#[fg=${fg}]`;
+  const atmosphere = ` #[fg=#ffffff,bold]${now.bar}#[nobold]"☿${getRising(now)} #[bold]${now.humidity}#[nobold]%#[fg=${fg}]`;
   return main + atmosphere + highLow + tomorrow;
 };
 
