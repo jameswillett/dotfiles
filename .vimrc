@@ -111,10 +111,10 @@ set statusline+=%{FugitiveStatusLine()}
 """
 
 let g:ale_sign_error = "💩"
-let g:syntastic_warning_symbol = "∆"
+let g:syntastic_warning_symbol = "🤔"
 let g:airline#extensions#ale#enabled = 1
 let g:ale_sign_offset = 1000000
-let g:ale_sign_warning = '🚩'
+let g:ale_sign_warning = '🤔'
 let g:ale_statusline_format = ['💣 %d', '🚩 %d', '']
 let g:ale_linters = {
 \   'javascript': ['eslint'],

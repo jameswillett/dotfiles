@@ -14,7 +14,7 @@ const emojiDict = {
 
 const q = '❓';
 
-const getEmoji = code => (emojiDict[code] || q).padEnd(/🌧/g.test(emojiDict[code]) ? 3 : 2, ' ');
+const getEmoji = code => (emojiDict[code] || q).padEnd(3, ' ');
 
 const getRising = ({ rising }) => rising ? '👆' :'👇';
 
