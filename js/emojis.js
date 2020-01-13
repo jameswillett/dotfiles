@@ -18,4 +18,6 @@ const getEmoji = code => (emojiDict[code] || q).padEnd(3, ' ');
 
 const getRising = ({ rising }) => rising ? '👆' :'👇';
 
-module.exports = { getEmoji, getRising };
+const weed = '🍁';
+
+module.exports = { getEmoji, getRising, weed };
