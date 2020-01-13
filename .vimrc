@@ -53,7 +53,8 @@ Plugin 'tpope/vim-dispatch'
 Plugin 'inkarkat/vim-SyntaxRange'
 Plugin 'Yggdroot/LeaderF'
 Plugin 'supercollider/scvim'
-Plugin 'ervandew/supertab'
+" Plugin 'ervandew/supertab'
+Plugin 'ycm-core/YouCompleteMe'
 
 source ~/configs/scripts/BufOnly.vim
 
