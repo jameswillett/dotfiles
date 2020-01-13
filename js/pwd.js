@@ -8,7 +8,11 @@ const shortDir = longDir.replace(new RegExp(`^${process.env.HOME}`), '~')
   .split('/')
   .reduce((a, c, i, arr) => {
     if (i < arr.length - 1) {
-      c = c[0];
+      if (c[0] === '.') {
+        c = c[0] + c[1];
+      } else {
+        c = c[0];
+      }
     }
     if (i === 0 && c === '~') return c;
     return `${a}/${c}`;
