@@ -4,6 +4,8 @@ const configs = require('./configs');
 const { getIpInfo, getYahooWeather } = require('./apiStuff');
 const { getEmoji, getRising } = require('./emojis');
 
+const isFirstSession = (process.argv[4] || '').indexOf(process.argv[5]) === 0;
+
 const width = process.argv[2];
 const invokeImmediately = process.argv[3] === 'true';
 
@@ -64,7 +66,7 @@ const makeString = ({ now, today, tomorrow: t }) => {
 
 const now = new Date();
 
-if (now.getSeconds() === 0 || invokeImmediately) {
+if ((now.getSeconds() === 0 || invokeImmediately) && isFirstSession) {
   getIpInfo()
     .then((ipInfo) => {
       if (invokeImmediately) console.log('ip info: ', ipInfo);

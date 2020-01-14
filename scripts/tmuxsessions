@@ -1,0 +1,3 @@
+#!/bin/bash
+
+tmux ls | sed 's/:.*$//g' | sed 's/\n/,/g' | tr '\n' ','
