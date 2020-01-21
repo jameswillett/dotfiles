@@ -4,10 +4,11 @@ const configs = require('./configs');
 const { getIpInfo, getYahooWeather } = require('./apiStuff');
 const { getEmoji, getRising } = require('./emojis');
 
-const isFirstSession = (process.argv[4] || '').indexOf(process.argv[5]) === 0;
 
 const width = process.argv[2];
 const invokeImmediately = process.argv[3] === 'true';
+
+const isFirstSession = (process.argv[4] || '').indexOf(process.argv[5]) === 0 || invokeImmediately;
 
 const lastWeather = `${process.env.HOME}/lastweather.json`;
 
