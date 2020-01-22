@@ -413,6 +413,11 @@ map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 
 map <leader>cd :cd %:p:h<cr>:pwd<cr>
 
+" “ is alt-[, ‘ is alt-]
+" better remap for me to move by hunk
+nmap “ <Plug>(GitGutterPrevHunk)
+nmap ‘ <Plug>(GitGutterNextHunk)
+
 try
   set switchbuf=useopen,usetab,newtab
   set stal=2
