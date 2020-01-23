@@ -282,7 +282,7 @@ function s:SqlHighlight()
   call SyntaxRange#Include('\vsql \= `', '`', 'sql')
   call SyntaxRange#Include('\v(pool(\n\s*)?\.)?query\((\n\s*)?`', '\v`(\n\s*)?(,|\))', 'sql')
   call SyntaxRange#Include('\v(pool(\n\s*)?\.)?query\((\n\s*)?''', '\v''(\n\s*)?(,|\))?', 'sql')
-  call SyntaxRange#Include('\v\<style((\n)?\s*)jsx(\n\s*)?\>(\n\s*)?\{`','\v`\}', 'css', 'xmlTagName')
+  call SyntaxRange#Include('\v\<style((\n)?\s*)jsx','\v\/style', 'css', 'xmlTagName')
 endfunction
 
 autocmd BufReadPost * call s:SqlHighlight()
