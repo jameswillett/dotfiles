@@ -282,6 +282,7 @@ function s:SqlHighlight()
   call SyntaxRange#Include('\vsql \= `', '`', 'sql')
   call SyntaxRange#Include('\v(pool(\n\s*)?\.)?query\((\n\s*)?`', '\v`(\n\s*)?(,|\))', 'sql')
   call SyntaxRange#Include('\v(pool(\n\s*)?\.)?query\((\n\s*)?''', '\v''(\n\s*)?(,|\))?', 'sql')
+  call SyntaxRange#Include('\v\<style((\n)?\s*)jsx(\n\s*)?\>(\n\s*)?\{`','\v`\}', 'css', 'xmlTagName')
 endfunction
 
 autocmd BufReadPost * call s:SqlHighlight()
@@ -418,6 +419,8 @@ map <leader>cd :cd %:p:h<cr>:pwd<cr>
 nmap “ <Plug>(GitGutterPrevHunk)
 nmap ‘ <Plug>(GitGutterNextHunk)
 
+nnoremap <leader>% :MtaJumpToOtherTag<cr>
+
 try
   set switchbuf=useopen,usetab,newtab
   set stal=2
@@ -523,6 +526,12 @@ function! VisualSelection(direction, extra_filter) range
   let @/ = l:pattern
   let @" = l:saved_reg
 endfunction
+
+" ≠ is alt =
+" Output the current syntax group
+nnoremap ≠ :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") .  '> trans<'
+      \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+      \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<cr>
 
 augroup suffixes
     autocmd!
