@@ -12,48 +12,41 @@ call vundle#begin()
 "call vundle#begin('~/some/path/here')
 
 " let Vundle manage Vundle, required
-Plugin 'SirVer/ultisnips'
-Plugin 'Valloric/MatchTagAlways'
 Plugin 'VundleVim/Vundle.vim'
+
+Plugin 'Valloric/MatchTagAlways'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plugin 'Yggdroot/LeaderF'
 Plugin 'airblade/vim-gitgutter'
-Plugin 'amadeus/vim-mjml'
 Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'dikiaap/minimalist'
 Plugin 'elmcast/elm-vim'
 Plugin 'heavenshell/vim-jsdoc'
-Plugin 'honza/vim-snippets'
+Plugin 'inkarkat/vim-SyntaxRange'
 Plugin 'junegunn/gv.vim'
 Plugin 'mileszs/ack.vim'
 Plugin 'moll/vim-node'
 Plugin 'mxw/vim-jsx'
 Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'neowit/vim-force.com'
 Plugin 'nono/vim-handlebars'
 Plugin 'othree/es.next.syntax.vim'
 Plugin 'othree/yajs.vim'
 Plugin 'ruanyl/vim-gh-line'
 Plugin 'scrooloose/nerdtree'
+Plugin 'supercollider/scvim'
+Plugin 'tidalcycles/vim-tidal'
 Plugin 'tmux-plugins/vim-tmux-focus-events'
 Plugin 'tpope/vim-abolish'
 Plugin 'tpope/vim-airline'
 Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'vim-scripts/ReplaceWithRegister'
-" Plugin 'vim-syntastic/syntastic'
 Plugin 'w0rp/ale'
-Plugin 'wikitopian/hardmode'
-Plugin 'tidalcycles/vim-tidal'
-Plugin 'tpope/vim-dispatch'
-Plugin 'inkarkat/vim-SyntaxRange'
-Plugin 'Yggdroot/LeaderF'
-Plugin 'supercollider/scvim'
-" Plugin 'ervandew/supertab'
 Plugin 'ycm-core/YouCompleteMe'
 
 source ~/configs/scripts/BufOnly.vim
@@ -145,12 +138,6 @@ let g:mta_filetypes = {
 """
 
 let g:jsx_ext_required = 0
-
-"""
-" ultisnips
-"""
-
-let g:UltiSnipsEditSplit = 'context'
 
 """
 " vim-jsdoc
@@ -334,7 +321,6 @@ if has("gui_running")
   set guitablabel=%M\ %t
 endif
 
-nmap <leader>gf :CtrlP<CR><C-\>w
 nmap <leader>so :source ~/.vimrc<cr>
 set encoding=utf8
 
@@ -434,8 +420,8 @@ set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ 
 
 " ∆ is alt-j ˚ is alt-k ˙ is alt-h ¬ is alt-l
 " move line or lines up and down and left and right
-nmap <silent> ∆ @='mz:m+<C-V><C-M>`z:delmark z<C-V><C-M>'<cr>
-nmap <silent> ˚ @='mz:m-2<C-V><C-M>`z:delmark z<C-V><C-M>'<cr>
+nmap <silent> ∆ ]e
+nmap <silent> ˚ [e
 nmap <silent> ¬ @='xp'<cr>
 nmap <silent> ˙ @='xhP'<cr>
 vmap <silent> ∆ @=':m''>+<C-V><C-M>`<my`>mzgv`yo`z'<cr>
