@@ -192,6 +192,7 @@ let g:scFlash = 1
 
 let g:Lf_WindowPosition = 'popup'
 let g:Lf_PreviewInPopup = 1
+let g:Lf_CommandMap = {'<Up>': [], '<C-Up>': ['<Up>'], '<Down>': [], '<C-Down>': ['<Down>']}
 
 """
 " the rest of it
