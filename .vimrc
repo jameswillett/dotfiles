@@ -28,7 +28,6 @@ Plugin 'mileszs/ack.vim'
 Plugin 'moll/vim-node'
 Plugin 'mxw/vim-jsx'
 Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'nono/vim-handlebars'
 Plugin 'othree/es.next.syntax.vim'
 Plugin 'othree/yajs.vim'
 Plugin 'ruanyl/vim-gh-line'
@@ -193,6 +192,13 @@ let g:scFlash = 1
 let g:Lf_WindowPosition = 'popup'
 let g:Lf_PreviewInPopup = 1
 let g:Lf_CommandMap = {'<Up>': [], '<C-Up>': ['<Up>'], '<Down>': [], '<C-Down>': ['<Down>']}
+
+"""
+" ack
+"""
+
+let g:ackhighlight = 1
+let g:ack_use_dispatch = 1
 
 """
 " the rest of it
