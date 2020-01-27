@@ -185,6 +185,14 @@ autocmd FileType tidal inoremap <C-e> <C-e><esc>
 au BufEnter,BufWinEnter,BufNewFile,BufRead *.sc,*.scd set filetype=supercollider
 au Filetype supercollider packadd scvim
 let g:scFlash = 1
+
+"""
+" leaderf
+"""
+
+let g:Lf_WindowPosition = 'popup'
+let g:Lf_PreviewInPopup = 1
+
 """
 " the rest of it
 """
