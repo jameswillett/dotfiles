@@ -230,8 +230,10 @@ set showcmd
 set showmatch
 set ttyfast
 set wildmenu
+
 set wrap
-set wrapmargin=8
+set wrapmargin=0
+set textwidth=0
 
 set complete+=kspell
 
