@@ -410,6 +410,7 @@ map <C-h> <C-w>h
 map <C-l> <C-w>l
 
 map <silent> <leader>bd :Bclose<cr>:tabclose<cr>gT
+map <silent> <leader>bo :Bonly<cr>
 map <silent> <leader>tn :tabnew<cr>
 map <silent> <leader>to :tabonly<cr>
 map <silent> <leader>tc :tabclose<cr>

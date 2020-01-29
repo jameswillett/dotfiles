@@ -6,6 +6,7 @@ My remaps:
   ,dr - eslint disable rule of line (only for js. jsx aware)
   ,dl - eslint disable line (only for js. jsx aware)
   ,bd - close buffer and tab
+  ,bo - close all other buffers
   ,tn - new tab
   ,to - close other tabs
   ,tc - close tab
