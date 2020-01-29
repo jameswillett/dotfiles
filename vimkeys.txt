@@ -38,5 +38,18 @@ My remaps:
   * - vanilla functionality but also works with vis selections
   # - "       "             "   "    "     "    "   "
 
-Things I need to remember:
-  (stopped at gv in plugin list for now)
+remaps from plugins I need to remember:
+  [I - display all results of word under cursor in quickfix
+  ,gh - open line in github
+  crs - coerce to snake_case
+  crm - coerce to MixedCase
+  crc - coerce to camelCase
+  cru - coerce to CONSTANT_CASE
+  cr- - coerce to kebab-case
+  cr. - coerce to dot.case
+  cr<space> - coerce to space case
+  crt - coerce to Title Case
+  gc(c) - comment out (gc is also an operator on a text object)
+  [f - next file in dir in buffer
+  ]f - prev file in dir in buffer
+
