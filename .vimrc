@@ -4,6 +4,7 @@ filetype off                  " required
 let mapleader = ","
 
 autocmd!
+runtime macros/matchit.vim
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -50,6 +51,7 @@ Plugin 'w0rp/ale'
 Plugin 'ycm-core/YouCompleteMe'
 
 " plugins to extend text objects
+Plugin 'kana/vim-textobj-user'
 Plugin 'michaeljsmith/vim-indent-object' " dii
 Plugin 'nelstrom/vim-textobj-rubyblock' " dir
 Plugin 'vim-scripts/argtextobj.vim' " dia
