@@ -49,6 +49,11 @@ Plugin 'vim-scripts/ReplaceWithRegister'
 Plugin 'w0rp/ale'
 Plugin 'ycm-core/YouCompleteMe'
 
+" plugins to extend text objects
+Plugin 'michaeljsmith/vim-indent-object' " dii
+Plugin 'nelstrom/vim-textobj-rubyblock' " dir
+Plugin 'vim-scripts/argtextobj.vim' " dia
+
 source ~/configs/scripts/BufOnly.vim
 
 call vundle#end()            " required
@@ -75,6 +80,7 @@ map <leader>nn :NERDTreeToggle<cr>
 map <leader>nb :NERDTreeFromBookmark<Space>
 map <leader>nf :NERDTreeFind<cr>
 let NERDTreeShowHidden=1
+let g:NERDTreeShowIgnoredStatus = 1
 
 """
 " syntastic
@@ -200,6 +206,12 @@ let g:Lf_CommandMap = {'<Up>': [], '<C-Up>': ['<Up>'], '<Down>': [], '<C-Down>':
 
 let g:ackhighlight = 1
 let g:ack_use_dispatch = 1
+
+"""
+" vim-jsdoc
+"""
+
+nmap <silent> <leader>jd <Plug>(jsdoc)
 
 """
 " the rest of it
