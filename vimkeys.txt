@@ -1,0 +1,42 @@
+My remaps:
+
+  space - search
+  ? - reverse search
+  ,sp - toggle spelling
+  ,so - re-source vimrc (currently breaks sql/css inline syntax highlighting)
+  ,dr - eslint disable rule of line (only for js. jsx aware)
+  ,dl - eslint disable line (only for js. jsx aware)
+  ,bd - close buffer and tab
+  ,tn - new tab
+  ,to - close other tabs
+  ,tc - close tab
+  ,tm - move tab
+  ,tt - next tab
+  ,te - edit tab
+  ,tl - last tab
+  ,ev - open vimrc from anywhere in new buffer
+  ,sv - open vimrc from anywhere in vertical split
+  ,sy - redraw syntax highlighting from top
+  ,cd - cd to current splits directory
+  ,% - go to matching xml/html/etc tag
+  ,l - toggle list chars
+  ,jd - run the jsdoc plugin
+  <alt>[ - prev git hunk
+  <alt>] - next git hunk
+  <alt>j - move contents of line down
+  <alt>k - move contents of line up
+  <alt>h - move char under cursor or in vis selection left
+  <alt>l - "    "    "     "      "   "  "  "         right
+  <alt>o - pad line with blank lines
+  <C-E> - same as vanilla but faster
+  <C-Y> - "    "  "       "   "
+  <shift><alt>j - next lint error
+  <shift><alt>k - prev lint error
+  <alt>a - same as <C-A> (increment)
+  <alt>x - same as <C-X> (decrement)
+  <alt>= - echo out the syntax group under cursor
+  * - vanilla functionality but also works with vis selections
+  # - "       "             "   "    "     "    "   "
+
+Things I need to remember:
+  (stopped at gv in plugin list for now)
