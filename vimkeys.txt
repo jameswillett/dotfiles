@@ -1,5 +1,4 @@
 My remaps:
-
   space - search
   ? - reverse search
   ,sp - toggle spelling
