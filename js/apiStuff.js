@@ -1,7 +1,7 @@
 const axios = require('axios');
 const OAuth = require('oauth');
 
-const { yahooAppId, yahooClientId, yahooClientSecret } = require('./configs');
+const { darkSkySecret, yahooAppId, yahooClientId, yahooClientSecret } = require('./configs');
 
 const header = {
   'X-Yahoo-App-Id': yahooAppId,
@@ -32,4 +32,8 @@ const getYahooWeather = (lat = '39.38319', lon = '-76.551872') => new Promise((r
 
 const getIpInfo = () => axios.get('https://ipinfo.io').then(r => r.data);
 
-module.exports = { getIpInfo, getYahooWeather };
+const getDarkSkyWeather = (lat = '39.38319', lon = '-76.551872') => axios.get(
+  `https://api.darksky.net/forecast/${darkSkySecret}/${lat},${lon}`
+);
+
+module.exports = { getDarkSkyWeather, getIpInfo, getYahooWeather };
