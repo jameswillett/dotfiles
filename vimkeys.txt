@@ -1,3 +1,7 @@
+Vanilla stuff i forget:
+  <C-O> - undo jump
+  <Tab> - redo jump
+
 My remaps:
   space - search
   ? - reverse search
