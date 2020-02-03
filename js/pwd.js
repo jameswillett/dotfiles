@@ -1,7 +1,7 @@
 const cp = require('child_process');
 const { weed } = require('./emojis');
 
-const longDir = process.argv[2] || __dirname;
+const longDir = process.argv[2] || process.cwd();
 
 const exec = cmd => {
   try {
