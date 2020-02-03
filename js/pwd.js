@@ -48,6 +48,7 @@ const statusString = !statuses ? '' : (() => {
   return statusString;
 })();
 
+// TODO: dont hardcode the origin. check if local has remote and use that. else fall back to this
 const unpushedCommits = exec(`git cherry origin/${branch} -v`).split('\n').reduce((a, c) => {
   if (!c) return a;
   return a + 1;
