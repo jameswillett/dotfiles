@@ -14,7 +14,7 @@ const exec = cmd => {
 };
 
 const branch = exec('git rev-parse --abbrev-ref HEAD').trim();
-const prettyBranch = !branch ? '' : ` #[fg=#ffaa00] ${branch}`;
+const prettyBranch = !branch ? '' : `#[fg=#dddddd]  #[fg=#ffaa00] ${branch}`;
 
 const shortDir = longDir.replace(new RegExp(`^${process.env.HOME}`), '~')
   .replace(/^~\/leafly-dev/, weed)
@@ -61,4 +61,4 @@ const segments = [
   statusString ? ` [#[fg=#22dd22]${statusString}#[fg=#ffaa00]#[fg=#ffaa00]]` : '',
 ];
 
-console.log(segments.join('#[fg=#ffaa00]'));
+console.log(segments.join(''));
