@@ -8,6 +8,7 @@ const exec = cmd => {
   try {
     return cp.execSync(cmd, { encoding: 'utf8', cwd: longDir });
   } catch (e) {
+    // if theres an error we just dont care about it
     return '';
   }
 };
