@@ -62,4 +62,4 @@ const segments = [
 ];
 
 
-console.log(segments.join(''));
+console.log(segments.join('#[fg=#ffaa00]'));
