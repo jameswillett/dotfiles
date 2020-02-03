@@ -3,7 +3,6 @@ const { weed } = require('./emojis');
 
 
 const longDir = process.argv[2] || 'Users/james.willett/documents/hello.js';
-const branch = process.argv[3];
 
 const exec = cmd => {
   try {
@@ -13,6 +12,7 @@ const exec = cmd => {
   }
 };
 
+const branch = exec('git rev-parse --abbrev-ref HEAD').trim();
 const prettyBranch = !branch ? '' : ` #[fg=#ffaa00] ${branch}`;
 
 const shortDir = longDir.replace(new RegExp(`^${process.env.HOME}`), '~')
