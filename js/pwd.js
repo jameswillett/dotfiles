@@ -1,8 +1,17 @@
-const exec = require('child_process').exec;
+const cp = require('child_process');
 const { weed } = require('./emojis');
+
 
 const longDir = process.argv[2] || 'Users/james.willett/documents/hello.js';
 const branch = process.argv[3];
+
+const exec = cmd => {
+  try {
+    return cp.execSync(cmd, { encoding: 'utf8', cwd: longDir });
+  } catch (e) {
+    return '';
+  }
+};
 
 const prettyBranch = !branch ? '' : ` #[fg=#ffaa00] ${branch}`;
 
@@ -22,9 +31,10 @@ const shortDir = longDir.replace(new RegExp(`^${process.env.HOME}`), '~')
     return `${a}/${c}`;
   }, '');
 
-exec(`cd ${longDir}; git status -s`, (e, sO) => {
-  if (e || !sO) return console.log(`${shortDir}${prettyBranch}`);
-  const statusMap = sO.split('\n').reduce((a, c) => {
+const statuses = exec('git status -s');
+
+const statusString = !statuses ? '' : (() => {
+  const statusMap = statuses.split('\n').reduce((a, c) => {
     if (!c) return a;
     const k = c.substring(0,2).replace(/\s/g, '');
     return {
@@ -33,7 +43,22 @@ exec(`cd ${longDir}; git status -s`, (e, sO) => {
     };
   }, {});
   const statusString = Object.keys(statusMap).reduce((a, c) => {
-    return a.concat(`${c}: ${statusMap[c]}`);
+    return a.concat(`${c}:${statusMap[c]}`);
   }, []).join(', ');
-  console.log(`${shortDir}${prettyBranch}${statusString ? ` [${statusString}]` : ''}`);
-});
+  return statusString;
+})();
+
+const unpushedCommits = exec('git cherry -v').split('\n').reduce((a, c) => {
+  if (!c) return a;
+  return a + 1;
+}, 0);
+
+const segments = [
+  shortDir,
+  prettyBranch,
+  unpushedCommits ? ` ${unpushedCommits > 1 ? unpushedCommits : ''}⬆` : '',
+  statusString ? ` [#[fg=#22dd22]${statusString}#[fg=#ffaa00]#[fg=#ffaa00]]` : '',
+];
+
+
+console.log(segments.join(''));
