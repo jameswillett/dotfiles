@@ -57,7 +57,7 @@ const unpushedCommits = exec('git cherry -v').split('\n').reduce((a, c) => {
 const segments = [
   shortDir,
   prettyBranch,
-  unpushedCommits ? ` ${unpushedCommits > 1 ? unpushedCommits : ''}⬆` : '',
+  unpushedCommits ? ` ${unpushedCommits}⬆` : '',
   statusString ? ` [#[fg=#22dd22]${statusString}#[fg=#ffaa00]#[fg=#ffaa00]]` : '',
 ];
 
