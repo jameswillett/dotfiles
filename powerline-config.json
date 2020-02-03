@@ -1,0 +1,17 @@
+{
+  "_comment": "place this at ~/.config/powerline-shell/config.json",
+  "segments": [
+    "virtual_env",
+    "cwd",
+    "git",
+    "hg",
+    "root"
+  ],
+  "cwd" : {
+    "max_dir_size": 2,
+    "full_cwd": true
+  },
+  "vcs": {
+    "show_symbol": true
+  }
+}
