@@ -48,7 +48,7 @@ const statusString = !statuses ? '' : (() => {
   return statusString;
 })();
 
-const unpushedCommits = exec('git cherry -v').split('\n').reduce((a, c) => {
+const unpushedCommits = exec('git cherry').split('\n').reduce((a, c) => {
   if (!c) return a;
   return a + 1;
 }, 0);
