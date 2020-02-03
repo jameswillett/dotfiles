@@ -58,7 +58,7 @@ const segments = [
   shortDir,
   prettyBranch,
   unpushedCommits ? ` #[fg=#bbbbff]${unpushedCommits}⬆` : '',
-  statusString ? ` [#[fg=#22dd22]${statusString}#[fg=#ffaa00]#[fg=#ffaa00]]` : '',
+  statusString ? ` [#[fg=#22dd22]${statusString}#[fg=#ffaa00]]` : '',
 ];
 
 console.log(segments.join(''));
