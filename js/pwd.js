@@ -50,10 +50,9 @@ const statusString = !statuses ? '' : (() => {
   return statusString;
 })();
 
-const originArr = statusArray[0].replace(/.*\.\.\.origin\//, ' ').split(' ');
+const originArr = statusArray[0].replace(/\.\.\.origin\//, ' ').split(' ');
 const origin = originArr[2] || originArr[1];
 
-// TODO: dont hardcode the origin. check if local has remote and use that. else fall back to this
 const [unmergedCommits, unpushedCommits] = exec(`
   git rev-list --left-right --count origin/${origin}...${branch} 
 `).split(/\s*/).map(Number);
