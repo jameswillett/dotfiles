@@ -14,10 +14,25 @@ const emojiDict = {
 
 const q = '❓';
 
-const getEmoji = code => (emojiDict[code] || q).padEnd(3, ' ');
+const darkSkyEmojis = {
+  'clear-day': '☀️',
+  'clear-night': '🌑',
+  rain: '☔️',
+  sleet: '🧊',
+  snow: '❄️',
+  wind: '🌬',
+  fog: '🌫',
+  cloudy: '☁️',
+  'partly-cloudy-day': '⛅️',
+  'partly-cloudy-night': '⛅️',
+};
+
+const getEmoji = (code, service='yahoo') =>
+  ((service === 'darksky' ? darkSkyEmojis : emojiDict)[code] || q).padEnd(3, ' ');
 
 const getRising = ({ rising }) => rising ? '👆' :'👇';
 
 const weed = '🍁';
+
 
 module.exports = { getEmoji, getRising, weed };
