@@ -12,9 +12,6 @@ const exec = cmd => {
   }
 };
 
-const branch = exec('git rev-parse --abbrev-ref HEAD').trim();
-const prettyBranch = !branch ? '' : `#[fg=#dddddd]  #[fg=#ffaa00] ${branch}`;
-
 const shortDir = longDir.replace(new RegExp(`^${process.env.HOME}`), '~')
   .replace(/^~\/leafly-dev/, weed)
   .replace(/^\//, '')
@@ -51,7 +48,11 @@ const statusString = !statuses ? '' : (() => {
 })();
 
 const originArr = statusArray[0].replace(/\.\.\.origin\//, ' ').split(' ');
-const origin = originArr[2] || originArr[1];
+const branch = originArr[1];
+
+const origin = originArr[2] || branch;
+
+const prettyBranch = !branch ? '' : `#[fg=#dddddd]  #[fg=#ffaa00] ${branch}`;
 
 const [unmergedCommits, unpushedCommits] = exec(`
   git rev-list --left-right --count origin/${origin}...${branch} 
