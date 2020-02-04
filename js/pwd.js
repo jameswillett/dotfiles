@@ -66,4 +66,4 @@ const segments = [
   statusString ? ` [#[fg=#22dd22]${statusString}#[fg=#ffaa00]]` : '',
 ];
 
-console.log(segments.join(''));
+console.log(segments.join('#[fg=#ffaa00]'));
