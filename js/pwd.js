@@ -31,11 +31,13 @@ const shortDir = longDir.replace(new RegExp(`^${process.env.HOME}`), '~')
     return `${a}/${c}`;
   }, '');
 
-const statuses = exec('git status -s');
+const statuses = exec('git status -sb');
+
+const statusArray = statuses.split('\n');
 
 const statusString = !statuses ? '' : (() => {
-  const statusMap = statuses.split('\n').reduce((a, c) => {
-    if (!c) return a;
+  const statusMap = statusArray.reduce((a, c) => {
+    if (!c || /^##/.test(c)) return a;
     const k = c.substring(0,2).replace(/\s/g, '');
     return {
       ...a,
@@ -48,9 +50,12 @@ const statusString = !statuses ? '' : (() => {
   return statusString;
 })();
 
+const originArr = statusArray[0].replace(/.*\.\.\.origin\//, ' ').split(' ');
+const origin = originArr[2] || originArr[1];
+
 // TODO: dont hardcode the origin. check if local has remote and use that. else fall back to this
 const [unmergedCommits, unpushedCommits] = exec(`
-  git rev-list --left-right --count origin/${branch}...${branch} 
+  git rev-list --left-right --count origin/${origin}...${branch} 
 `).split(/\s*/).map(Number);
 
 const segments = [
