@@ -53,9 +53,9 @@ const getColor = (temp, fg) => {
 };
 
 const makeString = ({ now, today, tomorrow: t }) => {
-  const bg = '#000000';
+  const bg = 'colour233';
   const fg = '#BBBBBB';
-  const main = `#[fg=${bg}]#[bg=${bg}] ${getEmoji(now.code)} ${getColor(now.temp, fg)}℉`;
+  const main = `#[bg=${bg}] ${getEmoji(now.code)} ${getColor(now.temp, fg)}℉`;
   if (width < 200) return main;
   const highLow = ` [${getEmoji(today.code)} ${getColor(today.high, fg)}℉/${getColor(today.low, fg)}℉]`;
   if (width < 220 ) return main + highLow;
