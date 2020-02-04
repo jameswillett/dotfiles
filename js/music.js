@@ -52,7 +52,7 @@ applescript.execFile(`${process.env.HOME}/configs/scripts/music`, (err, d) => {
   const width = process.argv[3];
   const { app, fg, bg, system } = getRunningApp(d);
   const sysVol = (background) =>
-    `#[fg=colour240,bg=colour${background},bold]#[fg=colour39,bg=colour240] 🔈 ${v(system.volume, system.muted)} `;
+    `#[fg=colour240,bg=colour${background},bold]#[fg=colour39,bg=colour240] 🔈 ${v(system.volume, system.muted)}`;
   if (!app || !app.running) return console.log(sysVol(lastBg));
   const {
     shuffling, repeating, state,
