@@ -55,7 +55,7 @@ const origin = originArr[2] || branch;
 const prettyBranch = !branch ? '' : `#[fg=#dddddd]  #[fg=#ffaa00] ${branch}`;
 
 const [unmergedCommits, unpushedCommits] = exec(`
-  git rev-list --left-right --count origin/${origin}...${branch} 
+  git rev-list --left-right --count origin/${origin}...${branch}
 `).split(/\s*/).map(Number);
 
 const segments = [
