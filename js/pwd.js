@@ -35,14 +35,19 @@ const statusArray = statuses.split('\n');
 const statusString = !statuses ? '' : (() => {
   const statusMap = statusArray.reduce((a, c) => {
     if (!c || /^##/.test(c)) return a;
-    const k = c.substring(0,2).replace(/\s/g, '');
+    const k = c.substring(0,2);
     return {
       ...a,
       [k]: (a[k] || 0) + 1,
     };
   }, {});
   const statusString = Object.keys(statusMap).reduce((a, c) => {
-    return a.concat(`${c}:${statusMap[c]}`);
+    const styled = [...c].reduce((sA, sC, i) => {
+      if (!sC || sC === ' ') return sA;
+      const color = i ? 'ff0000' : '22dd22';
+      return sA + `#[fg=#${color}]${sC}`;
+    }, '');
+    return a.concat(`${styled.trim()}#[fg=#dddddd]:${statusMap[c]}`);
   }, []).join(', ');
   return statusString;
 })();
@@ -63,7 +68,7 @@ const segments = [
   prettyBranch,
   unmergedCommits ? ` #[fg=#bbbbff]${unmergedCommits}⬇︎` : '',
   unpushedCommits ? ` #[fg=#bbbbff]${unpushedCommits}⬆` : '',
-  statusString ? ` [#[fg=#22dd22]${statusString}#[fg=#ffaa00]]` : '',
+  statusString ? ` [${statusString}#[fg=#ffaa00]]` : '',
 ];
 
 console.log(segments.join('#[fg=#ffaa00]'));
