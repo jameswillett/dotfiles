@@ -49,14 +49,18 @@ const statusString = !statuses ? '' : (() => {
 })();
 
 // TODO: dont hardcode the origin. check if local has remote and use that. else fall back to this
-const unpushedCommits = exec(`git cherry origin/${branch} -v`).split('\n').reduce((a, c) => {
-  if (!c) return a;
-  return a + 1;
-}, 0);
+const [unmergedCommits, unpushedCommits] = exec(`
+  git rev-list --left-right --count origin/${branch}...${branch} 
+`).split(/\s*/).map(Number);
+  // .reduce((a, c) => {
+  // if (!c) return a;
+  // return a + 1;
+// }, 0);
 
 const segments = [
   shortDir,
   prettyBranch,
+  unmergedCommits ? ` #[fg=#bbbbff]${unmergedCommits}⬇︎` : '',
   unpushedCommits ? ` #[fg=#bbbbff]${unpushedCommits}⬆` : '',
   statusString ? ` [#[fg=#22dd22]${statusString}#[fg=#ffaa00]]` : '',
 ];
