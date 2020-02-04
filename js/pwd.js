@@ -52,10 +52,6 @@ const statusString = !statuses ? '' : (() => {
 const [unmergedCommits, unpushedCommits] = exec(`
   git rev-list --left-right --count origin/${branch}...${branch} 
 `).split(/\s*/).map(Number);
-  // .reduce((a, c) => {
-  // if (!c) return a;
-  // return a + 1;
-// }, 0);
 
 const segments = [
   shortDir,
