@@ -12,9 +12,6 @@ const exec = cmd => {
   }
 };
 
-const branch = exec('git rev-parse --abbrev-ref HEAD').trim();
-const prettyBranch = !branch ? '' : `#[fg=#dddddd]  #[fg=#ffaa00] ${branch}`;
-
 const shortDir = longDir.replace(new RegExp(`^${process.env.HOME}`), '~')
   .replace(/^~\/leafly-dev/, weed)
   .replace(/^\//, '')
@@ -31,11 +28,13 @@ const shortDir = longDir.replace(new RegExp(`^${process.env.HOME}`), '~')
     return `${a}/${c}`;
   }, '');
 
-const statuses = exec('git status -s');
+const statuses = exec('git status -sb');
+
+const statusArray = statuses.split('\n');
 
 const statusString = !statuses ? '' : (() => {
-  const statusMap = statuses.split('\n').reduce((a, c) => {
-    if (!c) return a;
+  const statusMap = statusArray.reduce((a, c) => {
+    if (!c || /^##/.test(c)) return a;
     const k = c.substring(0,2).replace(/\s/g, '');
     return {
       ...a,
@@ -48,15 +47,21 @@ const statusString = !statuses ? '' : (() => {
   return statusString;
 })();
 
-// TODO: dont hardcode the origin. check if local has remote and use that. else fall back to this
-const unpushedCommits = exec(`git cherry origin/${branch} -v`).split('\n').reduce((a, c) => {
-  if (!c) return a;
-  return a + 1;
-}, 0);
+const originArr = statusArray[0].replace(/\.\.\.origin\//, ' ').split(' ');
+const branch = originArr[1];
+
+const origin = originArr[2] || branch;
+
+const prettyBranch = !branch ? '' : `#[fg=#dddddd]  #[fg=#ffaa00] ${branch}`;
+
+const [unmergedCommits, unpushedCommits] = exec(`
+  git rev-list --left-right --count origin/${origin}...${branch}
+`).split(/\s*/).map(Number);
 
 const segments = [
   shortDir,
   prettyBranch,
+  unmergedCommits ? ` #[fg=#bbbbff]${unmergedCommits}⬇︎` : '',
   unpushedCommits ? ` #[fg=#bbbbff]${unpushedCommits}⬆` : '',
   statusString ? ` [#[fg=#22dd22]${statusString}#[fg=#ffaa00]]` : '',
 ];
