@@ -44,8 +44,9 @@ const statusString = !statuses ? '' : (() => {
   const statusString = Object.keys(statusMap).reduce((a, c) => {
     const styled = [...c].reduce((sA, sC, i) => {
       if (!sC || sC === ' ') return sA;
+      if (sC === '?') return `${sA}#[fg=#ff0000]${sC}`;
       const color = i ? 'ff0000' : '22dd22';
-      return sA + `#[fg=#${color}]${sC}`;
+      return `${sA}#[fg=#${color}]${sC}`;
     }, '');
     return a.concat(`${styled.trim()}#[fg=#dddddd]:${statusMap[c]}`);
   }, []).join(', ');
