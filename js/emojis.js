@@ -28,7 +28,7 @@ const darkSkyEmojis = {
 };
 
 const getEmoji = (code, service='yahoo') =>
-  ((service === 'darksky' ? darkSkyEmojis : emojiDict)[code] || q).padEnd(3, ' ');
+  ((service === 'darksky' ? darkSkyEmojis : emojiDict)[code] || q).padEnd(2, ' ');
 
 const getRising = ({ rising }) => rising ? '👆' :'👇';
 

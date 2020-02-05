@@ -34,6 +34,6 @@ const getIpInfo = () => axios.get('https://ipinfo.io').then(r => r.data);
 
 const getDarkSkyWeather = (lat = '39.38319', lon = '-76.551872') => axios.get(
   `https://api.darksky.net/forecast/${darkSkySecret}/${lat},${lon}`
-);
+).then(r => r.data);
 
 module.exports = { getDarkSkyWeather, getIpInfo, getYahooWeather };

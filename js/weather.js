@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 const configs = require('./configs');
-const { getIpInfo, getYahooWeather } = require('./apiStuff');
+const { getIpInfo, getDarkSkyWeather } = require('./apiStuff');
 const { getEmoji, getRising } = require('./emojis');
 
 
@@ -11,12 +11,14 @@ const invokeImmediately = process.argv[3] === 'true';
 const isFirstSession = (process.argv[4] || '').indexOf(process.argv[5]) === 0 || invokeImmediately;
 
 const lastWeather = `${process.env.HOME}/lastweather.json`;
+const sampleDarkskyResponse = `${process.env.HOME}/Documents/darkskyresponsepretty.json`;
 
 const toHex = n => (n + (16 * n)).toString(16).padStart(2, '0');
 
-const getColor = (temp, fg) => {
+const getColor = (tempDirty, fg) => {
   let R = 15, G = 15, B = 15;
 
+  const temp = Math.floor(Number(tempDirty));
   if (temp >= 100) {
     R = 15;
     G = 0;
@@ -52,20 +54,28 @@ const getColor = (temp, fg) => {
   return `#[fg=${hex},bold]${temp}#[fg=${fg},nobold]`;
 };
 
-const makeString = ({ now, today, tomorrow: t }) => {
+const days = ['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa'];
+const getDayOfWeek = day => days[new Date(day.date).getDay()];
+
+const makeString = ({ now, today, tomorrow: t, extendedForecast }, service) => {
   const bg = 'colour233';
   const fg = '#BBBBBB';
-  const main = `#[bg=${bg}] ${getEmoji(now.code)} ${getColor(now.temp, fg)}℉`;
-  if (width < 200) return main;
-  const highLow = ` [${getEmoji(today.code)} ${getColor(today.high, fg)}℉/${getColor(today.low, fg)}℉]`;
-  if (width < 220 ) return main + highLow;
-  const tomorrow = ` [${getEmoji(t.code)} ${getColor(t.high, fg)}℉/${getColor(t.low, fg)}℉]`;
-  if (width < 240) return main + highLow + tomorrow;
-  const atmosphere = ` #[fg=#ffffff,bold]${now.bar}#[nobold]"☿${getRising(now)} #[bold]${now.humidity}#[nobold]%#[fg=${fg}]`;
-  return main + atmosphere + highLow + tomorrow;
+  const main = `#[bg=${bg}] ${getEmoji(now.code, service)} ${getColor(now.temp, fg)}℉`;
+  const highLow = ` [${getEmoji(today.code, service)} ${getColor(today.high, fg)}℉/${getColor(today.low, fg)}℉]`;
+  const tomorrow = ` ${getDayOfWeek(t)}:[${getEmoji(t.code, service)} ${getColor(t.high, fg)}℉/${getColor(t.low, fg)}℉]`;
+  const WEATHER = main + highLow + tomorrow;
+  if (width < 100) return WEATHER;
+  return WEATHER;
+ 
 };
 
 const now = new Date();
+
+const mapDay = d => ({
+  date: new Date(d.time * 1000), high: d.temperatureHigh, low: d.temperatureLow, code: d.icon,
+  weather: d.summary, sunset: d.sunsetTime, sunrise: d.sunriseTime,
+  precip: d.precipProbability, precipIntensity: d.precipIntensity, precipType: d.precipType,
+});
 
 if ((now.getSeconds() === 0 || invokeImmediately) && isFirstSession) {
   getIpInfo()
@@ -75,33 +85,36 @@ if ((now.getSeconds() === 0 || invokeImmediately) && isFirstSession) {
         ? configs.workLoc
         : ipInfo.loc
       ).split(',');
-      return getYahooWeather(lat, lng);
+      return getDarkSkyWeather(lat, lng);
     })
+    // .then(() => JSON.parse(fs.readFileSync(sampleDarkskyResponse, { encoding: 'utf8' })))
     .then((d) => {
       if (invokeImmediately) console.log('weather: ', d);
-      const [ today, tomorrow ] = d.forecasts;
-      const now = d['current_observation'];
+      const { currently, hourly, daily } = d;
+      const later = hourly.data[0];
+      const [ today, tomorrow, ...restOfDays] = daily.data;
       const parts = {
         now: {
-          code: now.condition.code, weather: now.condition.text, temp: now.condition.temperature,
-          bar: now.atmosphere.pressure, rising: now.atmosphere.rising, humidity: now.atmosphere.humidity,
+          code: currently.icon, weather: currently.summary, temp: currently.temperature,
+          bar: currently.pressure, humidity: currently.humidity,
+          precip: currently.precipProbability, precipIntensity: currently.precipIntensity, precipType: currently.precipType,
         },
-        today: {
-          high: today.high, low: today.low, code: today.code,
-          weather: today.text, sunset: now.astronomy.sunset, sunrise: now.astronomy.sunrise,
+        later: {
+          code: later.icon, weather: later.summary, temp: later.temperature,
+          bar: later.pressure, humidity: later.humidity,
         },
-        tomorrow: {
-          code: tomorrow.code, weather: tomorrow.text, high: tomorrow.high, low: tomorrow.low,
-        },
+        today: mapDay(today),
+        tomorrow: mapDay(tomorrow),
+        extendedForecast: restOfDays.map(mapDay),
       };
-      const string = makeString(parts);
+      const string = makeString(parts, 'darksky');
       const cached = JSON.stringify({
         ...parts,
         locale: {
           timestamp: new Date(),
-          timezone: d.location.timezone_id,
-          lat: d.location.lat,
-          lng: d.location.long,
+          timezone: d.timezone,
+          lat: d.latitude,
+          lng: d.longitude,
         },
       }, null, '  ');
       fs.writeFileSync(lastWeather, cached, { encoding: 'utf8' });
@@ -114,7 +127,7 @@ if ((now.getSeconds() === 0 || invokeImmediately) && isFirstSession) {
 } else {
   try {
     const raw = fs.readFileSync(lastWeather, { encoding: 'utf8' });
-    console.log(makeString(JSON.parse(raw)));
+    console.log(makeString(JSON.parse(raw), 'darksky'));
   } catch(e) {
     console.log(e);
     console.log('');
