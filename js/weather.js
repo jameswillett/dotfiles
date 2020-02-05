@@ -157,6 +157,7 @@ if ((now.getSeconds() === 0 || invokeImmediately) && isFirstSession) {
           lat: d.latitude,
           lng: d.longitude,
         },
+        poweredBy: 'Dark Sky (https://darksky.net/poweredby/)',
       }, null, '  ');
       fs.writeFileSync(lastWeather, cached, { encoding: 'utf8' });
       if (invokeImmediately) console.log('parts: ', parts);
