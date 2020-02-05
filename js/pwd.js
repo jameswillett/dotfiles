@@ -62,7 +62,7 @@ const prettyBranch = !branch ? '' : `#[fg=#dddddd]  #[fg=#ffaa00] ${branch
 
 const [unmergedCommits, unpushedCommits] = exec(`
   git rev-list --left-right --count origin/${origin}...${branch}
-`).split(/\s*/).map(Number);
+`).split(/\s+/).map(Number);
 
 const segments = [
   shortDir,
