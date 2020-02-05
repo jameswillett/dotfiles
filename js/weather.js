@@ -56,7 +56,7 @@ const days = ['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa'];
 const getDayOfWeek = day => days[new Date(day.date).getDay()];
 
 const stringForDay = (c, service, fg) =>
-  ` #[bold]${
+  `#[bold]${
     getDayOfWeek(c)
   }#[nobold]:#[fg=#ffaa00,bold][#[fg=${fg},nobold]${
     getEmoji(c.code, service)
@@ -76,14 +76,14 @@ const makeString = ({ now, today, tomorrow: t, later: l, extendedForecast }, ser
   const main = `#[bg=${bg}] ${getEmoji(now.code, service)} ${getColor(now.temp, fg)}℉`;
   const later = ` -> ${getEmoji(l.code, service)} ${getColor(l.temp, fg)}℉`;
   const moon = showMoon ? ` ${getMoon(today.moonPhase)}` : '';
-  const highLow = stringForDay(today, service, fg);
-  const tomorrow = stringForDay(t, service, fg);
+  const highLow = '  ' + stringForDay(today, service, fg);
+  const tomorrow = ' | ' + stringForDay(t, service, fg);
   const WEATHER = main + later + moon + highLow + tomorrow;
-  const maxExtended = (width - 140) / 10;
+  const maxExtended = (width - 145) / 13;
   if (width < 100) return WEATHER;
   const extended = extendedForecast.reduce((a, c, i) => {
     if (i > maxExtended) return a;
-    return a + stringForDay(c, service, fg);
+    return a + ' | ' + stringForDay(c, service, fg);
   }, '');
   return WEATHER + extended;
  
