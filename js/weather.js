@@ -2,8 +2,7 @@ const fs = require('fs');
 
 const configs = require('./configs');
 const { getIpInfo, getDarkSkyWeather } = require('./apiStuff');
-const { getEmoji, getRising } = require('./emojis');
-
+const { getEmoji, getMoon } = require('./emojis');
 
 const width = process.argv[2];
 const invokeImmediately = process.argv[3] === 'true';
@@ -11,7 +10,6 @@ const invokeImmediately = process.argv[3] === 'true';
 const isFirstSession = (process.argv[4] || '').indexOf(process.argv[5]) === 0 || invokeImmediately;
 
 const lastWeather = `${process.env.HOME}/lastweather.json`;
-const sampleDarkskyResponse = `${process.env.HOME}/Documents/darkskyresponsepretty.json`;
 
 const toHex = n => (n + (16 * n)).toString(16).padStart(2, '0');
 
@@ -57,15 +55,24 @@ const getColor = (tempDirty, fg) => {
 const days = ['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa'];
 const getDayOfWeek = day => days[new Date(day.date).getDay()];
 
-const makeString = ({ now, today, tomorrow: t, extendedForecast }, service) => {
+const makeString = ({ now, today, tomorrow: t, later: l, extendedForecast }, service) => {
+  const rightNow = new Date();
+  const showMoon = rightNow < new Date(today.sunrise * 1000) || rightNow > new Date(today.sunset * 1000);
   const bg = 'colour233';
   const fg = '#BBBBBB';
   const main = `#[bg=${bg}] ${getEmoji(now.code, service)} ${getColor(now.temp, fg)}℉`;
-  const highLow = ` [${getEmoji(today.code, service)} ${getColor(today.high, fg)}℉/${getColor(today.low, fg)}℉]`;
+  const later = ` -> ${getEmoji(l.code, service)} ${getColor(l.temp, fg)}℉`;
+  const moon = showMoon ? ` ${getMoon(today.moonPhase)}` : '';
+  const highLow = ` ${getDayOfWeek(today)}:[${getEmoji(today.code, service)} ${getColor(today.high, fg)}℉/${getColor(today.low, fg)}℉]`;
   const tomorrow = ` ${getDayOfWeek(t)}:[${getEmoji(t.code, service)} ${getColor(t.high, fg)}℉/${getColor(t.low, fg)}℉]`;
-  const WEATHER = main + highLow + tomorrow;
+  const WEATHER = main + later + moon + highLow + tomorrow;
+  const maxExtended = (width - 120) / 10;
   if (width < 100) return WEATHER;
-  return WEATHER;
+  const extended = extendedForecast.reduce((a, c, i) => {
+    if (i > maxExtended) return a;
+    return a + ` ${getDayOfWeek(c)}:[${getEmoji(c.code, service)} ${getColor(c.high, fg)}℉/${getColor(c.low, fg)}℉]`;
+  }, '');
+  return WEATHER + extended;
  
 };
 
@@ -75,6 +82,7 @@ const mapDay = d => ({
   date: new Date(d.time * 1000), high: d.temperatureHigh, low: d.temperatureLow, code: d.icon,
   weather: d.summary, sunset: d.sunsetTime, sunrise: d.sunriseTime,
   precip: d.precipProbability, precipIntensity: d.precipIntensity, precipType: d.precipType,
+  moonPhase: d.moonPhase,
 });
 
 if ((now.getSeconds() === 0 || invokeImmediately) && isFirstSession) {

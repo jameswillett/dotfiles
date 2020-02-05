@@ -19,13 +19,16 @@ const darkSkyEmojis = {
   'clear-night': '🌑',
   rain: '☔️',
   sleet: '🧊',
-  snow: '❄️',
+  snow: '❄️ ',
   wind: '🌬',
   fog: '🌫',
-  cloudy: '☁️',
+  cloudy: '☁️ ',
   'partly-cloudy-day': '⛅️',
   'partly-cloudy-night': '⛅️',
 };
+
+const moons = ['🌑', '🌒', '🌓', '🌔', '🌕', '🌖', '🌗', '🌘'];
+const getMoon = phase => moons[Math.floor(phase * 8)];
 
 const getEmoji = (code, service='yahoo') =>
   ((service === 'darksky' ? darkSkyEmojis : emojiDict)[code] || q).padEnd(2, ' ');
@@ -35,4 +38,4 @@ const getRising = ({ rising }) => rising ? '👆' :'👇';
 const weed = '🍁';
 
 
-module.exports = { getEmoji, getRising, weed };
+module.exports = { getEmoji, getMoon, getRising, weed };
