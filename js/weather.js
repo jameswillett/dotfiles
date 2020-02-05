@@ -81,22 +81,14 @@ const makeString = ({ now, today, tomorrow: t, later: l, extendedForecast, minut
   const main = `#[bg=${bg}] ${getEmoji(now.code, service)} ${getColor(now.temp, fg)}℉`;
   const later = ` -> ${getEmoji(l.code, service)} ${getColor(l.temp, fg)}℉`;
   const precipString = (() => {
-    if (sigPrecip) {
-      if (nextPrecip) {
-        return ` ${
-          getEmoji(nextPrecip.precipType, service)
-        } stopping in ${
-          new Date(nextPrecip.time) - rightNow
-        }`;
-      }
-      return ' for the hour';
-    }
+    if (sigPrecip && !nextPrecip) return ' for the hour';
     if (nextPrecip) {
+      const when = Math.ceil((new Date(nextPrecip.time * 1000) - rightNow) / 1000 / 60);
       return ` ${
         getEmoji(nextPrecip.precipType, service)
-      } in ${
-        new Date(nextPrecip.time) - rightNow
-      }`;
+      } ${sigPrecip ? 'stopping' : ''} in ${
+        when
+      }m`;
     }
     return '';
   })();
