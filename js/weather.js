@@ -58,7 +58,7 @@ const getDayOfWeek = day => days[new Date(day.date).getDay()];
 const stringForDay = (c, service, fg) =>
   ` #[bold]${
     getDayOfWeek(c)
-  }#[nobold]:[${
+  }#[nobold]:#[fg=#ffaa00,bold][#[fg=${fg},nobold]${
     getEmoji(c.code, service)
   }${
     c.precip ? ` (${c.precip * 100}%)` : ''
@@ -66,7 +66,7 @@ const stringForDay = (c, service, fg) =>
     getColor(c.high, fg)
   }℉/${
     getColor(c.low, fg)
-  }℉]`;
+  }℉#[fg=#ffaa00,bold]]#[fg=${fg},nobold]`;
 
 const makeString = ({ now, today, tomorrow: t, later: l, extendedForecast }, service) => {
   const rightNow = new Date();
@@ -123,6 +123,7 @@ if ((now.getSeconds() === 0 || invokeImmediately) && isFirstSession) {
         later: {
           code: later.icon, weather: later.summary, temp: later.temperature,
           bar: later.pressure, humidity: later.humidity,
+          precip: later.precipProbability, precipIntensity: later.precipIntensity, precipType: later.precipType,
         },
         today: mapDay(today),
         tomorrow: mapDay(tomorrow),
