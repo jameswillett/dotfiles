@@ -90,14 +90,14 @@ const makeString = ({ now, today, tomorrow: t, later: l, extendedForecast, nextP
     return '';
   })();
   const moon = showMoon ? ` ${getMoon(today.moonPhase)}` : '';
-  const highLow = '  ' + stringForDay(today, service, fg);
-  const tomorrow = ' | ' + stringForDay(t, service, fg);
+  const highLow = '   ' + stringForDay(today, service, fg);
+  const tomorrow = '    ' + stringForDay(t, service, fg);
   const WEATHER = main + later + precipString + moon + highLow + tomorrow;
-  const maxExtended = (width - 145) / 13;
-  if (width < 100) return WEATHER;
+  const maxExtended = (width - 120) / 22;
+  if (width < 90) return WEATHER;
   const extended = extendedForecast.reduce((a, c, i) => {
     if (i > maxExtended) return a;
-    return a + ' | ' + stringForDay(c, service, fg);
+    return a + '    ' + stringForDay(c, service, fg);
   }, '');
   return WEATHER + extended;
 };
