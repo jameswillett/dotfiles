@@ -74,9 +74,8 @@ const makeString = ({ now, today, tomorrow: t, later: l, extendedForecast, nextP
   const rightNow = new Date();
   const showMoon = rightNow < new Date(today.sunrise * 1000) || rightNow > new Date(today.sunset * 1000);
   const sigPrecip = now.precipIntensity >= PRECIP_THRESH;
-  const bg = 'colour233';
   const fg = '#BBBBBB';
-  const main = `#[bg=${bg}] ${getEmoji(now.code, service)} ${getColor(now.temp, fg)}℉`;
+  const main = ` ${getEmoji(now.code, service)} ${getColor(now.temp, fg)}℉`;
   const later = ` -> ${getEmoji(l.code, service)} ${getColor(l.temp, fg)}℉`;
   const precipString = (() => {
     if (sigPrecip && !nextPrecip) return ' for the hour';
