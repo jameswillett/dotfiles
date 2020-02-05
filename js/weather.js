@@ -83,11 +83,10 @@ const makeString = ({ now, today, tomorrow: t, later: l, extendedForecast, minut
   const precipString = (() => {
     if (sigPrecip && !nextPrecip) return ' for the hour';
     if (nextPrecip) {
-      const when = Math.ceil((new Date(nextPrecip.time * 1000) - rightNow) / 1000 / 60);
       return ` ${
         getEmoji(nextPrecip.precipType, service)
       } ${sigPrecip ? 'stopping' : ''} in ${
-        when
+        Math.ceil((new Date(nextPrecip.time * 1000) - rightNow) / 1000 / 60)
       }m`;
     }
     return '';
