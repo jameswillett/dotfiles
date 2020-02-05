@@ -68,13 +68,15 @@ const stringForDay = (c, service, fg) =>
     getColor(c.low, fg)
   }℉#[fg=#ffaa00,bold]]#[fg=${fg},nobold]`;
 
+const PRECIP_THRESH = 0.005;
+
 const makeString = ({ now, today, tomorrow: t, later: l, extendedForecast, minutely }, service) => {
   const rightNow = new Date();
   const showMoon = rightNow < new Date(today.sunrise * 1000) || rightNow > new Date(today.sunset * 1000);
-  const sigPrecip = now.precipIntensity >= 0.1;
+  const sigPrecip = now.precipIntensity >= PRECIP_THRESH;
   const nextPrecip = minutely.data.find((m) => {
-    if (sigPrecip) return m.precipIntensity < 0.1;
-    return m.precipIntensity >= 0.1;
+    if (sigPrecip) return m.precipIntensity < PRECIP_THRESH;
+    return m.precipIntensity >= PRECIP_THRESH;
   });
   const bg = 'colour233';
   const fg = '#BBBBBB';
@@ -85,7 +87,7 @@ const makeString = ({ now, today, tomorrow: t, later: l, extendedForecast, minut
     if (nextPrecip) {
       return ` ${
         getEmoji(nextPrecip.precipType, service)
-      } ${sigPrecip ? 'stopping' : ''} in ${
+      }${sigPrecip ? 'stopping' : ''} in ${
         Math.ceil((new Date(nextPrecip.time * 1000) - rightNow) / 1000 / 60)
       }m`;
     }
