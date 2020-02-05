@@ -86,7 +86,6 @@ const makeString = ({ now, today, tomorrow: t, later: l, extendedForecast }, ser
     return a + ' | ' + stringForDay(c, service, fg);
   }, '');
   return WEATHER + extended;
- 
 };
 
 const now = new Date();
@@ -108,7 +107,6 @@ if ((now.getSeconds() === 0 || invokeImmediately) && isFirstSession) {
       ).split(',');
       return getDarkSkyWeather(lat, lng);
     })
-    // .then(() => JSON.parse(fs.readFileSync(sampleDarkskyResponse, { encoding: 'utf8' })))
     .then((d) => {
       if (invokeImmediately) console.log('weather: ', d);
       const { currently, hourly, daily } = d;
