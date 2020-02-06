@@ -125,8 +125,9 @@ if ((now.getSeconds() === 0 || invokeImmediately) && isFirstSession) {
       const { currently, hourly, daily, minutely } = d;
       const later = hourly.data[0];
       const [ today, tomorrow, ...restOfDays] = daily.data;
-      const sigPrecip = now.precipIntensity >= PRECIP_THRESH;
-      const nextPrecip = minutely.data.find((m) => {
+      const sigPrecip = currently.precipIntensity >= PRECIP_THRESH;
+      const nextPrecip = minutely.data.find((m, i) => {
+        if (i === 0) return;
         if (sigPrecip) return m.precipIntensity < PRECIP_THRESH;
         return m.precipIntensity >= PRECIP_THRESH;
       });
