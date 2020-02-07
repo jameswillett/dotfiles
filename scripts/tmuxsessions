@@ -1,3 +1,2 @@
 #!/bin/bash
-
-tmux ls | sed 's/:.*$//g' | sed 's/\n/,/g' | tr '\n' ','
+tmux ls -F "#{session_name} #{session_attached}" | sed 's/.*0//g' | sed 's/ .*//g' | tr '\n' ',' | sed 's/^,//g' | sed 's/,$//g'
