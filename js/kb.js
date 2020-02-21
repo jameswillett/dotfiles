@@ -1,4 +1,5 @@
 const bplist = require('bplist-parser');
+const { kb } = require('./emojis');
 
 bplist.parseFile(`${process.env.HOME}/Library/Preferences/com.apple.HIToolbox.plist`)
   .then(([result]) => {
@@ -7,5 +8,5 @@ bplist.parseFile(`${process.env.HOME}/Library/Preferences/com.apple.HIToolbox.pl
       c => c.InputSourceKind === 'Keyboard Layout'
     );
     if (!selectedKeyboard) return;
-    console.log(selectedKeyboard['KeyboardLayout Name']);
+    console.log(kb + ' : ' + selectedKeyboard['KeyboardLayout Name']);
   });

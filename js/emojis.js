@@ -37,5 +37,7 @@ const getRising = ({ rising }) => rising ? '👆' :'👇';
 
 const weed = '🍁';
 
+const kb = '⌨️';
 
-module.exports = { getEmoji, getMoon, getRising, weed };
+
+module.exports = { getEmoji, getMoon, getRising, kb, weed };
