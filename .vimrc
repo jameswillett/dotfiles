@@ -333,6 +333,7 @@ function s:Colors(bg, ...)
   hi NonText ctermfg=darkgrey guifg=grey70
   hi SpecialKey ctermfg=darkgrey guifg=grey70
   hi Comment gui=italic cterm=italic
+  hi CursorLineNr ctermfg=34 cterm=italic
   call SqlHighlight()
 endfunction
 
