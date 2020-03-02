@@ -114,7 +114,11 @@ if ((now.getSeconds() === 0 || invokeImmediately) && isFirstSession) {
   getIpInfo()
     .then((ipInfo) => {
       if (invokeImmediately) console.log('ip info: ', ipInfo);
-      const [lat, lng] = (ipInfo.loc === configs.workIpLoc
+      const atWork = ipInfo.loc === configs.workIpLoc ||
+        ipInfo.hostname === configs.workHostname ||
+        ipInfo.org === configs.workOrg;
+
+      const [lat, lng] = (atWork
         ? configs.workLoc
         : ipInfo.loc
       ).split(',');
