@@ -122,6 +122,7 @@ let g:ale_linters = {
 \   'javascript': ['eslint'],
 \   'python': ['flake8', 'pylint'],
 \}
+let g:ale_fixers = { 'javascript': ['prettier'] }
 
 """
 " airline
