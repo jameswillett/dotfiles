@@ -484,6 +484,11 @@ nmap <silent>  @=':ALEPrevious<C-V><C-M>'<cr>
 nmap å <C-a>
 nmap ≈ <C-x>
 
+" bootleg ass inner _ text objects
+nmap ci_ T_ct_
+nmap ca_ T_cf_
+nmap da_ T_df_
+
 if has("mac") || has("macunix")
   nmap <D-j> <M-j>
   nmap <D-k> <M-k>
