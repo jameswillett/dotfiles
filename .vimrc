@@ -554,6 +554,7 @@ function! ToggleBool()
   endfor
 
   if !has_key(words, word)
+    echo ""
     return
   endif
 
