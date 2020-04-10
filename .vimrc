@@ -538,7 +538,7 @@ vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 
 function! ToggleBool()
   let word = expand("<cword>")
-  let words = {
+  let binary = {
   \  "false": "true",
   \  "False": "True",
   \  "FALSE": "TRUE",
@@ -549,9 +549,11 @@ function! ToggleBool()
   \  "Pickup": "Delivery",
   \}
 
-  for [k,v] in items(words)
-    let words[v] = k
+  for [k,v] in items(binary)
+    let binary[v] = k
   endfor
+  let tertiary = {}
+  let words = extend(tertiary, binary)
 
   if !has_key(words, word)
     echo ""
