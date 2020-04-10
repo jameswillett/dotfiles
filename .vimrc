@@ -539,14 +539,23 @@ vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 function! ToggleBool()
   let word = expand("<cword>")
   let binary = {
-  \  "false": "true",
-  \  "False": "True",
-  \  "FALSE": "TRUE",
-  \  "0": "1",
-  \  "f": "t",
-  \  "F": "T",
-  \  "pickup": "delivery",
-  \  "Pickup": "Delivery",
+  \   "false": "true",
+  \   "False": "True",
+  \   "FALSE": "TRUE",
+  \   "0": "1",
+  \   "f": "t",
+  \   "F": "T",
+  \   "pickup": "delivery",
+  \   "Pickup": "Delivery",
+  \   "&&": "||",
+  \   "and": "or",
+  \   "AND": "OR",
+  \   "yes": "no",
+  \   "Yes": "No",
+  \   "Y": "N",
+  \   "YES": "NO",
+  \   "!=": "==",
+  \   "!==": "===",
   \}
 
   for [k,v] in items(binary)
