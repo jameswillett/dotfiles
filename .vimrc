@@ -556,14 +556,19 @@ function! ToggleBool()
   \   "YES": "NO",
   \   "!=": "==",
   \   "!==": "===",
+  \   ">": "<",
+  \   ">=": "<=",
   \}
 
   for [k,v] in items(binary)
     let binary[v] = k
   endfor
 
-  " TODO: add more complicated & higher base toggles
-  let tertiary = {}
+  let tertiary = {
+  \   "map": "reduce",
+  \   "reduce": "filter",
+  \   "filter": "map",
+  \}
   let words = extend(tertiary, binary)
 
   if !has_key(words, word)
