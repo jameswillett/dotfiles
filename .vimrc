@@ -561,6 +561,7 @@ function! ToggleBool()
   \   "!==": "===",
   \   ">": "<",
   \   ">=": "<=",
+  \   "!": "!!",
   \}
 
   for [k,v] in items(binary)
