@@ -552,6 +552,8 @@ function! ToggleBool()
   for [k,v] in items(binary)
     let binary[v] = k
   endfor
+
+  " TODO: add more complicated & higher base toggles
   let tertiary = {}
   let words = extend(tertiary, binary)
 
