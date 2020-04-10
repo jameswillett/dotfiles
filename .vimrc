@@ -536,6 +536,33 @@ endfunction
 vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
 vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 
+function! ToggleBool()
+  let word = expand("<cword>")
+  let words = {
+  \  "false": "true",
+  \  "False": "True",
+  \  "FALSE": "TRUE",
+  \  "0": "1",
+  \  "f": "t",
+  \  "F": "T",
+  \  "pickup": "delivery",
+  \  "Pickup": "Delivery",
+  \}
+
+  for [k,v] in items(words)
+    let words[v] = k
+  endfor
+
+  if !has_key(words, word)
+    return
+  endif
+
+  let opposite = words[word]
+  execute "normal! ciw" . opposite
+endfunction
+
+nmap <silent> <leader>~ :<C-u>call ToggleBool()<CR>
+
 function! VisualSelection(direction, extra_filter) range
   let l:saved_reg = @"
   execute "normal! vgvy"
