@@ -574,6 +574,9 @@ function! ToggleBool()
 
   let opposite = g:toggle_words[word]
   execute "normal! ciw" . opposite
+  if len(opposite) > 1
+    execute "normal! b"
+  endif
 endfunction
 
 nmap <silent> <leader>~ :<C-u>call ToggleBool()<CR>
