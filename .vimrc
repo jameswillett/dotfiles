@@ -536,51 +536,43 @@ endfunction
 vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
 vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 
+let g:binary_words = {
+\   "false": "true", "False": "True", "FALSE": "TRUE",
+\   "0": "1", "f": "t", "F": "T",
+\   "pickup": "delivery", "Pickup": "Delivery",
+\   "&&": "||", "and": "or", "AND": "OR",
+\   "yes": "no", "Yes": "No", "Y": "N", "YES": "NO",
+\   "on": "off", "On": "Off", "ON": "OFF",
+\   "!=": "==", "!==": "===", ">": "<", ">=": "<=", "!": "!!",
+\}
+
+let g:ternary_words = {
+\   "map": "reduce",
+\   "reduce": "filter",
+\   "filter": "map",
+\   "soup": "salad",
+\   "salad": "sandwich",
+\   "sandwich": "soup",
+\   "Soup": "Salad",
+\   "Salad": "Sandwich",
+\   "Sandwich": "Soup",
+\}
+
+for [k,v] in items(g:binary_words)
+  let g:binary_words[v] = k
+endfor
+
+let g:toggle_words = extend(g:ternary_words, g:binary_words)
+
 function! ToggleBool()
   let word = expand("<cword>")
-  let binary = {
-  \   "false": "true",
-  \   "False": "True",
-  \   "FALSE": "TRUE",
-  \   "0": "1",
-  \   "f": "t",
-  \   "F": "T",
-  \   "pickup": "delivery",
-  \   "Pickup": "Delivery",
-  \   "&&": "||",
-  \   "and": "or",
-  \   "AND": "OR",
-  \   "yes": "no",
-  \   "Yes": "No",
-  \   "Y": "N",
-  \   "YES": "NO",
-  \   "on": "off",
-  \   "On": "Off",
-  \   "ON": "OFF",
-  \   "!=": "==",
-  \   "!==": "===",
-  \   ">": "<",
-  \   ">=": "<=",
-  \   "!": "!!",
-  \}
 
-  for [k,v] in items(binary)
-    let binary[v] = k
-  endfor
-
-  let tertiary = {
-  \   "map": "reduce",
-  \   "reduce": "filter",
-  \   "filter": "map",
-  \}
-  let words = extend(tertiary, binary)
-
-  if !has_key(words, word)
+  if !has_key(g:toggle_words, word)
     echo ""
     return
   endif
 
-  let opposite = words[word]
+  let opposite = g:toggle_words[word]
   execute "normal! ciw" . opposite
 endfunction
 
