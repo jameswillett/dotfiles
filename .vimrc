@@ -558,8 +558,16 @@ let g:ternary_words = {
 \   ">>=": "<$>",
 \}
 
+let g:haskell_binary_words = {
+\   "==": "/=",
+\}
+
 for [k,v] in items(g:binary_words)
   let g:binary_words[v] = k
+endfor
+
+for [k,v] in items(g:haskell_binary_words)
+  let g:haskell_binary_words[v] = k
 endfor
 
 let g:toggle_words = extend(g:ternary_words, g:binary_words)
@@ -567,6 +575,12 @@ let g:toggle_words = extend(g:ternary_words, g:binary_words)
 function! ToggleBool()
   let WORD = expand("<cWORD>")
   let word = expand("<cword>")
+
+  let words = g:toggle_words
+
+  if &ft == "haskell" || &ft == "tidal"
+    let words = extend(words, g:haskell_binary_words)
+  endif
 
   let opposite = 0
   if has_key(g:toggle_words, WORD)
