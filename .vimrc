@@ -533,9 +533,6 @@ function! CmdLine(str)
   call feedkeys(":" . a:str)
 endfunction
 
-vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
-vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
-
 let g:binary_words = {
 \   "false": "true", "False": "True", "FALSE": "TRUE",
 \   "0": "1", "f": "t", "F": "T",
@@ -556,6 +553,9 @@ let g:ternary_words = {
 \   "Soup": "Salad",
 \   "Salad": "Sandwich",
 \   "Sandwich": "Soup",
+\   "<$>": "<*>",
+\   "<*>": ">>=",
+\   ">>=": "<$>",
 \}
 
 for [k,v] in items(g:binary_words)
@@ -565,14 +565,19 @@ endfor
 let g:toggle_words = extend(g:ternary_words, g:binary_words)
 
 function! ToggleBool()
+  let WORD = expand("<cWORD>")
   let word = expand("<cword>")
 
-  if !has_key(g:toggle_words, word)
+  let opposite = 0
+  if has_key(g:toggle_words, WORD)
+    let opposite = g:toggle_words[WORD]
+  elseif has_key(g:toggle_words, word)
+    let opposite = g:toggle_words[word]
+  else
     echo ""
     return
   endif
 
-  let opposite = g:toggle_words[word]
   execute "normal! ciw" . opposite
   if len(opposite) > 1
     execute "normal! b"
@@ -580,6 +585,9 @@ function! ToggleBool()
 endfunction
 
 nmap <silent> <leader>~ :<C-u>call ToggleBool()<CR>
+
+vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
+vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 
 function! VisualSelection(direction, extra_filter) range
   let l:saved_reg = @"
