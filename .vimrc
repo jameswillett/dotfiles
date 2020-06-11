@@ -122,6 +122,7 @@ let g:ale_statusline_format = ['💣 %d', '🚩 %d', '']
 let g:ale_linters = {
 \   'javascript': ['eslint'],
 \   'python': ['flake8', 'pylint'],
+\   'ruby': ['rubocop'],
 \}
 let g:ale_fixers = { 'javascript': ['prettier'] }
 
@@ -179,6 +180,7 @@ let g:ycm_enable_diagnostic_highlighting = 0
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_auto_trigger = 1
+let g:ycm_language_server = [ { 'name': 'haskell', 'filetypes': [ 'haskell', 'hs', 'lhs' ], 'cmdline': [ 'hie-wrapper' , '--lsp'], 'project_root_files': [ '.stack.yaml', 'cabal.config', 'package.yaml' ] } ]
 nnoremap <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 
@@ -341,11 +343,11 @@ endfunction
 
 call s:Colors('dark', 'init')
 
-if exists('$TMUX')
-  autocmd FocusGained * call s:Colors('dark')
-  autocmd FocusLost * call s:Colors('light')
-else
-endif
+" if exists('$TMUX')
+"   autocmd FocusGained * call s:Colors('dark')
+"   autocmd FocusLost * call s:Colors('light')
+" else
+" endif
 
 
 "Set extra options when running in GUI mode
@@ -557,6 +559,12 @@ let g:ternary_words = {
 \   "<$>": "<*>",
 \   "<*>": ">>=",
 \   ">>=": "<$>",
+\   "xxs": "xs",
+\   "xs": "md",
+\   "md": "lg",
+\   "lg": "xl",
+\   "xl": "xxl",
+\   "xxl": "xxs",
 \}
 
 let g:haskell_binary_words = {
@@ -571,23 +579,33 @@ for [k,v] in items(g:haskell_binary_words)
   let g:haskell_binary_words[v] = k
 endfor
 
-let g:toggle_words = extend(g:ternary_words, g:binary_words)
+let g:reversed_ternary_words = {}
+for [k,v] in items(g:ternary_words)
+  let g:reversed_ternary_words[v] = k
+endfor
 
-function! ToggleBool()
+let g:toggle_words_forward = extend(g:ternary_words, g:binary_words)
+let g:toggle_words_reverse = extend(g:reversed_ternary_words, g:binary_words)
+
+function! ToggleBool(dir)
   let WORD = expand("<cWORD>")
   let word = expand("<cword>")
 
-  let words = g:toggle_words
+  if a:dir == 'r'
+    let words = g:toggle_words_reverse
+  else
+    let words = g:toggle_words_forward
+  endif
 
   if &ft == "haskell" || &ft == "tidal"
     let words = extend(words, g:haskell_binary_words)
   endif
 
   let opposite = 0
-  if has_key(g:toggle_words, WORD)
-    let opposite = g:toggle_words[WORD]
-  elseif has_key(g:toggle_words, word)
-    let opposite = g:toggle_words[word]
+  if has_key(words, WORD)
+    let opposite = words[WORD]
+  elseif has_key(words, word)
+    let opposite = words[word]
   else
     echo ""
     return
@@ -599,7 +617,8 @@ function! ToggleBool()
   endif
 endfunction
 
-nmap <silent> <leader>~ :<C-u>call ToggleBool()<CR>
+nmap <silent> <leader>~ :<C-u>call ToggleBool('r')<CR>
+nmap <silent> <leader>` :<C-u>call ToggleBool('f')<CR>
 
 vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
 vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
