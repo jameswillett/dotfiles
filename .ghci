@@ -1,4 +1,4 @@
-:set prompt "\ESC[1;35m\STX%s\n\ESC[1;33m\STXλ> \ESC[m\STX"
+:set prompt "\ESC[1;35m\STX%s\n\ESC[38;5;39m\ESC[48;5;240m\STX λ \ESC[38;5;240m\ESC[1;49m \ESC[m\STX"
 
 -- OverloadedStrings is often useful.
 :set -XOverloadedStrings
