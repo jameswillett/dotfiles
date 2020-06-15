@@ -24,6 +24,7 @@
 :}
 
 -- :set prompt "\ESC[38;5;39m\ESC[48;5;240m\STX λ :: \ESC[1;35m\STX%s \ESC[38;5;240m\ESC[1;49m \ESC[m\STX"
+:set prompt-cont "...  "
 :set prompt-function pf
 
 -- OverloadedStrings is often useful.
