@@ -12,7 +12,7 @@
       where (w, s'') = break p s'
 
   abbrvModule :: String -> String
-  abbrvModule mod = join' "." $ map ((:"") . head) $  wordsWhen (=='.') mod
+  abbrvModule = join' "." . map ((:"") . head) . wordsWhen (=='.')
 
   pf :: [String] -> Int -> IO String
   pf modules line = return (left ++ mods ++ right)
