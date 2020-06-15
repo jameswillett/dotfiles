@@ -24,10 +24,10 @@
   pf :: [String] -> Int -> IO String
   pf modules line = return (left ++ mods ++ right)
     where
-      showSeparator = if length modules > 0 then (lightGreyFG ++ "\57521 ") else ""
-      left = blueFG ++ greyBG ++ " λ " ++ showSeparator ++ pinkFG
-      mods = join' (" " ++ blueFG ++ "| " ++ pinkFG) $ map abbrvModule modules;
-      right = " " ++ greyFG ++ blankBG ++ "\57520 \ESC[m\STX"
+      showSeparator = if length modules > 0 then (concat [lightGreyFG, "\57521 "]) else ""
+      left          = concat [blueFG, greyBG, " λ ", showSeparator, pinkFG]
+      mods          = join' (concat [" ", blueFG, "| ", pinkFG]) $ map abbrvModule modules;
+      right         = concat [" ", greyFG, blankBG,  "\57520 \ESC[m\STX"]
 :}
 
 -- :set prompt "\ESC[38;5;39m\ESC[48;5;240m\STX λ :: \ESC[1;35m\STX%s \ESC[38;5;240m\ESC[1;49m \ESC[m\STX"
