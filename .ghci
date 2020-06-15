@@ -14,13 +14,20 @@
   abbrvModule :: String -> String
   abbrvModule = join' "." . map ((:"") . head) . wordsWhen (=='.')
 
+  greyBG      = "\ESC[48;5;238m\STX"
+  greyFG      = "\ESC[38;5;238m"
+  blueFG      = "\ESC[38;5;39m"
+  pinkFG      = "\ESC[1;35m\STX"
+  blankBG     = "\ESC[1;49m"
+  lightGreyFG = "\ESC[38;5;245m"
+
   pf :: [String] -> Int -> IO String
   pf modules line = return (left ++ mods ++ right)
     where
-      showSeparator = if length modules > 0 then "\ESC[38;5;245m\57521 " else ""
-      left = "\ESC[38;5;39m\ESC[48;5;238m\STX λ " ++ showSeparator ++ "\ESC[1;35m\STX"
-      mods = join' " \ESC[38;5;33m|\ESC[1;35m " $ map abbrvModule modules;
-      right =  " \ESC[38;5;238m\ESC[1;49m\57520 \ESC[m\STX"
+      showSeparator = if length modules > 0 then (lightGreyFG ++ "\57521 ") else ""
+      left = blueFG ++ greyBG ++ " λ " ++ showSeparator ++ pinkFG
+      mods = join' (" " ++ blueFG ++ "|" ++ pinkFG) $ map abbrvModule modules;
+      right = " " ++ greyFG ++ blankBG ++ "\57520 \ESC[m\STX"
 :}
 
 -- :set prompt "\ESC[38;5;39m\ESC[48;5;240m\STX λ :: \ESC[1;35m\STX%s \ESC[38;5;240m\ESC[1;49m \ESC[m\STX"
