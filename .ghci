@@ -1,4 +1,31 @@
-:set prompt "\ESC[1;35m\STX%s\n\ESC[38;5;39m\ESC[48;5;240m\STX λ \ESC[38;5;240m\ESC[1;49m \ESC[m\STX"
+:{
+  join' :: String -> [String] -> String
+  join' str l
+    | length l > 1  = (head l) ++ str ++ join' str (tail l)
+    | otherwise     = head l
+
+
+  wordsWhen :: (Char -> Bool) -> String -> [String]
+  wordsWhen p s =  case dropWhile p s of
+    "" -> []
+    s' -> w : wordsWhen p s''
+      where (w, s'') = break p s'
+
+  abbrvModule :: String -> String
+  abbrvModule mod = join' "." $ map ((:"") . head) $  wordsWhen (=='.') mod
+
+  pf :: [String] -> Int -> IO String
+  pf modules line = return (left ++ mods ++ right)
+    where
+      showSeparator = if length modules > 0 then "\ESC[38;5;245m\57521 " else ""
+      left = "\ESC[38;5;39m\ESC[48;5;238m\STX λ " ++ showSeparator ++ "\ESC[1;35m\STX"
+      mods = join' " \ESC[38;5;33m|\ESC[1;35m " $ map abbrvModule modules;
+      right =  " \ESC[38;5;238m\ESC[1;49m\57520 \ESC[m\STX"
+
+:}
+
+-- :set prompt "\ESC[38;5;39m\ESC[48;5;240m\STX λ :: \ESC[1;35m\STX%s \ESC[38;5;240m\ESC[1;49m \ESC[m\STX"
+:set prompt-function pf
 
 -- OverloadedStrings is often useful.
 :set -XOverloadedStrings
