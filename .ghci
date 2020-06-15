@@ -21,16 +21,22 @@
   blueFG      = "\ESC[38;5;31m\STX"
   pinkFG      = "\ESC[1;35m\STX"
   blankBG     = "\ESC[1;49m\STX"
-  lightGreyFG = "\ESC[38;5;238m\STX"
-  lightGreyBG = "\ESC[48;5;238m\STX"
+  lightGreyFG = "\ESC[38;5;240m\STX"
+  lightGreyBG = "\ESC[48;5;240m\STX"
 
   pf :: [String] -> Int -> IO String
   pf modules line = return (left ++ mods ++ right)
     where
       showSeparator  = if length modules > 0 then (concat [blueFG, greyBG, "\57520 "]) else ""
-      left           = concat [blueBG, whiteFG, " λ ", showSeparator, pinkFG]
+      left           = concat [ blueBG , whiteFG , " λ "
+                              , greyFG , "["
+                              , whiteFG , show line
+                              , greyFG , "] "
+                              , showSeparator
+                              , pinkFG
+                              ]
       mods           = join' (concat [" ", greyFG, "| ", pinkFG]) $ map abbrvModule modules;
-      powerlineColor = if length modules > 0 then blueFG else greyFG
+      powerlineColor = if length modules > 0 then greyFG else blueFG
       right          = concat [" ", powerlineColor, blankBG,  "\57520 \ESC[m\STX"]
 :}
 
