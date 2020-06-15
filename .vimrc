@@ -298,7 +298,7 @@ endfunction
 set t_ZH=[3m
 set t_ZR=[23m
 
-function! SqlHighlight()
+function! AltHighlight()
   call SyntaxRange#Include('\vQueryService(\n\s*)?\.query(One)?\((\n\s*)?`', '\v`(\n\s*)?(,|\))', 'sql')
   call SyntaxRange#Include('\vQueryService(\n\s*)?\.query(One)?\((\n\s*)?''', '\v''(\n\s*)?(,|\))?', 'sql')
   call SyntaxRange#Include('\vuery \= `', '`', 'sql')
@@ -306,9 +306,10 @@ function! SqlHighlight()
   call SyntaxRange#Include('\v(pool(\n\s*)?\.)?query\((\n\s*)?`', '\v`(\n\s*)?(,|\))', 'sql')
   call SyntaxRange#Include('\v(pool(\n\s*)?\.)?query\((\n\s*)?''', '\v''(\n\s*)?(,|\))?', 'sql')
   call SyntaxRange#Include('\v\<style((\n)?\s*)jsx','\v\/style', 'css', 'xmlTagName')
+  call SyntaxRange#Include('\v\:\{(\n)?','\v(\n)?\:\}', 'haskell')
 endfunction
 
-autocmd BufReadPost * call SqlHighlight()
+autocmd BufReadPost * call AltHighlight()
 
 function s:Colors(bg, ...)
   call s:SetTheme()
@@ -338,7 +339,6 @@ function s:Colors(bg, ...)
   hi SpecialKey ctermfg=darkgrey guifg=grey70
   hi Comment gui=italic cterm=italic
   hi CursorLineNr ctermfg=34 cterm=italic
-  call SqlHighlight()
 endfunction
 
 call s:Colors('dark', 'init')
