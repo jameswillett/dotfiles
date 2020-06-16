@@ -1,4 +1,19 @@
 :{
+  -- left to right composition
+  (>.>) :: (a -> b) -> (b -> c) -> a -> c
+  infixr 1 >.>
+  (>.>) = flip (.)
+
+  -- left to right application
+  (|>) :: a -> (a -> b) -> b
+  infixr 1 |>
+  (|>) = flip ($)
+
+  -- 2 argument right to left composition eg `add2ThenDouble = (*2) ... (+)`
+  (...) :: (b -> c) -> (a1 -> a2 -> b) -> a1 -> a2 -> c
+  infixr 1 ...
+  (...) = (.) . (.)
+
   join' :: String -> [String] -> String
   join' str l
     | length l > 1  = (head l) ++ str ++ join' str (tail l)
@@ -12,7 +27,9 @@
       where (w, s'') = break p s'
 
   abbrvModule :: String -> String
-  abbrvModule = join' "." . map ((:"") . head) . wordsWhen (=='.')
+  abbrvModule m
+    | m !! 0 == '*' = m
+    | otherwise     = join' "." $ map ((:"") . head) $ wordsWhen (=='.') m
 
   whiteFG     = "\ESC[38;5;255m\STX"
   greyBG      = "\ESC[48;5;237m\STX"
@@ -27,9 +44,9 @@
   pf :: [String] -> Int -> IO String
   pf modules line = return (left ++ mods ++ right)
     where
-      showSeparator  = if length modules > 0 then (concat [blueFG, greyBG, "\57520 "]) else ""
+      showSeparator  = if length modules > 0 then concat [blueFG, greyBG, "\57520 "] else ""
       left           = concat [ blueBG , whiteFG , " λ "
-                              , greyFG , "["
+                              , greyFG , ": ["
                               , whiteFG , show line
                               , greyFG , "] "
                               , showSeparator
