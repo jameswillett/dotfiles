@@ -14,6 +14,10 @@
   infixr 1 ...
   (...) = (.) . (.)
 
+  -- 3 argument compositon is achieved by (....) = (.) . (...)
+  -- 4 argument = (.) . (....)
+  -- etc
+
   join' :: String -> [String] -> String
   join' _   []     = ""
   join' _   [x]    = x
@@ -26,9 +30,8 @@
       where (w, s'') = break p s'
 
   abbrvModule :: String -> String
-  abbrvModule m
-    | m !! 0 == '*' = m
-    | otherwise     = join' "." $ map ((:"") . head) $ wordsWhen (=='.') m
+  abbrvModule ('*':xs) = '*':xs
+  abbrvModule m        = join' "." $ map ((:"") . head) $ wordsWhen (=='.') m
 
   whiteFG     = "\ESC[38;5;255m\STX"
   greyBG      = "\ESC[48;5;237m\STX"
