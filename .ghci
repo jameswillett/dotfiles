@@ -21,9 +21,9 @@
   data PromptStyle = PromptNormal | PromptCont
 
   join' :: String -> [String] -> String
-  join' _   []     = ""
+  join' _   []     = mempty
   join' _   [x]    = x
-  join' str (x:xs) = x ++ str ++ join' str xs
+  join' str (x:xs) = concat [x, str, join' str xs]
 
   wordsWhen :: (Char -> Bool) -> String -> [String]
   wordsWhen p s =  case dropWhile p s of
@@ -35,41 +35,39 @@
   abbrvModule ('*':xs) = '*':xs
   abbrvModule m        = join' "." $ map ((:"") . head) $ wordsWhen (=='.') m
 
-  whiteFG     = "\ESC[38;5;255m\STX"
-  greyBG      = "\ESC[48;5;237m\STX"
-  greyFG      = "\ESC[38;5;237m\STX"
-  blueBG      = "\ESC[48;5;31m\STX"
-  blueFG      = "\ESC[38;5;31m\STX"
-  pinkFG      = "\ESC[1;35m\STX"
-  blankBG     = "\ESC[1;49m\STX"
-  lightGreyFG = "\ESC[38;5;240m\STX"
-  lightGreyBG = "\ESC[48;5;240m\STX"
-
   promptFunction :: PromptStyle -> [String] -> Int -> IO String
-  promptFunction promptStyle modules line = return (left ++ mods ++ right)
+  promptFunction promptStyle modules line = return $ concat [left, mods, right]
     where
-      hasModules        = length modules > 0
-      (mainBG, arrowFG) = case promptStyle of
-                            PromptNormal -> (blueBG,      blueFG      )
-                            PromptCont   -> (lightGreyBG, lightGreyFG )
+      whiteFG     = "\ESC[38;5;255m\STX"
+      greyBG      = "\ESC[48;5;237m\STX"
+      greyFG      = "\ESC[38;5;237m\STX"
+      blueBG      = "\ESC[48;5;31m\STX"
+      blueFG      = "\ESC[38;5;31m\STX"
+      pinkFG      = "\ESC[1;35m\STX"
+      blankBG     = "\ESC[1;49m\STX"
+      lightGreyFG = "\ESC[38;5;240m\STX"
+      lightGreyBG = "\ESC[48;5;240m\STX"
 
-      (showSeparator, powerlineColor) =
-        case hasModules of
-          True -> (concat [arrowFG, greyBG, "\57520 "],  greyFG )
-          _    -> (mempty,                               arrowFG)
+      (mainBG, arrowFG) =
+        case promptStyle of
+          PromptNormal -> (blueBG,      blueFG      )
+          PromptCont   -> (lightGreyBG, lightGreyFG )
+
+      (powerlineColor, showSeparator) =
+        case length modules of
+          0 -> (arrowFG,  mempty                              )
+          _ -> (greyFG,   concat [arrowFG, greyBG, "\57520 "] )
 
       mods   = join' (concat [" ", greyFG, "| ", pinkFG]) $ map abbrvModule modules
-      right  =
-        concat
-          [" ", powerlineColor, blankBG,  "\57520 \ESC[m\STX"]
-      left   =
-        concat [ mainBG , whiteFG , " λ "
-               , greyFG , ": ["
-               , whiteFG , show line
-               , greyFG , "] "
-               , showSeparator
-               , pinkFG
-               ]
+      right  = concat [" ", powerlineColor, blankBG,  "\57520 \ESC[m\STX"]
+      left   = concat
+                [ mainBG , whiteFG , " λ "
+                , greyFG , ": ["
+                , whiteFG , show line
+                , greyFG , "] "
+                , showSeparator
+                , pinkFG
+                ]
 :}
 
 :set prompt-cont-function  promptFunction PromptCont
