@@ -58,9 +58,9 @@
           0 -> (arrowFG,  mempty                              )
           _ -> (greyFG,   concat [arrowFG, greyBG, "\57520 "] )
 
-      mods   = join' (concat [" ", greyFG, "| ", pinkFG]) $ map abbrvModule modules
-      right  = concat [" ", powerlineColor, blankBG,  "\57520 \ESC[m\STX"]
-      left   = concat
+      mods  = join' (concat [" ", greyFG, "| ", pinkFG]) $ map abbrvModule modules
+      right = concat [" ", powerlineColor, blankBG,  "\57520 \ESC[m\STX"]
+      left  = concat
                 [ mainBG , whiteFG , " λ "
                 , greyFG , ": ["
                 , whiteFG , show line
