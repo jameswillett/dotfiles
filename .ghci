@@ -20,24 +20,24 @@
 
   data PromptStyle = PromptNormal | PromptCont
 
-  join' :: String -> [String] -> String
-  join' _   []     = mempty
-  join' _   [x]    = x
-  join' str (x:xs) = concat [x, str, join' str xs]
-
-  wordsWhen :: (Char -> Bool) -> String -> [String]
-  wordsWhen p s =  case dropWhile p s of
-    "" -> []
-    s' -> w : wordsWhen p s''
-      where (w, s'') = break p s'
-
-  abbrvModule :: String -> String
-  abbrvModule ('*':xs) = '*':xs
-  abbrvModule m        = join' "." $ map ((:"") . head) $ wordsWhen (=='.') m
-
   promptFunction :: PromptStyle -> [String] -> Int -> IO String
   promptFunction promptStyle modules line = return $ concat [left, mods, right]
     where
+      join' :: String -> [String] -> String
+      join' _   []     = mempty
+      join' _   [x]    = x
+      join' str (x:xs) = concat [x, str, join' str xs]
+
+      wordsWhen :: (Char -> Bool) -> String -> [String]
+      wordsWhen p s =  case dropWhile p s of
+        "" -> []
+        s' -> w : wordsWhen p s''
+          where (w, s'') = break p s'
+
+      abbrvModule :: String -> String
+      abbrvModule ('*':xs) = '*':xs
+      abbrvModule m        = join' "." $ map ((:"") . head) $ wordsWhen (=='.') m
+
       whiteFG     = "\ESC[38;5;255m\STX"
       greyBG      = "\ESC[48;5;237m\STX"
       greyFG      = "\ESC[38;5;237m\STX"
