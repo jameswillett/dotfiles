@@ -18,6 +18,8 @@
   -- 4 argument = (.) . (....)
   -- etc
 
+  data PromptStyle = PromptNormal | PromptCont
+
   join' :: String -> [String] -> String
   join' _   []     = ""
   join' _   [x]    = x
@@ -43,33 +45,35 @@
   lightGreyFG = "\ESC[38;5;240m\STX"
   lightGreyBG = "\ESC[48;5;240m\STX"
 
-  promptFunction :: Bool -> [String] -> Int -> IO String
-  promptFunction isCont modules line = return (left ++ mods ++ right)
+  promptFunction :: PromptStyle -> [String] -> Int -> IO String
+  promptFunction promptStyle modules line = return (left ++ mods ++ right)
     where
-      mainBG         = if isCont then lightGreyBG else blueBG
-      arrowFG        = if isCont then lightGreyFG else blueFG
-      showSeparator  = if length modules > 0 then concat [arrowFG, greyBG, "\57520 "] else ""
-      left           = concat [ mainBG , whiteFG , " λ "
-                              , greyFG , ": ["
-                              , whiteFG , show line
-                              , greyFG , "] "
-                              , showSeparator
-                              , pinkFG
-                              ]
-      mods           = join' (concat [" ", greyFG, "| ", pinkFG]) $ map abbrvModule modules;
-      powerlineColor = if length modules > 0 then greyFG else arrowFG
-      right          = concat [" ", powerlineColor, blankBG,  "\57520 \ESC[m\STX"]
+      hasModules        = length modules > 0
+      (mainBG, arrowFG) = case promptStyle of
+                            PromptNormal -> (blueBG,      blueFG      )
+                            PromptCont   -> (lightGreyBG, lightGreyFG )
 
-  pf :: [String] -> Int -> IO String
-  pf = promptFunction False
+      (showSeparator, powerlineColor) =
+        case hasModules of
+          True -> (concat [arrowFG, greyBG, "\57520 "],  greyFG )
+          _    -> (mempty,                               arrowFG)
 
-  pcf :: [String] -> Int -> IO String
-  pcf = promptFunction True
+      mods   = join' (concat [" ", greyFG, "| ", pinkFG]) $ map abbrvModule modules
+      right  =
+        concat
+          [" ", powerlineColor, blankBG,  "\57520 \ESC[m\STX"]
+      left   =
+        concat [ mainBG , whiteFG , " λ "
+               , greyFG , ": ["
+               , whiteFG , show line
+               , greyFG , "] "
+               , showSeparator
+               , pinkFG
+               ]
 :}
 
--- :set prompt "\ESC[38;5;39m\ESC[48;5;240m\STX λ :: \ESC[1;35m\STX%s \ESC[38;5;240m\ESC[1;49m \ESC[m\STX"
-:set prompt-cont-function pcf
-:set prompt-function pf
+:set prompt-cont-function  promptFunction PromptCont
+:set prompt-function       promptFunction PromptNormal
 
 -- OverloadedStrings is often useful.
 :set -XOverloadedStrings
