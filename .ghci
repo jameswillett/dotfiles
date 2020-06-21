@@ -19,8 +19,11 @@
   -- etc
 
   data PromptStyle = PromptNormal | PromptCont
+  type Module      = String
+  type Prompt      = String
+  type LineNumber  = Int
 
-  promptFunction :: PromptStyle -> [String] -> Int -> IO String
+  promptFunction :: PromptStyle -> [Module] -> LineNumber -> IO Prompt
   promptFunction promptStyle modules line = return $ concat [left, mods, right]
     where
       join' :: String -> [String] -> String
