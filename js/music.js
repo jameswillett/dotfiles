@@ -18,14 +18,14 @@ const timeString = (rawSeconds) => {
 };
 
 const v = (num, muted = false) => {
-  if (num == 0 || muted) return '✘';
-  if (num < 15) return '▁';
-  if (num < 30) return '▂';
-  if (num < 45) return '▃';
-  if (num < 60) return '▄';
-  if (num < 75) return '▅';
-  if (num < 88) return '▆';
-  if (num < 100) return '▇';
+  if (num == 0 || muted) return '遼 ';
+  if (num < 15) return '蓼▁';
+  if (num < 30) return '蓼▂';
+  if (num < 45) return '蓼▃';
+  if (num < 60) return '蓼▄';
+  if (num < 75) return '蓼▅';
+  if (num < 88) return '蓼▆';
+  if (num < 100) return '蓼▇';
   return '█';
 };
 
@@ -52,7 +52,7 @@ applescript.execFile(`${process.env.HOME}/configs/scripts/music`, (err, d) => {
   const width = process.argv[3];
   const { app, fg, bg, system } = getRunningApp(d);
   const sysVol = (background) =>
-    `#[fg=colour240,bg=colour${background},bold]#[fg=colour39,bg=colour240] 🔈 ${v(system.volume, system.muted)}`;
+    `#[fg=colour240,bg=colour${background},bold]#[fg=colour39,bg=colour240] ${v(system.volume, system.muted)}`;
   if (!app || !app.running) return console.log(sysVol(lastBg));
   const {
     shuffling, repeating, state,
@@ -60,8 +60,8 @@ applescript.execFile(`${process.env.HOME}/configs/scripts/music`, (err, d) => {
     artist, title, volume,
   } = app;
 
-  const r = repeating ? ' ⟳' : '';
-  const s = state === 'playing' ? '►' : '✘';
+  const r = repeating ? ' ' : '';
+  const s = state === 'playing' ? '' : '';
   const shuf = shuffling ? ' ⤭' : '';
   const playStates = width > 200 ? `[ #[bold]${s}${shuf}${r}#[nobold] ]` : s;
 
