@@ -132,6 +132,21 @@ let g:ale_fixers = { 'javascript': ['prettier'] }
 """
 
 let g:airline_powerline_fonts = 1
+let g:filetype_icons = {
+      \ 'vim': '',
+      \ 'haskell': '',
+      \ 'javascript.jsx': '',
+      \ 'ruby': '',
+      \ 'python': '',
+    \}
+
+function! AddFTGlyph(...)
+  if has_key(g:filetype_icons, &ft)
+    let w:airline_section_x = &ft . ' ' . g:filetype_icons[&ft] . ' '
+  endif
+endfunction
+
+autocmd VimEnter * call airline#add_statusline_func('AddFTGlyph')
 
 """
 " match tag always
