@@ -22,6 +22,21 @@
   type Modules     = [String]
   type Prompt      = String
   type LineNumber  = Int
+  type PromptColor = String
+
+  whiteFG     = "\ESC[38;5;255m\STX"
+  greyBG      = "\ESC[48;5;237m\STX"
+  greyFG      = "\ESC[38;5;237m\STX"
+  blueBG      = "\ESC[48;5;31m\STX"
+  blueFG      = "\ESC[38;5;31m\STX"
+  pinkFG      = "\ESC[1;35m\STX"
+  blankBG     = "\ESC[1;49m\STX"
+  lightGreyFG = "\ESC[38;5;240m\STX"
+  lightGreyBG = "\ESC[48;5;240m\STX"
+
+  getPromptStyle :: PromptStyle -> (PromptColor, PromptColor)
+  getPromptStyle PromptNormal = (blueBG,      blueFG      )
+  getPromptStyle PromptCont   = (lightGreyBG, lightGreyFG )
 
   promptFunction :: PromptStyle -> Modules -> LineNumber -> IO Prompt
   promptFunction promptStyle modules line = return $ concat [left, mods, right]
@@ -41,20 +56,7 @@
       abbrvModule ('*':xs) = '*':xs
       abbrvModule m        = join' "." $ map ((:"") . head) $ wordsWhen (=='.') m
 
-      whiteFG     = "\ESC[38;5;255m\STX"
-      greyBG      = "\ESC[48;5;237m\STX"
-      greyFG      = "\ESC[38;5;237m\STX"
-      blueBG      = "\ESC[48;5;31m\STX"
-      blueFG      = "\ESC[38;5;31m\STX"
-      pinkFG      = "\ESC[1;35m\STX"
-      blankBG     = "\ESC[1;49m\STX"
-      lightGreyFG = "\ESC[38;5;240m\STX"
-      lightGreyBG = "\ESC[48;5;240m\STX"
-
-      (mainBG, arrowFG) =
-        case promptStyle of
-          PromptNormal -> (blueBG,      blueFG      )
-          PromptCont   -> (lightGreyBG, lightGreyFG )
+      (mainBG, arrowFG) = getPromptStyle promptStyle
 
       (powerlineColor, showSeparator) =
         case length modules of
