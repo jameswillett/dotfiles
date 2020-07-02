@@ -135,6 +135,7 @@ let g:airline_powerline_fonts = 1
 let g:filetype_icons = {
       \ 'vim': '',
       \ 'haskell': '',
+      \ 'tidal': '',
       \ 'javascript.jsx': '',
       \ 'ruby': '',
       \ 'python': '',
@@ -142,7 +143,7 @@ let g:filetype_icons = {
 
 function! AddFTGlyph(...)
   if has_key(g:filetype_icons, &ft)
-    let w:airline_section_x = &ft . ' ' . g:filetype_icons[&ft] . ' '
+    let w:airline_section_x = g:filetype_icons[&ft]
   endif
 endfunction
 
