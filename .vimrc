@@ -30,7 +30,7 @@ Plugin 'mileszs/ack.vim'
 Plugin 'moll/vim-node'
 Plugin 'mxw/vim-jsx'
 Plugin 'nathanaelkane/vim-indent-guides'
-" Plugin 'neoclide/coc.nvim'
+Plugin 'neoclide/coc.nvim'
 Plugin 'othree/es.next.syntax.vim'
 Plugin 'othree/yajs.vim'
 Plugin 'ruanyl/vim-gh-line'
@@ -50,7 +50,8 @@ Plugin 'tpope/vim-unimpaired'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'vim-scripts/ReplaceWithRegister'
 Plugin 'w0rp/ale'
-Plugin 'ycm-core/YouCompleteMe'
+" Plugin 'ycm-core/YouCompleteMe'
+" Plugin 'neovimhaskell/nvim-hs.vim'
 
 " plugins to extend text objects
 Plugin 'kana/vim-textobj-user'
@@ -360,11 +361,11 @@ endfunction
 
 call s:Colors('dark', 'init')
 
-" if exists('$TMUX')
-"   autocmd FocusGained * call s:Colors('dark')
-"   autocmd FocusLost * call s:Colors('light')
-" else
-" endif
+if exists('$TMUX')
+  autocmd FocusGained * call s:Colors('dark')
+  autocmd FocusLost * call s:Colors('light')
+else
+endif
 
 
 "Set extra options when running in GUI mode
@@ -704,5 +705,5 @@ augroup suffixes
     endfor
 augroup END
 set mouse=
-set ttymouse=
+" set ttymouse=
 

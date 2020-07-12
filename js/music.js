@@ -26,7 +26,7 @@ const v = (num, muted = false) => {
   if (num < 75) return '蓼▅';
   if (num < 88) return '蓼▆';
   if (num < 100) return '蓼▇';
-  return '█';
+  return '蓼█';
 };
 
 const getRunningApp = (data) => {
