@@ -580,6 +580,8 @@ let g:ternary_words = {
 \   ">>=": "<$>",
 \   "xxs": "xs",
 \   "xs": "md",
+\   "xs": "sm",
+\   "sm": "md",
 \   "md": "lg",
 \   "lg": "xl",
 \   "xl": "xxl",
