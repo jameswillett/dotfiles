@@ -127,6 +127,7 @@ let g:ale_linters = {
 \   'ruby': ['rubocop'],
 \}
 let g:ale_fixers = { 'javascript': ['prettier'] }
+let g:ale_haskell_ghc_options = '-package random'
 
 """
 " airline
@@ -198,7 +199,7 @@ let g:ycm_enable_diagnostic_highlighting = 0
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_auto_trigger = 1
-let g:ycm_language_server = [ { 'name': 'haskell', 'filetypes': [ 'haskell', 'hs', 'lhs' ], 'cmdline': [ 'hie-wrapper' , '--lsp'], 'project_root_files': [ '.stack.yaml', 'cabal.config', 'package.yaml' ] } ]
+" let g:ycm_language_server = [ { 'name': 'haskell', 'filetypes': [ 'haskell', 'hs', 'lhs' ], 'cmdline': [ 'hie-wrapper' , '--lsp'], 'project_root_files': [ '.stack.yaml', 'cabal.config', 'package.yaml' ] } ]
 nnoremap <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 
