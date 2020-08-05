@@ -21,7 +21,7 @@ Plugin 'Yggdroot/LeaderF'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'dikiaap/minimalist'
-Plugin 'dstein64/vim-startuptime'
+" Plugin 'dstein64/vim-startuptime'
 Plugin 'elmcast/elm-vim'
 Plugin 'heavenshell/vim-jsdoc'
 Plugin 'inkarkat/vim-SyntaxRange'
@@ -50,6 +50,7 @@ Plugin 'tpope/vim-unimpaired'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'vim-scripts/ReplaceWithRegister'
 Plugin 'w0rp/ale'
+Plugin 'mhinz/vim-startify'
 " Plugin 'ycm-core/YouCompleteMe'
 " Plugin 'neovimhaskell/nvim-hs.vim'
 
@@ -79,7 +80,7 @@ filetype plugin indent on    " required
 " nerdtree
 """
 autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 let g:NERDTreeWinSize=35
 map <leader>nn :NERDTreeToggle<cr>
 map <leader>nb :NERDTreeFromBookmark<Space>
