@@ -59,8 +59,7 @@ Plugin 'kana/vim-textobj-user'
 Plugin 'michaeljsmith/vim-indent-object' " dii
 Plugin 'nelstrom/vim-textobj-rubyblock' " dir
 Plugin 'vim-scripts/argtextobj.vim' " dia
-
-source ~/configs/scripts/BufOnly.vim
+Plugin 'vim-scripts/BufOnly.vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
