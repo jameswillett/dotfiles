@@ -50,7 +50,7 @@ Plugin 'tpope/vim-unimpaired'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'vim-scripts/ReplaceWithRegister'
 Plugin 'w0rp/ale'
-Plugin 'mhinz/vim-startify'
+" Plugin 'mhinz/vim-startify'
 " Plugin 'ycm-core/YouCompleteMe'
 " Plugin 'neovimhaskell/nvim-hs.vim'
 
