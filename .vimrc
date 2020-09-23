@@ -353,8 +353,8 @@ function s:Colors(bg, ...)
   hi clear SignColumn
   hi Pmenu ctermfg=15 ctermbg=0
   hi ColorColumn ctermbg=60 ctermfg=7
-  hi IndentGuidesOdd ctermbg=235
-  hi IndentGuidesEven ctermbg=236
+  hi IndentGuidesOdd ctermbg=236
+  hi IndentGuidesEven ctermbg=237
   hi NonText ctermfg=darkgrey guifg=grey70
   hi SpecialKey ctermfg=darkgrey guifg=grey70
   hi Comment gui=italic cterm=italic
