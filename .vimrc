@@ -21,6 +21,7 @@ Plugin 'Yggdroot/LeaderF'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'dikiaap/minimalist'
+Plugin 'morhetz/gruvbox'
 " Plugin 'dstein64/vim-startuptime'
 Plugin 'elmcast/elm-vim'
 Plugin 'heavenshell/vim-jsdoc'
@@ -309,7 +310,7 @@ endif
 
 function s:SetTheme()
   try
-    colorscheme minimalist
+    colorscheme gruvbox
   catch
   endtry
 endfunction
@@ -338,11 +339,11 @@ function s:Colors(bg, ...)
 
     if exists('$TMUX')
       if exists(':AirlineTheme')
-        AirlineTheme minimalist
+        AirlineTheme gruvbox
       endif
     endif
   elseif a:bg == 'light'
-    set background=light
+    " set background=dark
 
     if exists('$TMUX')
       hi Normal ctermfg=245 cterm=NONE guifg=NONE gui=NONE
