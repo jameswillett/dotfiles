@@ -335,7 +335,7 @@ function s:Colors(bg, ...)
   call s:SetTheme()
 
   if a:bg == 'dark'
-    set background=dark
+    " set background=dark
 
     if exists('$TMUX')
       if exists(':AirlineTheme')
@@ -346,7 +346,7 @@ function s:Colors(bg, ...)
     " set background=dark
 
     if exists('$TMUX')
-      hi Normal ctermfg=245 cterm=NONE guifg=NONE gui=NONE
+      hi Normal ctermfg=245 cterm=NONE guifg=NONE gui=NONE ctermbg=black
       AirlineTheme base16_twilight
     endif
   endif
