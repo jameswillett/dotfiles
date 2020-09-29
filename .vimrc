@@ -48,12 +48,15 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
+Plugin 'tpope/vim-rails'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'vim-scripts/ReplaceWithRegister'
+Plugin 'sirosen/vim-rockstar'
 Plugin 'w0rp/ale'
 " Plugin 'mhinz/vim-startify'
 " Plugin 'ycm-core/YouCompleteMe'
 " Plugin 'neovimhaskell/nvim-hs.vim'
+Plugin 'neovimhaskell/haskell-vim'
 
 " plugins to extend text objects
 Plugin 'kana/vim-textobj-user'
@@ -297,6 +300,9 @@ set thesaurus+=~/.vim/thesaurus/mthesaur.txt
 nmap Q :echo "i bet you didnt want to go to EX mode... hit alt-Q to actually enter EX mode"<cr>
 nnoremap Œ Q
 nnoremap q: q::echo "its cuz you typed q: ya dummy"<cr>
+command! Q :q
+command! Qa :qa
+command! QA :qa
 
 " spell check off by default
 autocmd VimEnter * :set nospell
@@ -359,6 +365,11 @@ function s:Colors(bg, ...)
   hi SpecialKey ctermfg=darkgrey guifg=grey70
   hi Comment gui=italic cterm=italic
   hi CursorLineNr ctermfg=34 cterm=italic
+
+  " vanilla hs gruvbox colors are a little bland
+  hi! link hsVarSym GruvboxBlue
+  hi! link hsDelimiter GruvboxYellow 
+  hi! link ConId GruvboxFg4
 endfunction
 
 call s:Colors('dark', 'init')
