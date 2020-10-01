@@ -57,6 +57,7 @@ Plugin 'w0rp/ale'
 " Plugin 'ycm-core/YouCompleteMe'
 " Plugin 'neovimhaskell/nvim-hs.vim'
 Plugin 'neovimhaskell/haskell-vim'
+Plugin 'mityu/vim-applescript'
 
 " plugins to extend text objects
 Plugin 'kana/vim-textobj-user'
