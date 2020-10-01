@@ -111,7 +111,7 @@ const mapDay = d => ({
 });
 
 const errorMessage = blob => {
-  console.log(`#[fg=#ff0000,bold]could not get weather. last ran at ${blob.locale.timestamp}#[nobold]`);
+  console.log(`#[fg=#ff0000,bold]could not get weather. last ran at #[fg=#ff69b4]${blob.locale.timestamp}#[nobold]`);
 };
 
 if ((now.getSeconds() === 0 || invokeImmediately) && isFirstSession) {
