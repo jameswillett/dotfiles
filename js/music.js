@@ -39,6 +39,7 @@ const getRunningApp = (data) => {
     } else if (itunes && itunes.running) {
       return itunes;
     }
+    return {};
   })();
 
   const fg = 232;
