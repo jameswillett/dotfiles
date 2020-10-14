@@ -477,6 +477,11 @@ nmap ‘ <Plug>(GitGutterNextHunk)
 
 nnoremap <leader>% :MtaJumpToOtherTag<cr>
 
+" "complicated" mapping to get into and out of insert mode
+" with a clutch
+nmap <S-F1> i
+imap <S-F2> <esc>
+
 try
   set switchbuf=useopen,usetab,newtab
   set stal=2
