@@ -340,18 +340,15 @@ autocmd BufReadPost * call AltHighlight()
 
 function s:Colors(bg, ...)
   call s:SetTheme()
+  set background=dark
 
   if a:bg == 'dark'
-    " set background=dark
-
     if exists('$TMUX')
       if exists(':AirlineTheme')
         AirlineTheme gruvbox
       endif
     endif
   elseif a:bg == 'light'
-    " set background=dark
-
     if exists('$TMUX')
       hi Normal ctermfg=245 cterm=NONE guifg=NONE gui=NONE ctermbg=black
       AirlineTheme base16_twilight
