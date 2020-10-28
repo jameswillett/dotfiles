@@ -110,6 +110,10 @@ const mapDay = d => ({
   moonPhase: d.moonPhase,
 });
 
+const errorMessage = blob => {
+  console.log(`#[fg=#ff0000,bold]could not get weather. last ran at #[fg=#ff69b4]${blob.locale.timestamp}#[nobold]`);
+};
+
 if ((now.getSeconds() === 0 || invokeImmediately) && isFirstSession) {
   getIpInfo()
     .then((ipInfo) => {
@@ -126,11 +130,13 @@ if ((now.getSeconds() === 0 || invokeImmediately) && isFirstSession) {
     })
     .then((d) => {
       if (invokeImmediately) console.log('weather: ', d);
+      if (d.error) return errorMessage(d);
       const { currently, hourly, daily, minutely } = d;
+      const isUnavailable = !!d.flags['darksky-unavailable'];
       const later = hourly.data[0];
       const [ today, tomorrow, ...restOfDays] = daily.data;
       const sigPrecip = currently.precipIntensity >= PRECIP_THRESH;
-      const nextPrecip = minutely.data.find((m, i) => {
+      const nextPrecip = !isUnavailable && minutely.data.find((m, i) => {
         if (i === 0) return;
         if (sigPrecip) return m.precipIntensity < PRECIP_THRESH;
         return m.precipIntensity >= PRECIP_THRESH;
@@ -149,6 +155,7 @@ if ((now.getSeconds() === 0 || invokeImmediately) && isFirstSession) {
         today: mapDay(today),
         tomorrow: mapDay(tomorrow),
         minutely,
+        isUnavailable,
         nextPrecip,
         extendedForecast: restOfDays.map(mapDay),
       };
@@ -161,14 +168,16 @@ if ((now.getSeconds() === 0 || invokeImmediately) && isFirstSession) {
           lat: d.latitude,
           lng: d.longitude,
         },
+        error: false,
         poweredBy: 'Dark Sky (https://darksky.net/poweredby/)',
       }, null, '  ');
       fs.writeFileSync(lastWeather, cached, { encoding: 'utf8' });
       if (invokeImmediately) console.log('parts: ', parts);
       console.log(string);
     }).catch((e) => {
-      console.log(e);
-      console.log('');
+      const error = { error: true, locale: { timestamp: new Date() } };
+      fs.writeFileSync(lastWeather, error, { encoding: 'utf-8' });
+      errorMessage(error);
     });
 } else {
   try {

@@ -39,6 +39,7 @@ const getRunningApp = (data) => {
     } else if (itunes && itunes.running) {
       return itunes;
     }
+    return {};
   })();
 
   const fg = 232;
@@ -46,7 +47,7 @@ const getRunningApp = (data) => {
   return { app, fg, bg, system };
 };
 
-applescript.execFile(`${process.env.HOME}/configs/scripts/music`, (err, d) => {
+applescript.execFile(`${process.env.HOME}/configs/scripts/music.applescript`, (err, d) => {
   if (err) return console.log(err);
   const lastBg = process.argv[2];
   const width = process.argv[3];

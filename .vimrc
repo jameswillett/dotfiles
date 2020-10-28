@@ -57,6 +57,7 @@ Plugin 'w0rp/ale'
 " Plugin 'ycm-core/YouCompleteMe'
 " Plugin 'neovimhaskell/nvim-hs.vim'
 Plugin 'neovimhaskell/haskell-vim'
+Plugin 'mityu/vim-applescript'
 
 " plugins to extend text objects
 Plugin 'kana/vim-textobj-user'
@@ -234,7 +235,7 @@ let g:Lf_CommandMap = {'<Up>': [], '<C-Up>': ['<Up>'], '<Down>': [], '<C-Down>':
 """
 
 let g:ackhighlight = 1
-let g:ack_use_dispatch = 1
+" let g:ack_use_dispatch = 1
 
 """
 " vim-jsdoc
@@ -339,18 +340,15 @@ autocmd BufReadPost * call AltHighlight()
 
 function s:Colors(bg, ...)
   call s:SetTheme()
+  set background=dark
 
   if a:bg == 'dark'
-    " set background=dark
-
     if exists('$TMUX')
       if exists(':AirlineTheme')
         AirlineTheme gruvbox
       endif
     endif
   elseif a:bg == 'light'
-    " set background=dark
-
     if exists('$TMUX')
       hi Normal ctermfg=245 cterm=NONE guifg=NONE gui=NONE ctermbg=black
       AirlineTheme base16_twilight
@@ -387,6 +385,10 @@ if has("gui_running")
   set guioptions-=e
   set t_Co=256
   set guitablabel=%M\ %t
+  try
+    set guifont=JetBrainsMono\ Nerd\ Font:h11
+  catch
+  endtry
 endif
 
 nmap <leader>so :source ~/.vimrc<cr>
@@ -475,6 +477,11 @@ nmap “ <Plug>(GitGutterPrevHunk)
 nmap ‘ <Plug>(GitGutterNextHunk)
 
 nnoremap <leader>% :MtaJumpToOtherTag<cr>
+
+" "complicated" mapping to get into and out of insert mode
+" with a clutch
+nmap <S-F1> i
+imap <S-F2> <esc>
 
 try
   set switchbuf=useopen,usetab,newtab
