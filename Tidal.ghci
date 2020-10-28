@@ -1,3 +1,4 @@
+:script ~/.vim/bundle/vim-tidal/Tidal.ghci
 :{
   -- squashes a pattern of fractionals to a pattern of ints
   irange :: (RealFrac a, Num b) => Pattern a -> Pattern a -> Pattern a -> Pattern b
