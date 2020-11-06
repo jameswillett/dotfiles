@@ -235,7 +235,7 @@ let g:Lf_CommandMap = {'<Up>': [], '<C-Up>': ['<Up>'], '<Down>': [], '<C-Down>':
 """
 
 let g:ackhighlight = 1
-" let g:ack_use_dispatch = 1
+let g:ack_use_dispatch = 1
 
 """
 " vim-jsdoc
