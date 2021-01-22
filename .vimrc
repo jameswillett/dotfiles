@@ -58,6 +58,7 @@ Plugin 'w0rp/ale'
 " Plugin 'neovimhaskell/nvim-hs.vim'
 Plugin 'neovimhaskell/haskell-vim'
 Plugin 'mityu/vim-applescript'
+Plugin 'ap/vim-css-color'
 
 " plugins to extend text objects
 Plugin 'kana/vim-textobj-user'
@@ -520,6 +521,7 @@ vmap <silent> u <esc>u
 " move forward or back eslint errors. works with counts
 nmap <silent> Ô @=':ALENext<C-V><C-M>'<cr>
 nmap <silent>  @=':ALEPrevious<C-V><C-M>'<cr>
+nmap <silent> <leader>af :ALEFix<CR>
 
 " map alt-a/alt-x to ctrl-a/ctrl-x, respectively
 nmap å <C-a>
