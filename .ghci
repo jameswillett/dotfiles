@@ -1,0 +1,98 @@
+:{
+  -- left to right composition
+  (>.>) :: (a -> b) -> (b -> c) -> a -> c
+  infixr 1 >.>
+  (>.>) = flip (.)
+
+  -- left to right application
+  (|>) :: a -> (a -> b) -> b
+  infixr 1 |>
+  (|>) = flip ($)
+
+  -- 2 argument right to left composition eg `add2ThenDouble = (*2) ... (+)`
+  (...) :: (b -> c) -> (a1 -> a2 -> b) -> a1 -> a2 -> c
+  infixr 1 ...
+  (...) = (.) . (.)
+
+  -- 3 argument compositon is achieved by (....) = (.) . (...)
+  -- 4 argument = (.) . (....)
+  -- etc
+
+  data PromptStyle = PromptNormal | PromptCont
+  type Modules     = [String]
+  type Prompt      = String
+  type LineNumber  = Int
+  type PromptColor = String
+
+  whiteFG     = "\ESC[38;5;255m\STX"
+  greyBG      = "\ESC[48;5;237m\STX"
+  greyFG      = "\ESC[38;5;237m\STX"
+  blueBG      = "\ESC[48;5;31m\STX"
+  blueFG      = "\ESC[38;5;31m\STX"
+  pinkFG      = "\ESC[1;35m\STX"
+  blankBG     = "\ESC[1;49m\STX"
+  lightGreyFG = "\ESC[38;5;240m\STX"
+  lightGreyBG = "\ESC[48;5;240m\STX"
+
+  getPromptStyle :: PromptStyle -> (PromptColor, PromptColor)
+  getPromptStyle PromptNormal = (blueBG,      blueFG      )
+  getPromptStyle PromptCont   = (lightGreyBG, lightGreyFG )
+
+  promptFunction :: PromptStyle -> Modules -> LineNumber -> IO Prompt
+  promptFunction promptStyle modules line = return $ concat [left, mods, right]
+    where
+      join' :: String -> [String] -> String
+      join' _   []     = mempty
+      join' _   [x]    = x
+      join' str (x:xs) = concat [x, str, join' str xs]
+
+      wordsWhen :: (Char -> Bool) -> String -> [String]
+      wordsWhen p s =  case dropWhile p s of
+        "" -> []
+        s' -> w : wordsWhen p s''
+          where (w, s'') = break p s'
+
+      abbrvModule :: String -> String
+      abbrvModule ('*':xs) = '*':xs
+      abbrvModule m        = join' "." $ map ((:"") . head) $ wordsWhen (=='.') m
+
+      (mainBG, arrowFG) = getPromptStyle promptStyle
+
+      (powerlineColor, showSeparator) =
+        case length modules of
+          0 -> (arrowFG,  mempty                              )
+          _ -> (greyFG,   concat [arrowFG, greyBG, "\57520 "] )
+
+      mods  = join' (concat [" ", greyFG, "| ", pinkFG]) $ map abbrvModule modules
+      right = concat [" ", powerlineColor, blankBG,  "\57520 \ESC[m\STX"]
+      left  = concat
+                [ mainBG , whiteFG , " λ "
+                , greyFG , ": ["
+                , whiteFG , show line
+                , greyFG , "] "
+                , showSeparator
+                , pinkFG
+                ]
+:}
+
+:set prompt-cont-function  promptFunction PromptCont
+:set prompt-function       promptFunction PromptNormal
+
+-- OverloadedStrings is often useful.
+:set -XOverloadedStrings
+
+-- Scoped type variables is often useful so we can specify the types
+-- of variables (for example, in lambda expressions).
+:set -XScopedTypeVariables
+
+-- useful for import from specified package
+:set -XPackageImports
+
+-- Show the types of evaluated expressions
+:set +t
+
+-- And stats
+:set +s
+
+-- Enable multi-line expressions with :{ and :}
+:set +m

@@ -21,7 +21,8 @@ Plugin 'Yggdroot/LeaderF'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'dikiaap/minimalist'
-Plugin 'dstein64/vim-startuptime'
+Plugin 'morhetz/gruvbox'
+" Plugin 'dstein64/vim-startuptime'
 Plugin 'elmcast/elm-vim'
 Plugin 'heavenshell/vim-jsdoc'
 Plugin 'inkarkat/vim-SyntaxRange'
@@ -30,33 +31,41 @@ Plugin 'mileszs/ack.vim'
 Plugin 'moll/vim-node'
 Plugin 'mxw/vim-jsx'
 Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'neoclide/coc.nvim'
 Plugin 'othree/es.next.syntax.vim'
 Plugin 'othree/yajs.vim'
 Plugin 'ruanyl/vim-gh-line'
+Plugin 'ryanoasis/vim-devicons'
 Plugin 'scrooloose/nerdtree'
 Plugin 'supercollider/scvim'
 Plugin 'tidalcycles/vim-tidal'
 Plugin 'tmux-plugins/vim-tmux-focus-events'
 Plugin 'tpope/vim-abolish'
-Plugin 'tpope/vim-airline'
+Plugin 'vim-airline/vim-airline'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
+Plugin 'tpope/vim-rails'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'vim-scripts/ReplaceWithRegister'
+Plugin 'sirosen/vim-rockstar'
 Plugin 'w0rp/ale'
-Plugin 'ycm-core/YouCompleteMe'
+" Plugin 'mhinz/vim-startify'
+" Plugin 'ycm-core/YouCompleteMe'
+" Plugin 'neovimhaskell/nvim-hs.vim'
+Plugin 'neovimhaskell/haskell-vim'
+Plugin 'mityu/vim-applescript'
+Plugin 'ap/vim-css-color'
 
 " plugins to extend text objects
 Plugin 'kana/vim-textobj-user'
 Plugin 'michaeljsmith/vim-indent-object' " dii
 Plugin 'nelstrom/vim-textobj-rubyblock' " dir
 Plugin 'vim-scripts/argtextobj.vim' " dia
-
-source ~/configs/scripts/BufOnly.vim
+Plugin 'vim-scripts/BufOnly.vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -121,13 +130,32 @@ let g:ale_statusline_format = ['💣 %d', '🚩 %d', '']
 let g:ale_linters = {
 \   'javascript': ['eslint'],
 \   'python': ['flake8', 'pylint'],
+\   'ruby': ['rubocop'],
 \}
+let g:ale_fixers = { 'javascript': ['prettier'] }
+let g:ale_haskell_ghc_options = '-package random'
 
 """
 " airline
 """
 
 let g:airline_powerline_fonts = 1
+let g:filetype_icons = {
+      \ 'vim': '',
+      \ 'haskell': '',
+      \ 'tidal': '',
+      \ 'javascript.jsx': '',
+      \ 'ruby': '',
+      \ 'python': '',
+    \}
+
+function! AddFTGlyph(...)
+  if has_key(g:filetype_icons, &ft)
+    let w:airline_section_x = g:filetype_icons[&ft]
+  endif
+endfunction
+
+autocmd VimEnter * call airline#add_statusline_func('AddFTGlyph')
 
 """
 " match tag always
@@ -177,6 +205,7 @@ let g:ycm_enable_diagnostic_highlighting = 0
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_auto_trigger = 1
+" let g:ycm_language_server = [ { 'name': 'haskell', 'filetypes': [ 'haskell', 'hs', 'lhs' ], 'cmdline': [ 'hie-wrapper' , '--lsp'], 'project_root_files': [ '.stack.yaml', 'cabal.config', 'package.yaml' ] } ]
 nnoremap <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 
@@ -273,6 +302,9 @@ set thesaurus+=~/.vim/thesaurus/mthesaur.txt
 nmap Q :echo "i bet you didnt want to go to EX mode... hit alt-Q to actually enter EX mode"<cr>
 nnoremap Œ Q
 nnoremap q: q::echo "its cuz you typed q: ya dummy"<cr>
+command! Q :q
+command! Qa :qa
+command! QA :qa
 
 " spell check off by default
 autocmd VimEnter * :set nospell
@@ -286,7 +318,7 @@ endif
 
 function s:SetTheme()
   try
-    colorscheme minimalist
+    colorscheme gruvbox
   catch
   endtry
 endfunction
@@ -294,7 +326,7 @@ endfunction
 set t_ZH=[3m
 set t_ZR=[23m
 
-function s:SqlHighlight()
+function! AltHighlight()
   call SyntaxRange#Include('\vQueryService(\n\s*)?\.query(One)?\((\n\s*)?`', '\v`(\n\s*)?(,|\))', 'sql')
   call SyntaxRange#Include('\vQueryService(\n\s*)?\.query(One)?\((\n\s*)?''', '\v''(\n\s*)?(,|\))?', 'sql')
   call SyntaxRange#Include('\vuery \= `', '`', 'sql')
@@ -302,38 +334,41 @@ function s:SqlHighlight()
   call SyntaxRange#Include('\v(pool(\n\s*)?\.)?query\((\n\s*)?`', '\v`(\n\s*)?(,|\))', 'sql')
   call SyntaxRange#Include('\v(pool(\n\s*)?\.)?query\((\n\s*)?''', '\v''(\n\s*)?(,|\))?', 'sql')
   call SyntaxRange#Include('\v\<style((\n)?\s*)jsx','\v\/style', 'css', 'xmlTagName')
+  call SyntaxRange#Include('\v\:\{(\n)?','\v(\n)?\:\}', 'haskell')
 endfunction
 
-autocmd BufReadPost * call s:SqlHighlight()
+autocmd BufReadPost * call AltHighlight()
 
 function s:Colors(bg, ...)
   call s:SetTheme()
+  set background=dark
 
   if a:bg == 'dark'
-    set background=dark
-
     if exists('$TMUX')
       if exists(':AirlineTheme')
-        AirlineTheme minimalist
+        AirlineTheme gruvbox
       endif
     endif
   elseif a:bg == 'light'
-    set background=light
-
     if exists('$TMUX')
-      hi Normal ctermfg=245 cterm=NONE guifg=NONE gui=NONE
+      hi Normal ctermfg=245 cterm=NONE guifg=NONE gui=NONE ctermbg=black
       AirlineTheme base16_twilight
     endif
   endif
   hi clear SignColumn
   hi Pmenu ctermfg=15 ctermbg=0
   hi ColorColumn ctermbg=60 ctermfg=7
-  hi IndentGuidesOdd ctermbg=235
-  hi IndentGuidesEven ctermbg=236
+  hi IndentGuidesOdd ctermbg=236
+  hi IndentGuidesEven ctermbg=237
   hi NonText ctermfg=darkgrey guifg=grey70
   hi SpecialKey ctermfg=darkgrey guifg=grey70
   hi Comment gui=italic cterm=italic
-  call s:SqlHighlight()
+  hi CursorLineNr ctermfg=34 cterm=italic
+
+  " vanilla hs gruvbox colors are a little bland
+  hi! link hsVarSym GruvboxBlue
+  hi! link hsDelimiter GruvboxYellow 
+  hi! link ConId GruvboxFg4
 endfunction
 
 call s:Colors('dark', 'init')
@@ -351,6 +386,10 @@ if has("gui_running")
   set guioptions-=e
   set t_Co=256
   set guitablabel=%M\ %t
+  try
+    set guifont=JetBrainsMono\ Nerd\ Font:h11
+  catch
+  endtry
 endif
 
 nmap <leader>so :source ~/.vimrc<cr>
@@ -440,6 +479,11 @@ nmap ‘ <Plug>(GitGutterNextHunk)
 
 nnoremap <leader>% :MtaJumpToOtherTag<cr>
 
+" "complicated" mapping to get into and out of insert mode
+" with a clutch
+nmap <S-F1> i
+imap <S-F2> <esc>
+
 try
   set switchbuf=useopen,usetab,newtab
   set stal=2
@@ -477,10 +521,16 @@ vmap <silent> u <esc>u
 " move forward or back eslint errors. works with counts
 nmap <silent> Ô @=':ALENext<C-V><C-M>'<cr>
 nmap <silent>  @=':ALEPrevious<C-V><C-M>'<cr>
+nmap <silent> <leader>af :ALEFix<CR>
 
 " map alt-a/alt-x to ctrl-a/ctrl-x, respectively
 nmap å <C-a>
 nmap ≈ <C-x>
+
+" bootleg ass inner _ text objects
+nmap ci_ T_ct_
+nmap ca_ T_cf_
+nmap da_ T_df_
 
 if has("mac") || has("macunix")
   nmap <D-j> <M-j>
@@ -526,6 +576,119 @@ function! CmdLine(str)
   call feedkeys(":" . a:str)
 endfunction
 
+let g:binary_words = {
+\   "false": "true", "False": "True", "FALSE": "TRUE",
+\   "0": "1", "f": "t", "F": "T",
+\   "pickup": "delivery", "Pickup": "Delivery",
+\   "&&": "||", "and": "or", "AND": "OR",
+\   "yes": "no", "Yes": "No", "Y": "N", "YES": "NO",
+\   "on": "off", "On": "Off", "ON": "OFF",
+\   "!=": "==", "!==": "===", ">": "<", ">=": "<=", "!": "!!",
+\}
+
+let g:ternary_words = {
+\   "map": "reduce",
+\   "reduce": "filter",
+\   "filter": "map",
+\   "soup": "salad",
+\   "salad": "sandwich",
+\   "sandwich": "soup",
+\   "Soup": "Salad",
+\   "Salad": "Sandwich",
+\   "Sandwich": "Soup",
+\   "<$>": "<*>",
+\   "<*>": ">>=",
+\   ">>=": "<$>",
+\   "xxs": "xs",
+\   "xs": "sm",
+\   "sm": "md",
+\   "md": "lg",
+\   "lg": "xl",
+\   "xl": "xxl",
+\   "xxl": "xxs",
+\   "monday": "tuesday",
+\   "tuesday": "wednesday",
+\   "wednesday": "thursday",
+\   "thursday": "friday",
+\   "friday": "saturday",
+\   "saturday": "sunday",
+\   "sunday": "monday",
+\   "Monday": "Tuesday",
+\   "Tuesday": "Wednesday",
+\   "Wednesday": "Thursday",
+\   "Thursday": "Friday",
+\   "Friday": "Saturday",
+\   "Saturday": "Sunday",
+\   "Sunday": "Monday",
+\   "mon": "tues",
+\   "tues": "wed",
+\   "wed": "thurs",
+\   "thurs": "fri",
+\   "fri": "sat",
+\   "sat": "sun",
+\   "sun": "mon",
+\   "Mon": "Tues",
+\   "Tues": "Wed",
+\   "Wed": "Thurs",
+\   "Thurs": "Fri",
+\   "Fri": "Sat",
+\   "Sat": "Sun",
+\   "Sun": "Mon",
+\}
+
+let g:haskell_binary_words = {
+\   "==": "/=",
+\}
+
+for [k,v] in items(g:binary_words)
+  let g:binary_words[v] = k
+endfor
+
+for [k,v] in items(g:haskell_binary_words)
+  let g:haskell_binary_words[v] = k
+endfor
+
+let g:reversed_ternary_words = {}
+for [k,v] in items(g:ternary_words)
+  let g:reversed_ternary_words[v] = k
+endfor
+
+let g:toggle_words_forward = extend(g:ternary_words, g:binary_words)
+let g:toggle_words_reverse = extend(g:reversed_ternary_words, g:binary_words)
+
+function! ToggleBool(dir)
+  let WORD = expand("<cWORD>")
+  let word = expand("<cword>")
+
+  if a:dir == 'r'
+    let words = g:toggle_words_reverse
+  else
+    let words = g:toggle_words_forward
+  endif
+
+  if &ft == "haskell" || &ft == "tidal"
+    let words = extend(words, g:haskell_binary_words)
+  endif
+
+  let opposite = 0
+  if has_key(words, WORD)
+    let opposite = words[WORD]
+  elseif has_key(words, word)
+    let opposite = words[word]
+  else
+    echo ""
+    return
+  endif
+
+  execute "normal! ciw" . opposite
+  if len(opposite) > 1
+    execute "normal! b"
+  endif
+endfunction
+
+nmap <silent> <leader>~ :<C-u>call ToggleBool('r')<CR>
+nmap <silent> <leader>` :<C-u>call ToggleBool('f')<CR>
+
 vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
 vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 
@@ -563,7 +726,159 @@ augroup suffixes
     for ft in associations
         execute "autocmd FileType " . ft[0] . " setlocal suffixesadd=" . ft[1]
     endfor
-augroup END
+  augroup END
 set mouse=
-set ttymouse=
+" set ttymouse=
 
+
+
+
+
+
+" this is just the default coc code from the readme
+
+
+
+
+
+
+
+" Give more space for displaying messages.
+set cmdheight=2
+
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
+
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+if has("patch-8.1.1564")
+  " Recently vim can merge signcolumn and number column into one
+  set signcolumn=number
+else
+  set signcolumn=yes
+endif
+
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : coc#refresh()
+
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+inoremap <silent><expr> <C-TAB> coc#refresh()
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+" position. Coc only does snippet and additional edit on confirm.
+" <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
+if exists('*complete_info')
+  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+else
+  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+endif
+
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
+" Formatting selected code.
+" xmap <leader>f  <Plug>(coc-format-selected)
+" nmap <leader>f  <Plug>(coc-format-selected)
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Applying codeAction to the selected region.
+" Example: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap keys for applying codeAction to the current buffer.
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Map function and class text objects
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
+
+" Use CTRL-S for selections ranges.
+" Requires 'textDocument/selectionRange' support of LS, ex: coc-tsserver
+nmap <silent> <C-s> <Plug>(coc-range-select)
+xmap <silent> <C-s> <Plug>(coc-range-select)
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocAction('format')
+
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+" Add (Neo)Vim's native statusline support.
+" NOTE: Please see `:h coc-status` for integrations with external plugins that
+" provide custom statusline: lightline.vim, vim-airline.
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+" Mappings for CoCList
+" Show all diagnostics.
+nnoremap <silent><nowait> <leader>ca  :<C-u>CocList diagnostics<cr>
+" Manage extensions.
+nnoremap <silent><nowait> <leader>ce  :<C-u>CocList extensions<cr>
+" Show commands.
+nnoremap <silent><nowait> <leader>cc  :<C-u>CocList commands<cr>
+" Find symbol of current document.
+nnoremap <silent><nowait> <leader>oc  :<C-u>CocList outline<cr>
+" Search workspace symbols.
+nnoremap <silent><nowait> <leader>cs  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent><nowait> <leader>cj  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent><nowait> <leader>ck  :<C-u>CocPrev<CR>
+" Resume latest coc list.
+nnoremap <silent><nowait> <leader>cp  :<C-u>CocListResume<CR>)

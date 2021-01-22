@@ -4,16 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "applescript": "^1.0.0",
     "axios": "^0.19.0",
-    "oauth": "^0.9.15"
+    "bplist-parser": "^0.2.0",
+    "oauth": "^0.9.15",
+    "ramda": "^0.27.1"
   },
   "devDependencies": {
-    "eslint": "^6.8.0"
+    "eslint": "^6.8.0",
+    "jest": "^26.4.2"
   }
 }

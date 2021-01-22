@@ -1,0 +1,21 @@
+:script ~/.vim/bundle/vim-tidal/Tidal.ghci
+:{
+  -- squashes a pattern of fractionals to a pattern of ints
+  irange :: (RealFrac a, Num b) => Pattern a -> Pattern a -> Pattern a -> Pattern b
+  irange min max = ((fromIntegral . round) <$>) . range min max
+
+  tidalPrompt :: PromptStyle -> Modules -> LineNumber -> IO Prompt
+  tidalPrompt promptStyle modules line =
+    return $
+    concat [ bg, whiteFG, " tidal "
+           , greyFG, ": ["
+           , whiteFG , show line
+           , greyFG, "]"
+           , fg, blankBG, "\57520 \ESC[m\STX"
+           ]
+      where
+        (bg, fg) = getPromptStyle promptStyle
+:}
+
+:set prompt-function      tidalPrompt PromptNormal
+:set prompt-cont-function tidalPrompt PromptCont
