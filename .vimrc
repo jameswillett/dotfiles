@@ -59,6 +59,8 @@ Plugin 'w0rp/ale'
 Plugin 'neovimhaskell/haskell-vim'
 Plugin 'mityu/vim-applescript'
 Plugin 'ap/vim-css-color'
+Plugin 'peitalin/vim-jsx-typescript'
+Plugin 'leafgarland/typescript-vim'
 
 " plugins to extend text objects
 Plugin 'kana/vim-textobj-user'
