@@ -58,9 +58,9 @@ Plugin 'w0rp/ale'
 " Plugin 'neovimhaskell/nvim-hs.vim'
 Plugin 'neovimhaskell/haskell-vim'
 Plugin 'mityu/vim-applescript'
-Plugin 'ap/vim-css-color'
 Plugin 'peitalin/vim-jsx-typescript'
 Plugin 'leafgarland/typescript-vim'
+Plugin 'ap/vim-css-color'
 
 " plugins to extend text objects
 Plugin 'kana/vim-textobj-user'
@@ -335,7 +335,7 @@ function! AltHighlight()
   call SyntaxRange#Include('\vsql \= `', '`', 'sql')
   call SyntaxRange#Include('\v(pool(\n\s*)?\.)?query\((\n\s*)?`', '\v`(\n\s*)?(,|\))', 'sql')
   call SyntaxRange#Include('\v(pool(\n\s*)?\.)?query\((\n\s*)?''', '\v''(\n\s*)?(,|\))?', 'sql')
-  call SyntaxRange#Include('\v\<style((\n)?\s*)jsx','\v\/style', 'css', 'xmlTagName')
+  call SyntaxRange#Include('\v\<style(.*)jsx','\v\/style', 'css', 'xmlTagName')
   call SyntaxRange#Include('\v\:\{(\n)?','\v(\n)?\:\}', 'haskell')
 endfunction
 
