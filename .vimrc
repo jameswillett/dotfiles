@@ -61,6 +61,8 @@ Plugin 'mityu/vim-applescript'
 Plugin 'peitalin/vim-jsx-typescript'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'ap/vim-css-color'
+Plugin 'xavierchow/vim-swagger-preview'
+Plugin 'yardnsm/vim-import-cost'
 
 " plugins to extend text objects
 Plugin 'kana/vim-textobj-user'
@@ -134,7 +136,11 @@ let g:ale_linters = {
 \   'python': ['flake8', 'pylint'],
 \   'ruby': ['rubocop'],
 \}
-let g:ale_fixers = { 'javascript': ['prettier'] }
+let g:ale_fixers = {
+\   'javascript': ['prettier', 'eslint'],
+\   'typescript': ['prettier', 'eslint'],
+\   'typescriptreact': ['prettier', 'eslint'],
+\}
 let g:ale_haskell_ghc_options = '-package random'
 
 """
@@ -373,13 +379,16 @@ function s:Colors(bg, ...)
   hi! link ConId GruvboxFg4
 endfunction
 
-call s:Colors('dark', 'init')
+autocmd VimEnter * call s:Colors('dark', 'init')
+autocmd BufReadPost *.tsx,*.ts,*.js,*.jsx :ImportCost
 
-if exists('$TMUX')
-  autocmd FocusGained * call s:Colors('dark')
-  autocmd FocusLost * call s:Colors('light')
-else
-endif
+
+" this was cool while it lasted but working in big files would make nvim chug
+" if exists('$TMUX')
+"   autocmd FocusGained * call s:Colors('dark')
+"   autocmd FocusLost * call s:Colors('light')
+" else
+" endif
 
 
 "Set extra options when running in GUI mode
@@ -392,6 +401,13 @@ if has("gui_running")
     set guifont=JetBrainsMono\ Nerd\ Font:h11
   catch
   endtry
+endif
+
+if has('nvim-0.4.3') || has('patch-8.2.0750')
+          nnoremap <nowait><expr> <C-p> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+          nnoremap <nowait><expr> <C-n> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+          inoremap <nowait><expr> <C-p> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+          inoremap <nowait><expr> <C-n> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
 endif
 
 nmap <leader>so :source ~/.vimrc<cr>
