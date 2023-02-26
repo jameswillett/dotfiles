@@ -6,88 +6,75 @@ let mapleader = ","
 autocmd!
 runtime macros/matchit.vim
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
-
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-
-Plugin 'Valloric/MatchTagAlways'
-Plugin 'Xuyuanp/nerdtree-git-plugin'
-Plugin 'Yggdroot/LeaderF'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'dikiaap/minimalist'
-Plugin 'morhetz/gruvbox'
-" Plugin 'dstein64/vim-startuptime'
-Plugin 'elmcast/elm-vim'
-Plugin 'heavenshell/vim-jsdoc'
-Plugin 'inkarkat/vim-SyntaxRange'
-Plugin 'junegunn/gv.vim'
-Plugin 'mileszs/ack.vim'
-Plugin 'moll/vim-node'
-Plugin 'mxw/vim-jsx'
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'neoclide/coc.nvim'
-Plugin 'othree/es.next.syntax.vim'
-Plugin 'othree/yajs.vim'
-Plugin 'ruanyl/vim-gh-line'
-Plugin 'ryanoasis/vim-devicons'
-Plugin 'scrooloose/nerdtree'
-Plugin 'supercollider/scvim'
-Plugin 'tidalcycles/vim-tidal'
-Plugin 'tmux-plugins/vim-tmux-focus-events'
-Plugin 'tpope/vim-abolish'
-Plugin 'vim-airline/vim-airline'
-Plugin 'tpope/vim-commentary'
-Plugin 'tpope/vim-dispatch'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-obsession'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'tpope/vim-rails'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'vim-scripts/ReplaceWithRegister'
-Plugin 'sirosen/vim-rockstar'
-Plugin 'dense-analysis/ale'
-" Plugin 'mhinz/vim-startify'
-" Plugin 'ycm-core/YouCompleteMe'
-" Plugin 'neovimhaskell/nvim-hs.vim'
-Plugin 'neovimhaskell/haskell-vim'
-Plugin 'mityu/vim-applescript'
-Plugin 'peitalin/vim-jsx-typescript'
-Plugin 'leafgarland/typescript-vim'
-Plugin 'ap/vim-css-color'
-Plugin 'xavierchow/vim-swagger-preview'
-Plugin 'yardnsm/vim-import-cost'
-Plugin 'digitaltoad/vim-pug'
-Plugin 'andweeb/presence.nvim'
+call plug#begin('~/.vim/plugged')
+" The default plugin directory will be as follows:
+"   - Vim (Linux/macOS): '~/.vim/plugged'
+"   - Vim (Windows): '~/vimfiles/plugged'
+"   - Neovim (Linux/macOS/Windows): stdpath('data') . '/plugged'
+" You can specify a custom plugin directory by passing it as the argument
+"   - e.g. `call plug#begin('~/.vim/plugged')`
+"   - Avoid using standard Vim directory names like 'plugin'
+Plug 'Valloric/MatchTagAlways'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'Yggdroot/LeaderF'
+Plug 'airblade/vim-gitgutter'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'dikiaap/minimalist'
+Plug 'morhetz/gruvbox'
+Plug 'elmcast/elm-vim'
+Plug 'heavenshell/vim-jsdoc'
+Plug 'inkarkat/vim-SyntaxRange'
+Plug 'junegunn/gv.vim'
+Plug 'mileszs/ack.vim'
+Plug 'moll/vim-node'
+Plug 'mxw/vim-jsx'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'neoclide/coc.nvim'
+Plug 'othree/es.next.syntax.vim'
+Plug 'othree/yajs.vim'
+Plug 'ruanyl/vim-gh-line'
+Plug 'ryanoasis/vim-devicons'
+Plug 'scrooloose/nerdtree'
+Plug 'supercollider/scvim'
+Plug 'tidalcycles/vim-tidal'
+Plug 'tmux-plugins/vim-tmux-focus-events'
+Plug 'tpope/vim-abolish'
+Plug 'vim-airline/vim-airline'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-obsession'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-rails'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'vim-scripts/ReplaceWithRegister'
+Plug 'sirosen/vim-rockstar'
+Plug 'dense-analysis/ale'
+Plug 'neovimhaskell/haskell-vim'
+Plug 'mityu/vim-applescript'
+Plug 'peitalin/vim-jsx-typescript'
+Plug 'leafgarland/typescript-vim'
+Plug 'ap/vim-css-color'
+Plug 'xavierchow/vim-swagger-preview'
+Plug 'yardnsm/vim-import-cost'
+Plug 'digitaltoad/vim-pug'
+Plug 'andweeb/presence.nvim'
 
 " plugins to extend text objects
-Plugin 'kana/vim-textobj-user'
-Plugin 'michaeljsmith/vim-indent-object' " dii
-Plugin 'nelstrom/vim-textobj-rubyblock' " dir
-Plugin 'vim-scripts/argtextobj.vim' " dia
-Plugin 'vim-scripts/BufOnly.vim'
+Plug 'kana/vim-textobj-user'
+Plug 'michaeljsmith/vim-indent-object' " dii
+Plug 'nelstrom/vim-textobj-rubyblock' " dir
+Plug 'vim-scripts/argtextobj.vim' " dia
+Plug 'vim-scripts/BufOnly.vim'
 
-call vundle#end()            " required
-filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
-
+" Initialize plugin system
+" - Automatically executes `filetype plugin indent on` and `syntax enable`.
+call plug#end()
+" You can revert the settings after the call like so:
+"   filetype indent off   " Disable file-type-specific indentation
+"   syntax off            " Disable syntax highlighting
 """
 " nerdtree
 """
@@ -145,6 +132,7 @@ let g:ale_fixers = {
 \   'typescriptreact': ['prettier', 'eslint'],
 \}
 let g:ale_haskell_ghc_options = '-package random'
+let g:ale_typescript_tsserver_use_global = 1
 
 """
 " airline
