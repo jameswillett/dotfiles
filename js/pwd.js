@@ -70,6 +70,9 @@ const segments = [
   unmergedCommits ? ` #[fg=#bbbbff]${unmergedCommits}⬇︎` : '',
   unpushedCommits ? ` #[fg=#bbbbff]${unpushedCommits}⬆` : '',
   statusString ? ` [${statusString}#[fg=#ffaa00]]` : '',
-];
+].reduce((acc, c) => {
+  if (!c) return acc;
+  return `${acc}#[fg=#ffaa00]${c}`;
+});
 
-console.log(segments.join('#[fg=#ffaa00]'));
+console.log(segments);

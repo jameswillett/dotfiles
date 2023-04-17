@@ -58,9 +58,14 @@ Plug 'peitalin/vim-jsx-typescript'
 Plug 'leafgarland/typescript-vim'
 Plug 'ap/vim-css-color'
 Plug 'xavierchow/vim-swagger-preview'
-Plug 'yardnsm/vim-import-cost'
+Plug 'yardnsm/vim-import-cost', { 'do': 'npm install --production' }
 Plug 'digitaltoad/vim-pug'
 Plug 'andweeb/presence.nvim'
+Plug 'ElijahLynn/sourcegraph-vim'
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
 
 " plugins to extend text objects
 Plug 'kana/vim-textobj-user'
@@ -130,8 +135,10 @@ let g:ale_fixers = {
 \   'javascript': ['prettier', 'eslint'],
 \   'typescript': ['prettier', 'eslint'],
 \   'typescriptreact': ['prettier', 'eslint'],
+\   'haskell': ['brittany', 'hlint'],
 \}
 let g:ale_haskell_ghc_options = '-package random'
+let g:ale_linters = { 'haskell': ['hlint'] }
 let g:ale_typescript_tsserver_use_global = 1
 
 """
@@ -195,19 +202,6 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=236
 autocmd FileType isml setlocal shiftwidth=4 tabstop=4
 
 """
-" ycm
-"""
-
-let g:ycm_min_num_of_chars_for_completion = 4
-let g:ycm_min_num_identifier_candidate_chars = 4
-let g:ycm_enable_diagnostic_highlighting = 0
-let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_autoclose_preview_window_after_completion = 1
-let g:ycm_auto_trigger = 1
-" let g:ycm_language_server = [ { 'name': 'haskell', 'filetypes': [ 'haskell', 'hs', 'lhs' ], 'cmdline': [ 'hie-wrapper' , '--lsp'], 'project_root_files': [ '.stack.yaml', 'cabal.config', 'package.yaml' ] } ]
-
-
-"""
 " tidal vim stuff
 """
 
@@ -241,6 +235,14 @@ let g:ack_use_dispatch = 1
 """
 
 nmap <silent> <leader>jd <Plug>(jsdoc)
+
+"""
+" LSP stuff
+"""
+
+let g:LanguageClient_serverCommands = {
+    \ 'haskell': ['haskell-language-server-9.0.2']
+    \ }
 
 
 let g:gh_trace=1
@@ -344,19 +346,15 @@ function s:Colors(bg, ...)
   set background=dark
 
   if a:bg == 'dark'
-    if exists('$TMUX')
-      if exists(':AirlineTheme')
-        AirlineTheme gruvbox
-      endif
+    if exists(':AirlineTheme')
+      AirlineTheme gruvbox
     endif
   elseif a:bg == 'light'
-    if exists('$TMUX')
-      hi Normal ctermfg=245 cterm=NONE guifg=NONE gui=NONE ctermbg=black
-      AirlineTheme base16_twilight
-    endif
+    hi Normal ctermfg=245 cterm=NONE guifg=NONE gui=NONE ctermbg=black
+    AirlineTheme base16_twilight
   endif
   hi clear SignColumn
-  hi Pmenu ctermfg=15 ctermbg=0
+  hi Pmenu ctermfg=15 ctermbg=234
   hi ColorColumn ctermbg=60 ctermfg=7
   hi IndentGuidesOdd ctermbg=236
   hi IndentGuidesEven ctermbg=237
