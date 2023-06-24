@@ -132,9 +132,9 @@ let g:ale_linters = {
 \   'ruby': ['rubocop'],
 \}
 let g:ale_fixers = {
-\   'javascript': ['prettier', 'eslint'],
-\   'typescript': ['prettier', 'eslint'],
-\   'typescriptreact': ['prettier', 'eslint'],
+\   'javascript': ['eslint'],
+\   'typescript': ['eslint'],
+\   'typescriptreact': ['eslint'],
 \   'haskell': ['brittany', 'hlint'],
 \}
 let g:ale_haskell_ghc_options = '-package random'
