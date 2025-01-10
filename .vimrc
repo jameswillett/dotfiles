@@ -16,7 +16,7 @@ call plug#begin('~/.vim/plugged')
 "   - Avoid using standard Vim directory names like 'plugin'
 Plug 'Valloric/MatchTagAlways'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'Yggdroot/LeaderF'
+Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
 Plug 'airblade/vim-gitgutter'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'dikiaap/minimalist'
@@ -129,7 +129,7 @@ let g:ale_statusline_format = ['💣 %d', '🚩 %d', '']
 let g:ale_linters = {
 \   'javascript': ['eslint'],
 \   'python': ['flake8', 'pylint'],
-\   'ruby': ['rubocop'],
+\   'ruby': ['standardrb'],
 \}
 let g:ale_fixers = {
 \   'javascript': ['eslint'],
@@ -137,7 +137,7 @@ let g:ale_fixers = {
 \   'typescriptreact': ['eslint'],
 \   'haskell': ['brittany', 'hlint'],
 \}
-let g:ale_haskell_ghc_options = '-package random'
+let g:ale_haskell_ghc_options = '-package random -package xmonad-contrib -package X11 -package xmonad'
 let g:ale_linters = { 'haskell': ['hlint'] }
 let g:ale_typescript_tsserver_use_global = 1
 
@@ -335,7 +335,7 @@ function! AltHighlight()
   call SyntaxRange#Include('\vsql \= `', '`', 'sql')
   call SyntaxRange#Include('\v(pool(\n\s*)?\.)?query\((\n\s*)?`', '\v`(\n\s*)?(,|\))', 'sql')
   call SyntaxRange#Include('\v(pool(\n\s*)?\.)?query\((\n\s*)?''', '\v''(\n\s*)?(,|\))?', 'sql')
-  call SyntaxRange#Include('\v\<style(.*)jsx','\v\/style', 'css', 'xmlTagName')
+  call SyntaxRange#Include('\v\<style(.*)jsx','\v(`)?\<\/style', 'css', 'xmlTagName')
   call SyntaxRange#Include('\v\:\{(\n)?','\v(\n)?\:\}', 'haskell')
 endfunction
 
@@ -746,6 +746,8 @@ set mouse=
 " this is just the default coc code from the readme
 
 
+
+let g:coc_global_extensions = ['coc-solargraph']
 
 
 
