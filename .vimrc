@@ -1,5 +1,5 @@
 set nocompatible              " be iMproved, required
-filetype off                  " required
+filetype plugin on
 
 let mapleader = ","
 
@@ -93,24 +93,6 @@ let NERDTreeShowHidden=1
 let g:NERDTreeShowIgnoredStatus = 1
 
 """
-" syntastic
-"""
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_aggregate_errors = 1
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_warning_symbol = "∆"
-let g:syntastic_style_error_symbol = '⁉️'
-let g:syntastic_style_warning_symbol = '💩'
-
-
-"""
 " fugitive
 """
 
@@ -121,7 +103,6 @@ set statusline+=%{FugitiveStatusLine()}
 """
 
 let g:ale_sign_error = "💩"
-let g:syntastic_warning_symbol = "🤔"
 let g:airline#extensions#ale#enabled = 1
 let g:ale_sign_offset = 1000000
 let g:ale_sign_warning = '🤔'
@@ -130,15 +111,16 @@ let g:ale_linters = {
 \   'javascript': ['eslint'],
 \   'python': ['flake8', 'pylint'],
 \   'ruby': ['standardrb'],
+\   'haskell': ['brittany', 'hlint'],
 \}
 let g:ale_fixers = {
 \   'javascript': ['eslint'],
 \   'typescript': ['eslint'],
 \   'typescriptreact': ['eslint'],
 \   'haskell': ['brittany', 'hlint'],
+\   'ruby': ['standardrb'],
 \}
 let g:ale_haskell_ghc_options = '-package random -package xmonad-contrib -package X11 -package xmonad'
-let g:ale_linters = { 'haskell': ['hlint'] }
 let g:ale_typescript_tsserver_use_global = 1
 
 """
