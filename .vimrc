@@ -109,17 +109,20 @@ let g:ale_sign_warning = '🤔'
 let g:ale_statusline_format = ['💣 %d', '🚩 %d', '']
 let g:ale_linters = {
 \   'javascript': ['eslint'],
+\   'typescript': ['eslint', 'tslint', 'tsserver'],
+\   'typescriptreact': ['eslint', 'tslint', 'tsserver'],
 \   'python': ['flake8', 'pylint'],
 \   'ruby': ['standardrb'],
 \   'haskell': ['brittany', 'hlint'],
 \}
 let g:ale_fixers = {
-\   'javascript': ['eslint'],
-\   'typescript': ['eslint'],
-\   'typescriptreact': ['eslint'],
+\   'javascript': ['eslint', 'prettier'],
+\   'typescript': ['eslint', 'prettier'],
+\   'typescriptreact': ['eslint', 'prettier'],
 \   'haskell': ['brittany', 'hlint'],
 \   'ruby': ['standardrb'],
 \}
+
 let g:ale_haskell_ghc_options = '-package random -package xmonad-contrib -package X11 -package xmonad'
 let g:ale_typescript_tsserver_use_global = 1
 
