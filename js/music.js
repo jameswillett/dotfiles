@@ -18,15 +18,15 @@ const timeString = (rawSeconds) => {
 };
 
 const v = (num, muted = false) => {
-  if (num == 0 || muted) return '遼 ';
-  if (num < 15) return '蓼▁';
-  if (num < 30) return '蓼▂';
-  if (num < 45) return '蓼▃';
-  if (num < 60) return '蓼▄';
-  if (num < 75) return '蓼▅';
-  if (num < 88) return '蓼▆';
-  if (num < 100) return '蓼▇';
-  return '蓼█';
+  if (num == 0 || muted) return '\udb81\udf5f';
+  if (num < 15) return '\udb81\udd7f ▁';
+  if (num < 30) return '\udb81\udd7f ▂';
+  if (num < 45) return '\udb81\udd7f ▃';
+  if (num < 60) return '\udb81\udd7f ▄';
+  if (num < 75) return '\udb81\udd7f ▅';
+  if (num < 88) return '\udb81\udd7f ▆';
+  if (num < 100) return '\udb81\udd7f ▇';
+  return '\udb81\udf5f █';
 };
 
 const getRunningApp = (data) => {
